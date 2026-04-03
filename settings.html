@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bobby Reichert | Settings</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J4PE57KXDN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-J4PE57KXDN');
+    </script>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind - Dark mode ENABLED -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Enable dark mode via the 'dark' class on <html>
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#4f46e5', // Indigo-600
+                        'primary-dark': '#a5b4fc' // Blue-800 for dark mode accent
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Load Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        /* Light Mode Scrollbar */
+        ::-webkit-scrollbar-thumb {
+            background: #d1d5db; /* Gray-400 */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f7f9fc; /* Light background */
+        }
+        /* Dark Mode Scrollbar Overrides */
+        .dark ::-webkit-scrollbar-thumb {
+            background: #4b5563; /* Gray-600 */
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #111827; /* Gray-900 background */
+        }
+        
+        /* Custom styles for the fixed cookie banner transition (used by JS to hide it smoothly) */
+        .fade-out {
+            opacity: 0 !important;
+            transform: translateY(100%) !important;
+            pointer-events: none;
+        }
+
+        /* Custom styles for the segmented controls (Theme-aware styles via CSS) */
+        .segmented-control {
+            display: grid;
+            /* Explicitly define columns to ensure equal width for 3 items by default */
+            grid-template-columns: repeat(3, 1fr); 
+            border-radius: 0.5rem;
+            padding: 4px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            /* Light/Dark Mode Container Colors */
+            background-color: #e5e7eb; /* bg-gray-200 light */
+        }
+        .dark .segmented-control {
+            background-color: #374151; /* bg-gray-700 dark */
+        }
+        
+        .segmented-control input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .segmented-control label {
+            text-align: center;
+            padding: 0.5rem 0.25rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            position: relative;
+            z-index: 10;
+            /* Label Colors */
+            color: #4b5563; /* text-gray-600 light */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .dark .segmented-control label {
+            color: #d1d5db; /* text-gray-300 dark */
+        }
+
+        /* Checked State (Light Mode) */
+        .segmented-control input[type="radio"]:checked + label {
+            background-color: #ffffff; /* bg-white light */
+            color: #4f46e5; /* text-primary light */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+            border-radius: 0.375rem;
+        }
+        /* Checked State (Dark Mode) */
+        .dark .segmented-control input[type="radio"]:checked + label {
+            background-color: #1f2937; /* bg-gray-800 dark */
+            color: #a5b4fc; /* text-primary-dark */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Dropdown Menu Styles (Theme-aware classes added in HTML) */
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s ease-out;
+        }
+
+        .dropdown-menu.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* Mobile Menu Styles (KEPT) */
+        #mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-out;
+            pointer-events: none;
+        }
+        #mobile-menu.open {
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+        
+    </style>
+</head>
+
+<!-- Body now uses responsive background/text colors -->
+<body class="font-sans min-h-screen flex flex-col transition-colors duration-300 bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+
+    <!-- 🔴 START: NAVIGATION BAR 🔴 -->
+    
+    <!-- Nav classes are now managed entirely by JS -->
+    <!-- UPDATED: z-index increased to 50 to stay above mobile menu -->
+    <nav id="main-nav" class="w-full shadow-lg sticky top-0 z-50 dark:shadow-xl transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo/Name -->
+                <div class="flex-shrink-0">
+                    <span class="text-xl font-bold text-primary dark:text-primary-dark">Bobby Reichert</span>
+                </div>
+
+                <!-- Desktop Links & Dropdown (Added ID: desktop-nav) -->
+                <div id="desktop-nav" class="hidden md:flex items-center space-x-3 md:space-x-4 text-sm md:text-base">
+                    <!-- Links now use dark: classes for text color -->
+                    <a href="home.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150">Home</a>
+                    <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150">Bio</a>
+                    <a href="blog.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150">Blog</a>
+                    <a href="contact.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150">Contact</a>
+                    
+                    <!-- DROPDOWN MENU -->
+                    <div id="more-dropdown" class="relative group">
+                        <button type="button" class="text-gray-900 dark:text-gray-100 font-bold p-2 rounded-md bg-indigo-100 dark:bg-indigo-700 flex items-center hover:bg-indigo-200 dark:hover:bg-indigo-600 transition" aria-expanded="false" aria-controls="more-menu-items">
+                            More
+                            <!-- Icon color adjusts for dark mode -->
+                            <svg class="w-4 h-4 ml-1 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        
+                        <!-- Dropdown Content uses dark: classes -->
+                        <div id="more-menu-items" class="dropdown-menu absolute right-0 mt-2 w-48 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-30 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                            <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="more-dropdown">
+                                <!-- Menu Items -->
+                                <a href="archived-blogs.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-primary transition duration-150" role="menuitem">
+                                    Archived Blogs
+                                </a>
+                                <a href="changelog.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-primary transition duration-150" role="menuitem">
+                                    Changelog
+                                </a>
+                                <a href="planned-features.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-primary transition duration-150" role="menuitem">
+                                    Future Features
+                                </a>
+                                <!-- Highlighted item -->
+                                <a href="#" class="block px-4 py-2 text-sm font-semibold text-indigo-700 bg-indigo-50 dark:text-primary-dark dark:bg-indigo-900 hover:text-primary dark:hover:text-primary-dark transition duration-150" role="menuitem">
+                                    Settings
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button (Added ID: mobile-toggle) -->
+                <div id="mobile-toggle" class="md:hidden">
+                    <button id="mobile-menu-button" type="button" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 inline-flex items-center justify-center p-2 rounded-md transition duration-150" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <!-- Hamburger Icon -->
+                        <svg id="hamburger-icon" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <!-- Close Icon (X) -->
+                        <svg id="close-icon" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- 🔴 END: NAVIGATION BAR 🔴 -->
+    
+    <!-- 🔴 START: MOBILE MENU PANEL 🔴 -->
+    <!-- Mobile menu classes are now managed entirely by JS -->
+    <!-- UPDATED: z-index increased to 40 to cover page content (z-10 toggles) but sit under nav (z-50) -->
+    <div id="mobile-menu" class="fixed inset-0 top-16 w-full h-full md:hidden z-40">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col">
+            <!-- Main Links -->
+            <a href="home.html" class="text-lg font-medium block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary dark:hover:text-primary-dark transition duration-150">Home</a>
+            <a href="about.html" class="text-lg font-medium block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary dark:hover:text-primary-dark transition duration-150">Bio</a>
+            <a href="blog.html" class="text-lg font-medium block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary dark:hover:text-primary-dark transition duration-150">Blog</a>
+            <a href="contact.html" class="text-lg font-medium block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary dark:hover:text-primary-dark transition duration-150">Contact</a>
+            
+            <!-- Separator -->
+            <div class="h-px w-full my-2 bg-gray-200 dark:bg-gray-700"></div>
+
+            <!-- "More" Dropdown Items -->
+            <a href="archived-blogs.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">Archived Blogs</a>
+            <a href="changelog.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">Changelog</a>
+            <a href="planned-features.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">Future Features</a>
+            <!-- Highlighted item -->
+            <a href="#" class="text-md block px-3 py-2 rounded-md text-indigo-700 bg-indigo-50 dark:text-primary-dark dark:bg-indigo-900 font-semibold transition duration-150">Settings</a>
+        </div>
+    </div>
+    <!-- 🔴 END: MOBILE MENU PANEL 🔴 -->
+
+    <main class="flex-grow flex items-center justify-center p-4">
+        <!-- Main Card uses responsive background/text colors -->
+        <div id="settings-card" class="w-full max-w-lg shadow-xl rounded-xl p-6 md:p-10 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+            
+            <!-- Header -->
+            <h1 class="text-3xl font-bold mb-2">Settings</h1>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Manage interface preferences.</p>
+            
+            <div class="space-y-8 mt-8">
+                
+                <!-- --- THEME MODE SETTINGS SECTION --- -->
+                <div>
+                    <h2 class="text-xl font-semibold mb-3 border-t pt-8 border-gray-200 dark:border-gray-700">Theme Mode</h2>
+                    <p class="text-sm mb-4 text-gray-600 dark:text-gray-400">Control the appearance of the user interface.</p>
+                    
+                    <div id="theme-control" class="relative segmented-control max-w-sm mx-auto">
+                        
+                        <input type="radio" id="theme-system" name="theme" value="system">
+                        <label for="theme-system">System</label>
+                        
+                        <input type="radio" id="theme-light" name="theme" value="light">
+                        <label for="theme-light">Light</label>
+                        
+                        <input type="radio" id="theme-dark" name="theme" value="dark">
+                        <label for="theme-dark">Dark</label>
+                    </div>
+                    <p id="theme-status" class="mt-4 text-center text-sm italic text-gray-600 dark:text-gray-400">
+                        Current setting: System
+                    </p>
+                </div>
+
+                <!-- --- Navigation Style Section (NEW) --- -->
+                <div>
+                    <h2 class="text-xl font-semibold mb-3 border-t pt-8 border-gray-200 dark:border-gray-700">Navigation Style</h2>
+                    <p class="text-sm mb-4 text-gray-600 dark:text-gray-400">Choose between a translucent blur or a solid background.</p>
+                    
+                    <!-- Inline style override to create 2 columns instead of 3 -->
+                    <div id="nav-style-control" class="relative segmented-control max-w-sm mx-auto" style="grid-template-columns: repeat(2, 1fr);">
+                        
+                        <input type="radio" id="nav-blur" name="nav-style" value="blur">
+                        <label for="nav-blur">Blur</label>
+                        
+                        <input type="radio" id="nav-solid" name="nav-style" value="solid">
+                        <label for="nav-solid">Solid</label>
+                    </div>
+                    <p id="nav-style-status" class="mt-4 text-center text-sm italic text-gray-600 dark:text-gray-400">
+                        Current setting: Blur
+                    </p>
+                </div>
+
+                <!-- --- Menu Bar Settings Section --- -->
+                <div>
+                    <h2 class="text-xl font-semibold mb-3 border-t pt-8 border-gray-200 dark:border-gray-700">Menu Bar Mode</h2>
+                    <p class="text-sm mb-4 text-gray-600 dark:text-gray-400">Define how the main navigation bar behaves.</p>
+                    
+                    <!-- Fixed: Removed grid-cols-3 in favor of CSS grid-template-columns in style block for safety -->
+                    <div id="menu-control" class="relative segmented-control max-w-sm mx-auto">
+                        
+                        <input type="radio" id="menu-desktop" name="menu" value="desktop">
+                        <label for="menu-desktop">Desktop</label>
+                        
+                        <input type="radio" id="menu-mobile" name="menu" value="mobile">
+                        <label for="menu-mobile">Mobile</label>
+                        
+                        <input type="radio" id="menu-auto" name="menu" value="auto">
+                        <label for="menu-auto">Auto</label>
+                    </div>
+                    <p id="menu-status" class="mt-4 text-center text-sm italic text-gray-600 dark:text-gray-400">
+                        Current setting: Auto (Determined by screen size).
+                    </p>
+                </div>
+
+                <!-- --- Privacy & Data Section --- -->
+                <div>
+                    <h2 class="text-xl font-semibold mb-3 border-t pt-8 border-gray-200 dark:border-gray-700">Privacy & Data</h2>
+                    <p class="text-sm mb-4 text-gray-600 dark:text-gray-400">Manage your cookie preferences.</p>
+                    
+                    <div class="flex flex-col items-center">
+                        <button id="reset-cookies-btn" class="w-full sm:w-auto px-6 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition duration-150 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                            Reset Cookie Consent
+                        </button>
+                        <p id="cookie-status-msg" class="mt-2 text-center text-sm italic text-primary dark:text-primary-dark opacity-0 transition-opacity duration-300">
+                            Preferences cleared. Banner will reappear.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Save Indicator (just for show) -->
+                <div id="save-indicator" class="text-center text-sm font-medium opacity-0 transition-opacity duration-500 pt-4 text-indigo-700 dark:text-primary-dark">
+                    Settings saved!
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- 🔴 START: FOOTER 🔴 -->
+    <!-- Footer uses responsive background/text/border colors -->
+    <footer class="w-full bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-center text-sm py-4 border-t border-gray-200 dark:border-gray-700">
+        <p>Last Updated: 11/11/2025</p>
+    </footer>
+    <!-- 🔴 END: FOOTER 🔴 -->
+
+    <!-- 🔴 START: COOKIE BANNER 🔴 -->
+    <!-- Cookie banner uses fixed dark background, common for alerts, so no dark mode override needed -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 p-4 md:p-6 bg-gray-800/40 backdrop-blur-md text-white shadow-2xl transition-all duration-500 transform translate-y-0 z-50 opacity-100">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
+            <p class="text-sm mb-3 md:mb-0 md:mr-6">
+                This website uses cookies to ensure you get the best experience and to track web traffic. By continuing to use this site, you agree to our use of cookies.
+            </p>
+            <button id="accept-cookies" class="w-full md:w-auto px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-lg shadow-md transition duration-300 text-sm">
+                Got it!
+            </button>
+        </div>
+    </div>
+    <!-- 🔴 END: COOKIE BANNER 🔴 -->
+
+
+    <script>
+        // --- CONSTANTS ---
+        const MENU_KEY = 'app-menu-mode';
+        const THEME_KEY = 'app-theme-mode';
+        const NAV_STYLE_KEY = 'app-nav-style'; 
+        const COOKIE_KEY = 'cookiesAccepted';
+        
+        // --- DOM Elements ---
+        const settingsCard = document.getElementById('settings-card');
+        const menuControl = document.getElementById('menu-control');
+        const themeControl = document.getElementById('theme-control'); 
+        const navStyleControl = document.getElementById('nav-style-control'); 
+        const saveIndicator = document.getElementById('save-indicator');
+        const resetCookiesBtn = document.getElementById('reset-cookies-btn');
+        const cookieStatusMsg = document.getElementById('cookie-status-msg');
+
+        // Nav Element
+        const navElement = document.getElementById('main-nav');
+
+        // Cookie banner elements
+        const cookieBanner = document.getElementById('cookie-banner');
+        const acceptButton = document.getElementById('accept-cookies');
+
+        // Mobile menu elements
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu'); // Target for mobile menu style
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const closeIcon = document.getElementById('close-icon');
+
+        // --- THEME MODE LOGIC ---
+        
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+        function applyTheme(theme) {
+            const html = document.documentElement;
+            let resolvedTheme = theme;
+
+            if (theme === 'system') {
+                resolvedTheme = mediaQuery.matches ? 'dark' : 'light';
+            }
+
+            if (resolvedTheme === 'dark') {
+                html.classList.add('dark');
+            } else {
+                html.classList.remove('dark');
+            }
+
+            if (themeControl) {
+                const themeStatus = document.getElementById('theme-status');
+                
+                let statusText = '';
+                if (theme === 'system') {
+                    statusText = `System (Currently: ${mediaQuery.matches ? 'Dark' : 'Light'}).`;
+                } else {
+                    statusText = `${theme.charAt(0).toUpperCase() + theme.slice(1)} mode`;
+                }
+                themeStatus.textContent = 'Current setting: ' + statusText;
+                
+                const themeInput = themeControl.querySelector(`input[value="${theme}"]`);
+                if(themeInput) { themeInput.checked = true; }
+            }
+        }
+
+        function handleThemeModeChange(mode) {
+            localStorage.setItem(THEME_KEY, mode);
+            applyTheme(mode);
+            showSaveIndicator();
+        }
+
+        function setupSystemThemeListener() {
+            mediaQuery.addEventListener('change', () => {
+                const currentPreference = localStorage.getItem(THEME_KEY) || 'system';
+                if (currentPreference === 'system') {
+                    applyTheme('system');
+                }
+            });
+        }
+
+        // --- NAVIGATION STYLE LOGIC ---
+
+        /**
+         * Applies the Blur or Solid style to the Navigation Bar and Mobile Menu.
+         * @param {string} style 'blur' or 'solid'.
+         */
+        function applyNavStyle(style) {
+            localStorage.setItem(NAV_STYLE_KEY, style);
+
+            // Classes specific to the Main Nav (#main-nav)
+            const navBlurClasses = ['bg-white/10', 'backdrop-blur-md', 'dark:bg-gray-800/30'];
+            // Added explicit opacity and blur reset for solid mode
+            const navSolidClasses = ['bg-white', 'bg-opacity-100', 'backdrop-blur-none', 'dark:bg-gray-800', 'dark:bg-opacity-100'];
+
+            const menuBlurClasses = ['bg-white/30', 'backdrop-blur-md', 'dark:bg-gray-900/40'];
+            // Added explicit opacity and blur reset for solid mode
+            const menuSolidClasses = ['bg-white', 'bg-opacity-100', 'backdrop-blur-none', 'dark:bg-gray-900', 'dark:bg-opacity-100'];
+            
+            const allNavClasses = [...navBlurClasses, ...navSolidClasses];
+            const allMenuClasses = [...menuBlurClasses, ...menuSolidClasses];
+
+            navElement.classList.remove(...allNavClasses);
+            mobileMenu.classList.remove(...allMenuClasses);
+
+            if (style === 'blur') {
+                navElement.classList.add(...navBlurClasses);
+                mobileMenu.classList.add(...menuBlurClasses);
+            } else { // 'solid'
+                navElement.classList.add(...navSolidClasses);
+                mobileMenu.classList.add(...menuSolidClasses);
+            }
+
+            // Update UI
+            if (navStyleControl) {
+                const status = document.getElementById('nav-style-status');
+                status.textContent = 'Current setting: ' + (style === 'blur' ? 'Blur' : 'Solid');
+                
+                const input = navStyleControl.querySelector(`input[value="${style}"]`);
+                if(input) input.checked = true;
+                showSaveIndicator();
+            }
+        }
+
+        // --- MENU MODE LOGIC ---
+
+        function toggleMobileMenu() {
+            const isOpen = mobileMenu.classList.contains('open');
+            mobileMenu.classList.toggle('open');
+            
+            if (isOpen) {
+                hamburgerIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+            } else {
+                hamburgerIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'true');
+            }
+        }
+
+        function applyMenuMode(mode) {
+            localStorage.setItem(MENU_KEY, mode);
+            
+            const desktopNav = document.getElementById('desktop-nav');
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const mobileMenuPanel = document.getElementById('mobile-menu');
+
+            if (!desktopNav.dataset.originalClasses) desktopNav.dataset.originalClasses = desktopNav.className;
+            if (!mobileToggle.dataset.originalClasses) mobileToggle.dataset.originalClasses = mobileToggle.className;
+            if (!mobileMenuPanel.dataset.originalClasses) mobileMenuPanel.dataset.originalClasses = mobileMenuPanel.className;
+
+            if (mode === 'auto') {
+                desktopNav.className = desktopNav.dataset.originalClasses;
+                mobileToggle.className = mobileToggle.dataset.originalClasses;
+                mobileMenuPanel.className = mobileMenuPanel.dataset.originalClasses;
+                mobileMenuPanel.classList.remove('open');
+            } 
+            else if (mode === 'desktop') {
+                desktopNav.className = desktopNav.dataset.originalClasses;
+                desktopNav.classList.remove('hidden');
+                desktopNav.classList.add('flex');
+                
+                mobileToggle.className = mobileToggle.dataset.originalClasses;
+                mobileToggle.classList.add('hidden');
+
+                mobileMenuPanel.classList.remove('open');
+                mobileMenuPanel.classList.add('hidden'); 
+            } 
+            else if (mode === 'mobile') {
+                desktopNav.className = desktopNav.dataset.originalClasses;
+                desktopNav.classList.add('hidden');
+                desktopNav.classList.remove('flex', 'md:flex');
+                
+                mobileToggle.className = mobileToggle.dataset.originalClasses;
+                mobileToggle.classList.remove('md:hidden');
+                
+                mobileMenuPanel.className = mobileMenuPanel.dataset.originalClasses;
+                mobileMenuPanel.classList.remove('md:hidden');
+            }
+
+            // --- FIX START ---
+            // Re-apply the current navigation style because setting className above wipes out the background classes
+            const currentNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'blur';
+            applyNavStyle(currentNavStyle);
+            // --- FIX END ---
+
+            if (menuControl) {
+                const menuStatus = document.getElementById('menu-status');
+                
+                let statusText = '';
+                if (mode === 'auto') statusText = 'Auto';
+                else if (mode === 'desktop') statusText = 'Desktop';
+                else statusText = 'Mobile';
+                
+                menuStatus.textContent = 'Current setting: ' + statusText;
+                
+                const menuInput = menuControl.querySelector(`input[value="${mode}"]`);
+                if(menuInput) { menuInput.checked = true; }
+                showSaveIndicator();
+            }
+        }
+        
+        function showSaveIndicator() {
+            if (saveIndicator) {
+                saveIndicator.classList.remove('opacity-0');
+                saveIndicator.classList.add('opacity-100');
+                clearTimeout(window.saveTimer);
+                window.saveTimer = setTimeout(() => {
+                    saveIndicator.classList.remove('opacity-100');
+                    saveIndicator.classList.add('opacity-0');
+                }, 1500);
+            }
+        }
+
+        // --- COOKIE LOGIC ---
+
+        function initializeCookieBanner() {
+            if (!cookieBanner || !acceptButton) return;
+            const accepted = localStorage.getItem(COOKIE_KEY);
+            if (accepted === 'true') {
+                cookieBanner.style.display = 'none';
+            } else {
+                cookieBanner.style.display = 'block';
+            }
+            acceptButton.addEventListener('click', () => {
+                localStorage.setItem(COOKIE_KEY, 'true');
+                cookieBanner.classList.add('fade-out');
+                setTimeout(() => {
+                    cookieBanner.style.display = 'none';
+                }, 500);
+            });
+        }
+
+        function resetCookies() {
+            localStorage.removeItem(COOKIE_KEY);
+            cookieBanner.style.display = 'block';
+            cookieBanner.classList.remove('fade-out');
+            if (cookieStatusMsg) {
+                cookieStatusMsg.classList.remove('opacity-0');
+                setTimeout(() => {
+                    cookieStatusMsg.classList.add('opacity-0');
+                }, 3000);
+            }
+        }
+
+        function initializeDropdownListeners() {
+            const dropdown = document.getElementById('more-dropdown');
+            if (!dropdown) return;
+            const dropdownButton = dropdown.querySelector('button');
+            const menu = document.getElementById('more-menu-items');
+
+            const toggleMenu = () => {
+                menu.classList.toggle('visible');
+                const isExpanded = menu.classList.contains('visible');
+                dropdownButton.setAttribute('aria-expanded', isExpanded);
+            };
+
+            const hideMenu = () => {
+                menu.classList.remove('visible');
+                dropdownButton.setAttribute('aria-expanded', 'false');
+            };
+
+            dropdown.addEventListener('mouseenter', () => {
+                if (window.innerWidth >= 768) menu.classList.add('visible');
+            });
+            dropdown.addEventListener('mouseleave', () => {
+                if (window.innerWidth >= 768) menu.classList.remove('visible');
+            });
+
+            dropdownButton.addEventListener('click', (e) => {
+                if (window.innerWidth < 768) {
+                      e.stopPropagation();
+                }
+            });
+            
+            document.addEventListener('click', (event) => {
+                if (window.innerWidth >= 768 && !dropdown.contains(event.target) && menu.classList.contains('visible')) {
+                    hideMenu();
+                }
+            });
+        }
+        
+        // --- Event Listeners ---
+        
+        if (menuControl) {
+            menuControl.addEventListener('change', (event) => {
+                if (event.target.name === 'menu') {
+                    applyMenuMode(event.target.value);
+                }
+            });
+        }
+
+        if (themeControl) {
+            themeControl.addEventListener('change', (event) => {
+                if (event.target.name === 'theme') {
+                    handleThemeModeChange(event.target.value);
+                }
+            });
+        }
+        
+        // Nav Style Listener (NEW)
+        if (navStyleControl) {
+            navStyleControl.addEventListener('change', (event) => {
+                if (event.target.name === 'nav-style') {
+                    applyNavStyle(event.target.value);
+                }
+            });
+        }
+
+        if (resetCookiesBtn) {
+            resetCookiesBtn.addEventListener('click', resetCookies);
+        }
+
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', toggleMobileMenu);
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (mobileMenu.classList.contains('open')) {
+                        toggleMobileMenu();
+                    }
+                });
+            });
+        }
+
+        // --- Core Initialization ---
+
+        function initializeSettings() {
+            // 1. Theme
+            const initialThemeMode = localStorage.getItem(THEME_KEY) || 'system';
+            applyTheme(initialThemeMode);
+            setupSystemThemeListener(); 
+
+            // 2. Dropdown
+            initializeDropdownListeners();
+
+            // 3. Menu Mode
+            const initialMenuMode = localStorage.getItem(MENU_KEY) || 'auto';
+            applyMenuMode(initialMenuMode);
+            
+            // 4. Nav Style (NEW) - Default to 'blur' if not set
+            const initialNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'blur';
+            applyNavStyle(initialNavStyle);
+
+            // 5. Cookie
+            initializeCookieBanner();
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeSettings);
+
+    </script>
+</body>
+</html>
