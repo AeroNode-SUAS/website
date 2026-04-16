@@ -49,11 +49,16 @@
         .post-card:hover { transform: translateY(-4px); }
         .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         .fade-out { opacity: 0 !important; transform: translateY(100%) !important; pointer-events: none; }
+
+        /* Gallery Styles */
+        .gallery-container { position: relative; background: #000; width: 100%; }
+        .gallery-slide { display: none; }
+        .gallery-slide.active { display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
 
-    <!-- 🔴 START: NAVIGATION BAR 🔴 -->
+    <!-- 🔴 NAVIGATION BAR 🔴 -->
     <nav id="main-nav" class="w-full bg-white/30 backdrop-blur-md shadow-lg sticky top-0 z-50 dark:bg-gray-800/30 dark:shadow-xl transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
@@ -119,16 +124,31 @@
 
     <!-- Post Reading Modal -->
     <div id="post-modal" class="fixed inset-0 z-[60] hidden overflow-y-auto px-4 py-6 md:py-12">
-        <div class="fixed inset-0 bg-gray-900/90 backdrop-blur-md" onclick="closeModal()"></div>
+        <div class="fixed inset-0 bg-gray-900/95 backdrop-blur-md" onclick="closeModal()"></div>
         <div class="relative max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-3xl shadow-2xl overflow-hidden mb-12 border border-gray-200 dark:border-gray-700">
-            <button onclick="closeModal()" class="absolute top-4 right-4 p-2 bg-black/20 hover:bg-black/40 text-white rounded-full backdrop-blur-md transition z-20">
+            <!-- Close Button -->
+            <button onclick="closeModal()" class="absolute top-4 right-4 p-2 bg-black/40 hover:bg-black/60 text-white rounded-full backdrop-blur-md transition z-30">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round"/></svg>
             </button>
-            <div id="modal-image-container" class="w-full bg-black flex items-center justify-center overflow-hidden hidden">
-                <a id="modal-image-link" href="#" target="_blank">
-                    <img id="modal-image" src="" class="max-w-full h-auto max-h-[70vh] block" alt="Blog cover">
-                </a>
+
+            <!-- Image Gallery Container -->
+            <div id="gallery" class="gallery-container group">
+                <!-- Slides will be injected here -->
+                <div id="slides-wrapper" class="w-full flex min-h-[300px] md:min-h-[500px]"></div>
+                
+                <!-- Controls -->
+                <div id="gallery-controls" class="absolute inset-0 flex items-center justify-between px-4 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button onclick="changeSlide(-1)" class="p-3 bg-black/50 text-white rounded-full hover:bg-black/70 pointer-events-auto transition">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <button onclick="changeSlide(1)" class="p-3 bg-black/50 text-white rounded-full hover:bg-black/70 pointer-events-auto transition">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                </div>
+                <!-- Pagination -->
+                <div id="gallery-pagination" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2"></div>
             </div>
+
             <div class="p-8 md:p-12">
                 <div class="flex items-center space-x-2 text-sm text-primary dark:text-primary-dark font-medium mb-4">
                     <span id="modal-date"></span>
@@ -137,6 +157,7 @@
                 </div>
                 <h2 id="modal-title" class="text-3xl md:text-4xl font-extrabold mb-8 leading-tight"></h2>
                 <div id="modal-content" class="prose prose-lg dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 leading-relaxed space-y-4"></div>
+                
                 <div class="mt-12 pt-8 border-t border-gray-100 dark:border-gray-700">
                     <button onclick="closeModal()" class="text-sm font-bold text-gray-500 hover:text-primary transition uppercase tracking-widest flex items-center">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -176,8 +197,10 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         let posts = [];
+        let currentSlideIndex = 0;
+        let activeImages = [];
 
-        // --- NAVIGATION LOGIC ---
+        // --- UI HANDLERS ---
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const hamburgerIcon = document.getElementById('hamburger-icon');
@@ -189,13 +212,11 @@
             closeIcon.classList.toggle('hidden', !isOpen);
         };
 
-        // More Dropdown
         const dropdown = document.getElementById('more-dropdown');
         const menuItems = document.getElementById('more-menu-items');
         dropdown.onmouseenter = () => menuItems.classList.add('visible');
         dropdown.onmouseleave = () => menuItems.classList.remove('visible');
 
-        // Cookie Banner
         const banner = document.getElementById('cookie-banner');
         const acceptBtn = document.getElementById('accept-cookies');
         if (localStorage.getItem('cookiesAccepted') === 'true') banner.style.display = 'none';
@@ -205,16 +226,7 @@
             setTimeout(() => banner.style.display = 'none', 500);
         };
 
-        // Theme Toggle (Sync with system)
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        function applyTheme() {
-            if (mediaQuery.matches) document.documentElement.classList.add('dark');
-            else document.documentElement.classList.remove('dark');
-        }
-        mediaQuery.addListener(applyTheme);
-        applyTheme();
-
-        // --- BLOG CONTENT ---
+        // --- BLOG DATA & GALLERY ---
         const blogGrid = document.getElementById('blog-grid');
         const modal = document.getElementById('post-modal');
 
@@ -230,10 +242,24 @@
                 snapshot.forEach(docSnap => {
                     const post = { id: docSnap.id, ...docSnap.data() };
                     posts.push(post);
+                    
+                    // Support legacy imageUrl or new imageUrls array
+                    const displayImages = post.imageUrls || (post.imageUrl ? [post.imageUrl] : []);
+                    const coverImg = displayImages.length > 0 ? displayImages[0] : null;
+
                     const card = document.createElement('article');
                     card.className = "post-card bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border border-gray-200 dark:border-gray-700 flex flex-col";
                     card.innerHTML = `
-                        ${post.imageUrl ? `<img src="${post.imageUrl}" class="w-full h-56 object-cover cursor-pointer" onclick="openPost('${post.id}')">` : ''}
+                        ${coverImg ? `
+                            <div class="relative group cursor-pointer overflow-hidden" onclick="openPost('${post.id}')">
+                                <img src="${coverImg}" class="w-full h-56 object-cover transition duration-500 group-hover:scale-105">
+                                ${displayImages.length > 1 ? `
+                                    <div class="absolute top-3 right-3 bg-black/60 text-white text-[10px] font-bold px-2 py-1 rounded backdrop-blur-sm">
+                                        +${displayImages.length - 1} PHOTOS
+                                    </div>
+                                ` : ''}
+                            </div>
+                        ` : ''}
                         <div class="p-6 flex flex-col flex-1">
                             <div class="flex items-center text-xs font-semibold text-primary dark:text-primary-dark mb-2 uppercase tracking-wider">
                                 <span>${post.date || 'Recent'}</span>
@@ -244,7 +270,7 @@
                             <p class="text-gray-600 dark:text-gray-400 text-sm mb-6 line-clamp-3">${post.excerpt || post.content.substring(0, 150) + '...'}</p>
                             <div class="mt-auto">
                                 <button onclick="openPost('${post.id}')" class="text-primary dark:text-primary-dark font-bold text-sm flex items-center hover:translate-x-1 transition">
-                                    READ BLOG POST <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-width="2"/></svg>
+                                    READ MORE <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-width="2"/></svg>
                                 </button>
                             </div>
                         </div>
@@ -257,31 +283,100 @@
         window.openPost = (id) => {
             const post = posts.find(p => p.id === id);
             if (!post) return;
+
+            activeImages = post.imageUrls || (post.imageUrl ? [post.imageUrl] : []);
+            currentSlideIndex = 0;
+
             document.getElementById('modal-title').innerText = post.title;
             document.getElementById('modal-date').innerText = post.date || 'Recent';
             document.getElementById('modal-author').innerText = post.author || 'AeroNode Team';
             document.getElementById('modal-content').innerHTML = post.content.split('\n\n').map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
-            const imgContainer = document.getElementById('modal-image-container');
-            const imgEl = document.getElementById('modal-image');
-            const imgLink = document.getElementById('modal-image-link');
-            if (post.imageUrl) {
-                imgEl.src = post.imageUrl;
-                imgLink.href = post.imageUrl;
-                imgContainer.classList.remove('hidden');
-            } else {
-                imgContainer.classList.add('hidden');
-            }
+
+            renderGallery();
+
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
             modal.scrollTo(0, 0);
         };
+
+        function renderGallery() {
+            const gallery = document.getElementById('gallery');
+            const wrapper = document.getElementById('slides-wrapper');
+            const pagination = document.getElementById('gallery-pagination');
+            const controls = document.getElementById('gallery-controls');
+
+            wrapper.innerHTML = '';
+            pagination.innerHTML = '';
+
+            if (activeImages.length === 0) {
+                gallery.classList.add('hidden');
+                return;
+            }
+
+            gallery.classList.remove('hidden');
+            controls.classList.toggle('hidden', activeImages.length <= 1);
+
+            activeImages.forEach((url, idx) => {
+                // Create Slide
+                const slide = document.createElement('div');
+                slide.className = `gallery-slide w-full h-full flex-shrink-0 ${idx === 0 ? 'active' : ''}`;
+                slide.innerHTML = `
+                    <a href="${url}" target="_blank" class="w-full flex justify-center">
+                        <img src="${url}" class="max-w-full h-auto max-h-[75vh] block object-contain" alt="Gallery image">
+                    </a>
+                `;
+                wrapper.appendChild(slide);
+
+                // Create Dot
+                if (activeImages.length > 1) {
+                    const dot = document.createElement('button');
+                    dot.className = `w-2 h-2 rounded-full transition-all ${idx === 0 ? 'bg-white w-4' : 'bg-white/40'}`;
+                    dot.onclick = () => showSlide(idx);
+                    pagination.appendChild(dot);
+                }
+            });
+        }
+
+        window.changeSlide = (n) => {
+            showSlide(currentSlideIndex + n);
+        };
+
+        function showSlide(index) {
+            if (activeImages.length === 0) return;
+            
+            // Loop indices
+            if (index >= activeImages.length) index = 0;
+            if (index < 0) index = activeImages.length - 1;
+
+            currentSlideIndex = index;
+
+            // Update Slides
+            const slides = document.querySelectorAll('.gallery-slide');
+            slides.forEach((s, i) => {
+                s.classList.toggle('active', i === index);
+                s.classList.toggle('hidden', i !== index);
+            });
+
+            // Update Dots
+            const dots = document.querySelectorAll('#gallery-pagination button');
+            dots.forEach((d, i) => {
+                d.className = `w-2 h-2 rounded-full transition-all ${i === index ? 'bg-white w-4' : 'bg-white/40'}`;
+            });
+        }
 
         window.closeModal = () => {
             modal.classList.add('hidden');
             document.body.style.overflow = 'auto';
         };
 
-        window.onkeydown = (e) => { if (e.key === 'Escape') closeModal(); };
+        window.onkeydown = (e) => { 
+            if (e.key === 'Escape') closeModal();
+            if (!modal.classList.contains('hidden')) {
+                if (e.key === 'ArrowRight') changeSlide(1);
+                if (e.key === 'ArrowLeft') changeSlide(-1);
+            }
+        };
+
         loadPosts();
     </script>
 </body>
