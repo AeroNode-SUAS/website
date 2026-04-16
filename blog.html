@@ -9,19 +9,17 @@
         gtag('js', new Date());
         gtag('config', 'G-J4PE57KXDN');
     </script>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog | AeroNode</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Configure Tailwind -->
     <script>
         tailwind.config = {
-            darkMode: 'class', 
+            darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: { 
                         'primary': '#4f46e5', 
                         'primary-dark': '#a5b4fc' 
                     }
@@ -33,163 +31,138 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         body { font-family: 'Inter', sans-serif; }
         
+        /* Consistent Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
         ::-webkit-scrollbar-track { background: #f7f9fc; }
         .dark ::-webkit-scrollbar-thumb { background: #4b5563; }
         .dark ::-webkit-scrollbar-track { background: #111827; }
 
-        .fade-out { opacity: 0 !important; transform: translateY(100%) !important; pointer-events: none; }
-        
+        /* Navigation Styles */
         .dropdown-menu { opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.2s ease-out; }
         .dropdown-menu.visible { opacity: 1; visibility: visible; transform: translateY(0); }
-
         #mobile-menu { transform: translateX(100%); transition: transform 0.3s ease-out; pointer-events: none; }
         #mobile-menu.open { transform: translateX(0); pointer-events: auto; }
 
-        /* Spinner animation for loading state */
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border-left-color: #4f46e5;
-            animation: spin 1s linear infinite;
-        }
-        .dark .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.1);
-            border-left-color: #a5b4fc;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
-        /* Clamp lines for excerpts */
-        .line-clamp-3 {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;  
-            overflow: hidden;
-        }
+        /* Blog UI */
+        .post-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .post-card:hover { transform: translateY(-4px); }
+        .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .fade-out { opacity: 0 !important; transform: translateY(100%) !important; pointer-events: none; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center transition-colors duration-300 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+<body class="min-h-screen flex flex-col bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
 
     <!-- 🔴 START: NAVIGATION BAR 🔴 -->
     <nav id="main-nav" class="w-full bg-white/30 backdrop-blur-md shadow-lg sticky top-0 z-50 dark:bg-gray-800/30 dark:shadow-xl transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <!-- Logo/Name -->
                 <div class="flex-shrink-0">
-                    <a href="index.html" class="text-xl text-primary dark:text-primary-dark">AERO<b>NODE</b></a>
+                    <a href="SUASindex.html" class="text-xl text-primary dark:text-primary-dark">AERO<b>NODE</b></a>
                 </div>
                 
-                <!-- Desktop Links & Dropdown -->
                 <div id="desktop-nav" class="hidden md:flex items-center space-x-3 md:space-x-4 text-sm md:text-base">
-                    <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150">Home</a>
+                    <a href="SUASindex.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150">Home</a>
                     <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150">Bio</a>
-                    <!-- Active Link Styling applied to 'Blog' -->
                     <a href="blog.html" class="text-gray-900 dark:text-gray-100 font-bold p-2 rounded-md bg-indigo-100 dark:bg-indigo-800 hover:bg-indigo-200 dark:hover:bg-indigo-700 transition">Blog</a>
                     <a href="contact.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150">Contact</a>
                     
-                    <!-- DROPDOWN MENU -->
                     <div id="more-dropdown" class="relative group">
-                        <button type="button" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150 flex items-center" aria-expanded="false" aria-controls="more-menu-items">
+                        <button type="button" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150 flex items-center">
                             More
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
-                        
                         <div id="more-menu-items" class="dropdown-menu absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-700 ring-1 ring-black ring-opacity-5 dark:ring-gray-600 z-30">
-                            <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="more-dropdown">
-                                <a href="PLACEHOLDER.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-primary transition duration-150" role="menuitem">PLACEHOLDER</a>
-                                <a href="PLACEHOLDER.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-primary transition duration-150" role="menuitem">PLACEHOLDER</a>
-                                <a href="PLACEHOLDER.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-primary transition duration-150" role="menuitem">PLACEHOLDER</a>
-                                <a href="settings.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-primary transition duration-150" role="menuitem">Page Settings</a>
+                            <div class="py-1">
+                                <a href="PLACEHOLDER.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 transition duration-150">Archived Blogs</a>
+                                <a href="settings.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 transition duration-150">Page Settings</a>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div id="mobile-toggle" class="md:hidden">
-                    <button id="mobile-menu-button" type="button" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 inline-flex items-center justify-center p-2 rounded-md transition duration-150" aria-controls="mobile-menu" aria-expanded="false">
-                        <span class="sr-only">Open main menu</span>
-                        <svg id="hamburger-icon" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                        <svg id="close-icon" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
+                    <button id="mobile-menu-button" type="button" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 p-2 rounded-md transition">
+                        <svg id="hamburger-icon" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                        <svg id="close-icon" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                     </button>
                 </div>
             </div>
         </div>
     </nav>
-    <!-- 🔴 END: NAVIGATION BAR 🔴 -->
-    
-    <!-- 🔴 START: MOBILE MENU PANEL 🔴 -->
-    <div id="mobile-menu" class="fixed inset-0 top-16 w-full h-full md:hidden z-40 bg-white dark:bg-gray-900">
-        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col">
-            <a href="index.html" class="text-lg font-medium block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">Home</a>
-            <a href="about.html" class="text-lg font-medium block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">Bio</a>
-            <!-- Active Mobile Link -->
-            <a href="blog.html" class="text-lg block px-3 py-2 rounded-md text-primary dark:text-primary-dark bg-indigo-50 dark:bg-indigo-900 font-semibold transition duration-150">Blog</a>
-            <a href="contact.html" class="text-lg font-medium block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">Contact</a>
-            
-            <div class="h-px w-full my-2 bg-gray-200 dark:bg-gray-700"></div>
 
-            <a href="PLACEHOLDER.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">Archived Blogs</a>
-            <a href="PLACEHOLDER.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">Changelog</a>
-            <a href="PLACEHOLDER.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">PLACEHOLDER</a>
-            <a href="settings.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">Page Settings</a>
+    <!-- MOBILE MENU PANEL -->
+    <div id="mobile-menu" class="fixed inset-0 top-16 w-full h-full md:hidden z-40 bg-white dark:bg-gray-900">
+        <div class="px-2 pt-2 pb-3 space-y-1 flex flex-col">
+            <a href="SUASindex.html" class="text-lg block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">Home</a>
+            <a href="about.html" class="text-lg block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">Bio</a>
+            <a href="blog.html" class="text-lg block px-3 py-2 rounded-md text-primary dark:text-primary-dark bg-indigo-50 dark:bg-indigo-900 font-semibold">Blog</a>
+            <a href="contact.html" class="text-lg block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">Contact</a>
         </div>
     </div>
-    <!-- 🔴 END: MOBILE MENU PANEL 🔴 -->
 
     <!-- MAIN CONTENT -->
-    <main class="flex-grow w-full max-w-6xl mx-auto px-4 py-10 md:px-8">
-        
-        <div class="mb-10 text-center">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-gray-100 tracking-tight mb-4">
-                Team Updates
-            </h1>
-            <p class="text-lg text-primary dark:text-primary-dark max-w-2xl mx-auto">
-                Follow our journey to SUAS 2026. Read about our design process, flight tests, and technical challenges.
-            </p>
+    <header class="py-16 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight text-gray-900 dark:text-gray-100">Team Updates</h1>
+            <p class="text-lg text-gray-600 dark:text-gray-400">Documentation of our progress, challenges, and milestones in the SUAS competition.</p>
         </div>
+    </header>
 
-        <!-- Dynamic Blog Posts Container -->
-        <div id="loading-indicator" class="flex flex-col items-center justify-center py-20">
-            <div class="spinner mb-4"></div>
-            <p class="text-gray-500 dark:text-gray-400">Loading latest updates...</p>
+    <main class="max-w-7xl mx-auto px-4 py-8 mb-20">
+        <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="col-span-full flex justify-center py-20">
+                <div class="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent"></div>
+            </div>
         </div>
-
-        <div id="blog-posts-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 hidden">
-            <!-- Posts will be injected here via JavaScript -->
-        </div>
-
     </main>
 
+    <!-- Post Reading Modal -->
+    <div id="post-modal" class="fixed inset-0 z-[60] hidden overflow-y-auto px-4 py-6 md:py-12">
+        <div class="fixed inset-0 bg-gray-900/90 backdrop-blur-md" onclick="closeModal()"></div>
+        <div class="relative max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-3xl shadow-2xl overflow-hidden mb-12 border border-gray-200 dark:border-gray-700">
+            <button onclick="closeModal()" class="absolute top-4 right-4 p-2 bg-black/20 hover:bg-black/40 text-white rounded-full backdrop-blur-md transition z-20">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+            <div id="modal-image-container" class="w-full bg-black flex items-center justify-center overflow-hidden hidden">
+                <a id="modal-image-link" href="#" target="_blank">
+                    <img id="modal-image" src="" class="max-w-full h-auto max-h-[70vh] block" alt="Blog cover">
+                </a>
+            </div>
+            <div class="p-8 md:p-12">
+                <div class="flex items-center space-x-2 text-sm text-primary dark:text-primary-dark font-medium mb-4">
+                    <span id="modal-date"></span>
+                    <span>•</span>
+                    <span id="modal-author"></span>
+                </div>
+                <h2 id="modal-title" class="text-3xl md:text-4xl font-extrabold mb-8 leading-tight"></h2>
+                <div id="modal-content" class="prose prose-lg dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 leading-relaxed space-y-4"></div>
+                <div class="mt-12 pt-8 border-t border-gray-100 dark:border-gray-700">
+                    <button onclick="closeModal()" class="text-sm font-bold text-gray-500 hover:text-primary transition uppercase tracking-widest flex items-center">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
-    <footer class="w-full bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-center text-sm py-6 border-t dark:border-gray-700 mt-auto">
-        <p>Last Updated: 04/15/2026</p>
-        <p class="mt-2">&copy; 2026 AeroNode SUAS Team. All rights reserved.</p>
+    <footer class="w-full bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-center text-sm py-8 border-t dark:border-gray-700 mt-auto">
+        <p>AeroNode SUAS Team &copy; 2026</p>
     </footer>
 
     <!-- Cookie Banner -->
-    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 p-4 md:p-6 bg-gray-800/40 backdrop-blur-md text-white shadow-2xl transition-all duration-500 transform translate-y-0 z-50 opacity-100">
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 p-6 bg-gray-800/40 backdrop-blur-md text-white shadow-2xl transition-all duration-500 z-50">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
-            <p class="text-sm mb-3 md:mb-0 md:mr-6">
-                This website uses cookies to ensure you get the best experience and to track web traffic. By continuing to use this site, you agree to our use of cookies.
-            </p>
-            <button id="accept-cookies" class="w-full md:w-auto px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-lg shadow-md transition duration-300 text-sm">
-                Got it!
-            </button>
+            <p class="text-sm mb-3 md:mb-0">This website uses cookies to track web traffic and ensure the best experience.</p>
+            <button id="accept-cookies" class="px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-lg text-sm transition">Got it!</button>
         </div>
     </div>
 
-    <!-- 🔴 FIREBASE INTEGRATION SCRIPT 🔴 -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-analytics.js";
-        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBaz7fTqeJsAqMAhJ1bKyOPHoyNOSMgQMU",
@@ -197,237 +170,119 @@
             projectId: "aeronode-suas",
             storageBucket: "aeronode-suas.firebasestorage.app",
             messagingSenderId: "55107024885",
-            appId: "1:55107024885:web:7068d2cd2efaa93992d2bc",
-            measurementId: "G-TKDQV7JLDS"
+            appId: "1:55107024885:web:7068d2cd2efaa93992d2bc"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
         const db = getFirestore(app);
+        let posts = [];
 
-        async function fetchBlogPosts() {
-            const container = document.getElementById('blog-posts-container');
-            const loading = document.getElementById('loading-indicator');
-            
-            try {
-                // Assuming you have a collection named 'posts'
-                // You can optionally add ordering: query(collection(db, "posts"), orderBy("createdAt", "desc"))
-                const q = query(collection(db, "posts")); 
-                const querySnapshot = await getDocs(q);
+        // --- NAVIGATION LOGIC ---
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const closeIcon = document.getElementById('close-icon');
 
-                loading.style.display = 'none';
-                container.classList.remove('hidden');
+        mobileMenuButton.onclick = () => {
+            const isOpen = mobileMenu.classList.toggle('open');
+            hamburgerIcon.classList.toggle('hidden', isOpen);
+            closeIcon.classList.toggle('hidden', !isOpen);
+        };
 
-                if (querySnapshot.empty) {
-                    container.innerHTML = `
-                        <div class="col-span-full text-center py-10 bg-white dark:bg-gray-800 rounded-2xl shadow border border-gray-200 dark:border-gray-700">
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">No Posts Yet</h3>
-                            <p class="text-gray-500 dark:text-gray-400">Check back soon for updates from the engineering team!</p>
-                        </div>
-                    `;
+        // More Dropdown
+        const dropdown = document.getElementById('more-dropdown');
+        const menuItems = document.getElementById('more-menu-items');
+        dropdown.onmouseenter = () => menuItems.classList.add('visible');
+        dropdown.onmouseleave = () => menuItems.classList.remove('visible');
+
+        // Cookie Banner
+        const banner = document.getElementById('cookie-banner');
+        const acceptBtn = document.getElementById('accept-cookies');
+        if (localStorage.getItem('cookiesAccepted') === 'true') banner.style.display = 'none';
+        acceptBtn.onclick = () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            banner.classList.add('fade-out');
+            setTimeout(() => banner.style.display = 'none', 500);
+        };
+
+        // Theme Toggle (Sync with system)
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        function applyTheme() {
+            if (mediaQuery.matches) document.documentElement.classList.add('dark');
+            else document.documentElement.classList.remove('dark');
+        }
+        mediaQuery.addListener(applyTheme);
+        applyTheme();
+
+        // --- BLOG CONTENT ---
+        const blogGrid = document.getElementById('blog-grid');
+        const modal = document.getElementById('post-modal');
+
+        function loadPosts() {
+            const q = query(collection(db, "posts"), orderBy("updatedAt", "desc"));
+            onSnapshot(q, (snapshot) => {
+                blogGrid.innerHTML = '';
+                posts = [];
+                if(snapshot.empty) {
+                    blogGrid.innerHTML = '<p class="col-span-full text-center py-20 opacity-50">No stories published yet.</p>';
                     return;
                 }
-
-                // Clear any existing content just in case
-                container.innerHTML = '';
-
-                querySnapshot.forEach((doc) => {
-                    const post = doc.data();
-                    const article = document.createElement('article');
-                    article.className = 'bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-200 dark:border-gray-700 flex flex-col';
-
-                    // Format date (handling Firestore Timestamps or standard date strings)
-                    let displayDate = "Recent";
-                    if (post.date && post.date.toDate) {
-                        displayDate = post.date.toDate().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
-                    } else if (post.date) {
-                        displayDate = new Date(post.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
-                    }
-
-                    // Render card HTML
-                    article.innerHTML = `
-                        ${post.imageUrl ? `<img src="${post.imageUrl}" alt="Blog Image" class="w-full h-48 object-cover">` : `<div class="w-full h-48 bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center"><svg class="w-12 h-12 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5L18.5 7H20"></path></svg></div>`}
-                        <div class="p-6 flex flex-col flex-grow">
-                            <div class="text-xs text-primary dark:text-primary-dark font-semibold uppercase tracking-wider mb-2">
-                                ${displayDate} • ${post.author || 'Team AeroNode'}
+                snapshot.forEach(docSnap => {
+                    const post = { id: docSnap.id, ...docSnap.data() };
+                    posts.push(post);
+                    const card = document.createElement('article');
+                    card.className = "post-card bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border border-gray-200 dark:border-gray-700 flex flex-col";
+                    card.innerHTML = `
+                        ${post.imageUrl ? `<img src="${post.imageUrl}" class="w-full h-56 object-cover cursor-pointer" onclick="openPost('${post.id}')">` : ''}
+                        <div class="p-6 flex flex-col flex-1">
+                            <div class="flex items-center text-xs font-semibold text-primary dark:text-primary-dark mb-2 uppercase tracking-wider">
+                                <span>${post.date || 'Recent'}</span>
+                                <span class="mx-2 opacity-30">|</span>
+                                <span>${post.author || 'AeroNode'}</span>
                             </div>
-                            <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3 leading-tight">
-                                ${post.title || 'Untitled Update'}
-                            </h2>
-                            <p class="text-gray-600 dark:text-gray-300 text-sm mb-6 line-clamp-3 flex-grow">
-                                ${post.excerpt || post.content || 'Click below to read more about this update.'}
-                            </p>
-                            <a href="#" class="inline-flex items-center text-primary dark:text-primary-dark font-semibold hover:underline mt-auto">
-                                Read More
-                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                            </a>
+                            <h3 class="text-xl font-bold mb-3 cursor-pointer hover:text-primary transition" onclick="openPost('${post.id}')">${post.title}</h3>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-6 line-clamp-3">${post.excerpt || post.content.substring(0, 150) + '...'}</p>
+                            <div class="mt-auto">
+                                <button onclick="openPost('${post.id}')" class="text-primary dark:text-primary-dark font-bold text-sm flex items-center hover:translate-x-1 transition">
+                                    READ BLOG POST <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-width="2"/></svg>
+                                </button>
+                            </div>
                         </div>
                     `;
-                    container.appendChild(article);
+                    blogGrid.appendChild(card);
                 });
-
-            } catch (error) {
-                console.error("Error fetching documents: ", error);
-                loading.style.display = 'none';
-                container.classList.remove('hidden');
-                container.innerHTML = `
-                    <div class="col-span-full text-center py-10 bg-red-50 dark:bg-red-900/20 rounded-2xl border border-red-200 dark:border-red-800">
-                        <p class="text-red-600 dark:text-red-400 font-semibold">Could not load updates.</p>
-                        <p class="text-sm text-red-500 dark:text-red-500 mt-2">Please ensure your Firestore security rules allow public reads and the "posts" collection exists.</p>
-                    </div>
-                `;
-            }
-        }
-
-        // Call fetch function
-        fetchBlogPosts();
-    </script>
-
-    <!-- UI Scripts for Navigation and Theme -->
-    <script>
-        const MENU_KEY = 'app-menu-mode';
-        const THEME_KEY = 'app-theme-mode';
-        const NAV_STYLE_KEY = 'app-nav-style'; 
-        const COOKIE_KEY = 'cookiesAccepted';
-        
-        let mobileMenuButton, mobileMenu, hamburgerIcon, closeIcon;
-        const navElement = document.getElementById('main-nav');
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-        function applyNavStyle(style) {
-            const navBlurClasses = ['bg-white/30', 'backdrop-blur-md', 'dark:bg-gray-800/30'];
-            const navSolidClasses = ['bg-white', 'bg-opacity-100', 'backdrop-blur-none', 'dark:bg-gray-800', 'dark:bg-opacity-100'];
-            const menuBlurClasses = ['bg-white/30', 'backdrop-blur-md', 'dark:bg-gray-900/40'];
-            const menuSolidClasses = ['bg-white', 'bg-opacity-100', 'backdrop-blur-none', 'dark:bg-gray-900', 'dark:bg-opacity-100'];
-            
-            if (navElement) navElement.classList.remove(...navBlurClasses, ...navSolidClasses);
-            if (mobileMenu) mobileMenu.classList.remove(...menuBlurClasses, ...menuSolidClasses);
-
-            if (style === 'blur') {
-                if (navElement) navElement.classList.add(...navBlurClasses);
-                if (mobileMenu) mobileMenu.classList.add(...menuBlurClasses);
-            } else { 
-                if (navElement) navElement.classList.add(...navSolidClasses);
-                if (mobileMenu) mobileMenu.classList.add(...menuSolidClasses);
-            }
-        }
-
-        function applyMenuMode(mode) {
-            const desktopNav = document.getElementById('desktop-nav');
-            const mobileToggle = document.getElementById('mobile-toggle');
-            const mobileMenuPanel = document.getElementById('mobile-menu');
-
-            if (!desktopNav || !mobileToggle || !mobileMenuPanel) return;
-
-            if (!desktopNav.dataset.originalClasses) desktopNav.dataset.originalClasses = desktopNav.className;
-            if (!mobileToggle.dataset.originalClasses) mobileToggle.dataset.originalClasses = mobileToggle.className;
-            if (!mobileMenuPanel.dataset.originalClasses) mobileMenuPanel.dataset.originalClasses = mobileMenuPanel.className;
-
-            if (mode === 'auto') {
-                desktopNav.className = desktopNav.dataset.originalClasses;
-                mobileToggle.className = mobileToggle.dataset.originalClasses;
-                mobileMenuPanel.className = mobileMenuPanel.dataset.originalClasses;
-                mobileMenuPanel.classList.remove('open');
-            } else if (mode === 'desktop') {
-                desktopNav.className = desktopNav.dataset.originalClasses;
-                desktopNav.classList.remove('hidden');
-                desktopNav.classList.add('flex');
-                mobileToggle.className = mobileToggle.dataset.originalClasses;
-                mobileToggle.classList.add('hidden');
-                mobileMenuPanel.classList.remove('open');
-                mobileMenuPanel.classList.add('hidden'); 
-            } else if (mode === 'mobile') {
-                desktopNav.className = desktopNav.dataset.originalClasses;
-                desktopNav.classList.add('hidden');
-                desktopNav.classList.remove('flex', 'md:flex');
-                mobileToggle.className = mobileToggle.dataset.originalClasses;
-                mobileToggle.classList.remove('md:hidden');
-                mobileMenuPanel.className = mobileMenuPanel.dataset.originalClasses;
-                mobileMenuPanel.classList.remove('md:hidden');
-            }
-
-            const currentNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'blur';
-            applyNavStyle(currentNavStyle);
-        }
-
-        function applyTheme(theme) {
-            const html = document.documentElement;
-            let resolvedTheme = theme;
-            if (theme === 'system') resolvedTheme = mediaQuery.matches ? 'dark' : 'light';
-            if (resolvedTheme === 'dark') html.classList.add('dark');
-            else html.classList.remove('dark');
-        }
-        
-        function setupSystemThemeListener() {
-            mediaQuery.addEventListener('change', () => {
-                if ((localStorage.getItem(THEME_KEY) || 'system') === 'system') applyTheme('system');
             });
         }
-        
-        function toggleMobileMenu() {
-            if (!mobileMenu || !mobileMenuButton) return; 
-            const isOpen = mobileMenu.classList.contains('open');
-            mobileMenu.classList.toggle('open');
-            if (isOpen) {
-                hamburgerIcon.classList.remove('hidden');
-                closeIcon.classList.add('hidden');
-                mobileMenuButton.setAttribute('aria-expanded', 'false');
+
+        window.openPost = (id) => {
+            const post = posts.find(p => p.id === id);
+            if (!post) return;
+            document.getElementById('modal-title').innerText = post.title;
+            document.getElementById('modal-date').innerText = post.date || 'Recent';
+            document.getElementById('modal-author').innerText = post.author || 'AeroNode Team';
+            document.getElementById('modal-content').innerHTML = post.content.split('\n\n').map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
+            const imgContainer = document.getElementById('modal-image-container');
+            const imgEl = document.getElementById('modal-image');
+            const imgLink = document.getElementById('modal-image-link');
+            if (post.imageUrl) {
+                imgEl.src = post.imageUrl;
+                imgLink.href = post.imageUrl;
+                imgContainer.classList.remove('hidden');
             } else {
-                hamburgerIcon.classList.add('hidden');
-                closeIcon.classList.remove('hidden');
-                mobileMenuButton.setAttribute('aria-expanded', 'true');
+                imgContainer.classList.add('hidden');
             }
-        }
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            mobileMenuButton = document.getElementById('mobile-menu-button');
-            mobileMenu = document.getElementById('mobile-menu');
-            hamburgerIcon = document.getElementById('hamburger-icon');
-            closeIcon = document.getElementById('close-icon');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            modal.scrollTo(0, 0);
+        };
 
-            applyTheme(localStorage.getItem(THEME_KEY) || 'system');
-            setupSystemThemeListener();
-            applyMenuMode(localStorage.getItem(MENU_KEY) || 'auto');
-            applyNavStyle(localStorage.getItem(NAV_STYLE_KEY) || 'blur');
+        window.closeModal = () => {
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        };
 
-            // Cookie Consent Logic
-            const banner = document.getElementById('cookie-banner');
-            const acceptButton = document.getElementById('accept-cookies');
-            if (localStorage.getItem(COOKIE_KEY) === 'true' && banner) {
-                banner.style.display = 'none';
-            } else if (banner && acceptButton) {
-                banner.style.display = 'block';
-                acceptButton.addEventListener('click', () => {
-                    localStorage.setItem(COOKIE_KEY, 'true');
-                    banner.classList.add('fade-out');
-                    setTimeout(() => { banner.style.display = 'none'; }, 500); 
-                });
-            }
-
-            // Dropdown Toggle Logic
-            const dropdown = document.getElementById('more-dropdown');
-            const menu = document.getElementById('more-menu-items');
-            if(dropdown && menu) {
-                dropdown.addEventListener('mouseenter', () => { if (window.innerWidth >= 768) menu.classList.add('visible'); });
-                dropdown.addEventListener('mouseleave', () => { if (window.innerWidth >= 768) { menu.classList.remove('visible'); dropdown.querySelector('button').setAttribute('aria-expanded', 'false'); } });
-                document.addEventListener('click', (event) => {
-                    if (window.innerWidth >= 768 && !dropdown.contains(event.target) && menu.classList.contains('visible')) {
-                        menu.classList.remove('visible');
-                        dropdown.querySelector('button').setAttribute('aria-expanded', 'false');
-                    }
-                });
-            }
-
-            if (mobileMenuButton) {
-                mobileMenuButton.addEventListener('click', toggleMobileMenu);
-                if (mobileMenu) {
-                    mobileMenu.querySelectorAll('a').forEach(link => {
-                        link.addEventListener('click', () => { if (mobileMenu.classList.contains('open')) toggleMobileMenu(); });
-                    });
-                }
-            }
-        });
+        window.onkeydown = (e) => { if (e.key === 'Escape') closeModal(); };
+        loadPosts();
     </script>
 </body>
 </html>
