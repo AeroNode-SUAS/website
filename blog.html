@@ -74,7 +74,7 @@
                     <a href="contact.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150">Contact</a>
                     
                     <div id="more-dropdown" class="relative group">
-                        <button type="button" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150 flex items-center">
+                        <button type="button" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150 flex items-center" aria-expanded="false" aria-controls="more-menu-items">
                             More
                             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
@@ -88,7 +88,8 @@
                 </div>
 
                 <div id="mobile-toggle" class="md:hidden">
-                    <button id="mobile-menu-button" type="button" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 p-2 rounded-md transition">
+                    <button id="mobile-menu-button" type="button" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 p-2 rounded-md transition" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
                         <svg id="hamburger-icon" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
                         <svg id="close-icon" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                     </button>
@@ -104,6 +105,11 @@
             <a href="about.html" class="text-lg block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">About</a>
             <a href="blog.html" class="text-lg block px-3 py-2 rounded-md text-primary dark:text-primary-dark bg-indigo-50 dark:bg-indigo-900 font-semibold">Blog</a>
             <a href="contact.html" class="text-lg block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">Contact</a>
+            
+            <div class="h-px w-full my-2 bg-gray-200 dark:bg-gray-700"></div>
+
+            <a href="PLACEHOLDER.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Archived Blogs</a>
+            <a href="settings.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Page Settings</a>
         </div>
     </div>
 
@@ -171,7 +177,7 @@
 
     <!-- Footer -->
     <footer class="w-full bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-center text-sm py-8 border-t dark:border-gray-700 mt-auto">
-        <p>AeroNode SUAS Team &copy; 2026</p>
+        <p>Last Updated: 4/16/2026</p>
     </footer>
 
     <!-- Cookie Banner -->
@@ -197,37 +203,182 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        
         let posts = [];
         let currentSlideIndex = 0;
         let activeImages = [];
 
-        // --- UI HANDLERS ---
+        // --- CONSTANTS ---
+        const MENU_KEY = 'app-menu-mode';
+        const THEME_KEY = 'app-theme-mode';
+        const NAV_STYLE_KEY = 'app-nav-style'; 
+        const COOKIE_KEY = 'cookiesAccepted';
+
+        // --- DOM Elements ---
+        const navElement = document.getElementById('main-nav');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const hamburgerIcon = document.getElementById('hamburger-icon');
         const closeIcon = document.getElementById('close-icon');
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-        mobileMenuButton.onclick = () => {
-            const isOpen = mobileMenu.classList.toggle('open');
-            hamburgerIcon.classList.toggle('hidden', isOpen);
-            closeIcon.classList.toggle('hidden', !isOpen);
-        };
+        // --- UI SETTINGS HANDLERS (Same as index.html) ---
+        function applyNavStyle(style) {
+            const navBlurClasses = ['bg-white/30', 'backdrop-blur-md', 'dark:bg-gray-800/30'];
+            const navSolidClasses = ['bg-white', 'bg-opacity-100', 'backdrop-blur-none', 'dark:bg-gray-800', 'dark:bg-opacity-100'];
+            const menuBlurClasses = ['bg-white/30', 'backdrop-blur-md', 'dark:bg-gray-900/40'];
+            const menuSolidClasses = ['bg-white', 'bg-opacity-100', 'backdrop-blur-none', 'dark:bg-gray-900', 'dark:bg-opacity-100'];
+            
+            if (navElement) navElement.classList.remove(...navBlurClasses, ...navSolidClasses);
+            if (mobileMenu) mobileMenu.classList.remove(...menuBlurClasses, ...menuSolidClasses);
 
-        const dropdown = document.getElementById('more-dropdown');
-        const menuItems = document.getElementById('more-menu-items');
-        dropdown.onmouseenter = () => menuItems.classList.add('visible');
-        dropdown.onmouseleave = () => menuItems.classList.remove('visible');
+            if (style === 'blur') {
+                if (navElement) navElement.classList.add(...navBlurClasses);
+                if (mobileMenu) mobileMenu.classList.add(...menuBlurClasses);
+            } else { 
+                if (navElement) navElement.classList.add(...navSolidClasses);
+                if (mobileMenu) mobileMenu.classList.add(...menuSolidClasses);
+            }
+        }
 
-        const banner = document.getElementById('cookie-banner');
-        const acceptBtn = document.getElementById('accept-cookies');
-        if (localStorage.getItem('cookiesAccepted') === 'true') banner.style.display = 'none';
-        acceptBtn.onclick = () => {
-            localStorage.setItem('cookiesAccepted', 'true');
-            banner.classList.add('fade-out');
-            setTimeout(() => banner.style.display = 'none', 500);
-        };
+        function applyMenuMode(mode) {
+            const desktopNav = document.getElementById('desktop-nav');
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const mobileMenuPanel = document.getElementById('mobile-menu');
 
-        // --- BLOG DATA & GALLERY ---
+            if (!desktopNav || !mobileToggle || !mobileMenuPanel) return;
+
+            if (!desktopNav.dataset.originalClasses) desktopNav.dataset.originalClasses = desktopNav.className;
+            if (!mobileToggle.dataset.originalClasses) mobileToggle.dataset.originalClasses = mobileToggle.className;
+            if (!mobileMenuPanel.dataset.originalClasses) mobileMenuPanel.dataset.originalClasses = mobileMenuPanel.className;
+
+            if (mode === 'auto') {
+                desktopNav.className = desktopNav.dataset.originalClasses;
+                mobileToggle.className = mobileToggle.dataset.originalClasses;
+                mobileMenuPanel.className = mobileMenuPanel.dataset.originalClasses;
+                mobileMenuPanel.classList.remove('open');
+            } else if (mode === 'desktop') {
+                desktopNav.className = desktopNav.dataset.originalClasses;
+                desktopNav.classList.remove('hidden');
+                desktopNav.classList.add('flex');
+                
+                mobileToggle.className = mobileToggle.dataset.originalClasses;
+                mobileToggle.classList.add('hidden');
+
+                mobileMenuPanel.classList.remove('open');
+                mobileMenuPanel.classList.add('hidden'); 
+            } else if (mode === 'mobile') {
+                desktopNav.className = desktopNav.dataset.originalClasses;
+                desktopNav.classList.add('hidden');
+                desktopNav.classList.remove('flex', 'md:flex');
+                
+                mobileToggle.className = mobileToggle.dataset.originalClasses;
+                mobileToggle.classList.remove('md:hidden');
+                
+                mobileMenuPanel.className = mobileMenuPanel.dataset.originalClasses;
+                mobileMenuPanel.classList.remove('md:hidden');
+            }
+
+            const currentNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'blur';
+            applyNavStyle(currentNavStyle);
+        }
+
+        function applyTheme(theme) {
+            const html = document.documentElement;
+            let resolvedTheme = theme;
+            if (theme === 'system') {
+                resolvedTheme = mediaQuery.matches ? 'dark' : 'light';
+            }
+            if (resolvedTheme === 'dark') {
+                html.classList.add('dark');
+            } else {
+                html.classList.remove('dark');
+            }
+        }
+        
+        function setupSystemThemeListener() {
+            mediaQuery.addEventListener('change', () => {
+                const currentPreference = localStorage.getItem(THEME_KEY) || 'system';
+                if (currentPreference === 'system') applyTheme('system');
+            });
+        }
+
+        function toggleMobileMenu() {
+            if (!mobileMenu || !mobileMenuButton) return; 
+            const isOpen = mobileMenu.classList.contains('open');
+            mobileMenu.classList.toggle('open');
+            
+            if (isOpen) {
+                hamburgerIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+            } else {
+                hamburgerIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'true');
+            }
+        }
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Apply Settings
+            const initialThemeMode = localStorage.getItem(THEME_KEY) || 'system';
+            applyTheme(initialThemeMode);
+            setupSystemThemeListener();
+
+            const initialMenuMode = localStorage.getItem(MENU_KEY) || 'auto';
+            applyMenuMode(initialMenuMode);
+            
+            const initialNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'blur';
+            applyNavStyle(initialNavStyle);
+
+            // Menu Handlers
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', toggleMobileMenu);
+                if (mobileMenu) {
+                    mobileMenu.querySelectorAll('a').forEach(link => {
+                        link.addEventListener('click', () => {
+                            if (mobileMenu.classList.contains('open')) toggleMobileMenu();
+                        });
+                    });
+                }
+            }
+
+            const dropdown = document.getElementById('more-dropdown');
+            const menuItems = document.getElementById('more-menu-items');
+            if (dropdown && menuItems) {
+                const hideMenu = () => {
+                    menuItems.classList.remove('visible');
+                    dropdown.querySelector('button').setAttribute('aria-expanded', 'false');
+                };
+
+                dropdown.addEventListener('mouseenter', () => { if (window.innerWidth >= 768) menuItems.classList.add('visible'); });
+                dropdown.addEventListener('mouseleave', () => { if (window.innerWidth >= 768) hideMenu(); });
+                document.addEventListener('click', (event) => {
+                    if (window.innerWidth >= 768 && !dropdown.contains(event.target) && menuItems.classList.contains('visible')) {
+                        hideMenu();
+                    }
+                });
+            }
+
+            // Cookie Banner
+            const banner = document.getElementById('cookie-banner');
+            const acceptBtn = document.getElementById('accept-cookies');
+            if (localStorage.getItem(COOKIE_KEY) === 'true' && banner) {
+                banner.style.display = 'none';
+            } else if (banner && acceptBtn) {
+                acceptBtn.addEventListener('click', () => {
+                    localStorage.setItem(COOKIE_KEY, 'true');
+                    banner.classList.add('fade-out');
+                    setTimeout(() => banner.style.display = 'none', 500);
+                });
+            }
+            
+            // Load Blog Posts
+            loadPosts();
+        });
+
+        // --- BLOG DATA & GALLERY LOGIC ---
         const blogGrid = document.getElementById('blog-grid');
         const modal = document.getElementById('post-modal');
 
@@ -244,7 +395,6 @@
                     const post = { id: docSnap.id, ...docSnap.data() };
                     posts.push(post);
                     
-                    // Support legacy imageUrl or new imageUrls array
                     const displayImages = post.imageUrls || (post.imageUrl ? [post.imageUrl] : []);
                     const coverImg = displayImages.length > 0 ? displayImages[0] : null;
 
@@ -318,7 +468,6 @@
             controls.classList.toggle('hidden', activeImages.length <= 1);
 
             activeImages.forEach((url, idx) => {
-                // Create Slide
                 const slide = document.createElement('div');
                 slide.className = `gallery-slide w-full h-full flex-shrink-0 ${idx === 0 ? 'active' : ''}`;
                 slide.innerHTML = `
@@ -328,7 +477,6 @@
                 `;
                 wrapper.appendChild(slide);
 
-                // Create Dot
                 if (activeImages.length > 1) {
                     const dot = document.createElement('button');
                     dot.className = `w-2 h-2 rounded-full transition-all ${idx === 0 ? 'bg-white w-4' : 'bg-white/40'}`;
@@ -345,20 +493,17 @@
         function showSlide(index) {
             if (activeImages.length === 0) return;
             
-            // Loop indices
             if (index >= activeImages.length) index = 0;
             if (index < 0) index = activeImages.length - 1;
 
             currentSlideIndex = index;
 
-            // Update Slides
             const slides = document.querySelectorAll('.gallery-slide');
             slides.forEach((s, i) => {
                 s.classList.toggle('active', i === index);
                 s.classList.toggle('hidden', i !== index);
             });
 
-            // Update Dots
             const dots = document.querySelectorAll('#gallery-pagination button');
             dots.forEach((d, i) => {
                 d.className = `w-2 h-2 rounded-full transition-all ${i === index ? 'bg-white w-4' : 'bg-white/40'}`;
@@ -378,7 +523,6 @@
             }
         };
 
-        loadPosts();
     </script>
 </body>
 </html>
