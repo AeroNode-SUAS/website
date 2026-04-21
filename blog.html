@@ -140,7 +140,7 @@
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round"/></svg>
             </button>
 
-            <!-- Image Gallery Container -->
+            <!-- Image/Video Gallery Container -->
             <div id="gallery" class="gallery-container group">
                 <!-- Slides will be injected here -->
                 <div id="slides-wrapper" class="w-full flex min-h-[300px] md:min-h-[500px]"></div>
@@ -155,7 +155,7 @@
                     </button>
                 </div>
                 <!-- Pagination -->
-                <div id="gallery-pagination" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2"></div>
+                <div id="gallery-pagination" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-20"></div>
             </div>
 
             <div class="p-8 md:p-12">
@@ -179,13 +179,13 @@
 
     <!-- Footer -->
     <footer class="w-full bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-center text-sm py-8 border-t dark:border-gray-700 mt-auto">
-        <p>Last Updated: 4/16/2026</p>
+        <p>Last Updated: 4/20/2026</p>
     </footer>
 
     <!-- Cookie Banner -->
     <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 p-6 bg-gray-800/40 backdrop-blur-md text-white shadow-2xl transition-all duration-500 z-50">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
-            <p class="text-sm mb-3 md:mb-0">This website uses cookies to track web traffic and ensure the best experience.</p>
+            <p class="text-sm mb-3 md:mb-0">This website uses cookies to ensure you get the best experience and to track web traffic. By continuing to use this site, you agree to our use of cookies.</p>
             <button id="accept-cookies" class="px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-lg text-sm transition">Got it!</button>
         </div>
     </div>
@@ -208,7 +208,7 @@
         
         let posts = [];
         let currentSlideIndex = 0;
-        let activeImages = [];
+        let activeMedia = [];
 
         // --- CONSTANTS ---
         const MENU_KEY = 'app-menu-mode';
@@ -224,7 +224,7 @@
         const closeIcon = document.getElementById('close-icon');
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-        // --- UI SETTINGS HANDLERS (Same as index.html) ---
+        // --- UI SETTINGS HANDLERS ---
         function applyNavStyle(style) {
             const navBlurClasses = ['bg-white/30', 'backdrop-blur-md', 'dark:bg-gray-800/30'];
             const navSolidClasses = ['bg-white', 'bg-opacity-100', 'backdrop-blur-none', 'dark:bg-gray-800', 'dark:bg-opacity-100'];
@@ -394,21 +394,59 @@
                     return;
                 }
                 snapshot.forEach(docSnap => {
-                    const post = { id: docSnap.id, ...docSnap.data() };
+                    const postData = docSnap.data();
+                    
+                    // Normalize Media Processing
+                    let displayMedia = [];
+                    
+                    // 1. Process explicit images, checking for video extensions just in case
+                    const images = postData.imageUrls || (postData.imageUrl ? [postData.imageUrl] : []);
+                    images.forEach(url => {
+                        if(url.match(/\.(mp4|webm|ogg)(\?.*)?$/i)) {
+                            displayMedia.push({ type: 'video', url: url });
+                        } else {
+                            displayMedia.push({ type: 'image', url: url });
+                        }
+                    });
+
+                    // 2. Process explicit videos
+                    const videos = postData.videoUrls || (postData.videoUrl ? [postData.videoUrl] : []);
+                    videos.forEach(url => {
+                        displayMedia.push({ type: 'video', url: url });
+                    });
+
+                    const post = { id: docSnap.id, displayMedia, ...postData };
                     posts.push(post);
                     
-                    const displayImages = post.imageUrls || (post.imageUrl ? [post.imageUrl] : []);
-                    const coverImg = displayImages.length > 0 ? displayImages[0] : null;
+                    const coverMedia = displayMedia.length > 0 ? displayMedia[0] : null;
 
                     const card = document.createElement('article');
                     card.className = "post-card bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border border-gray-200 dark:border-gray-700 flex flex-col";
+                    
+                    // Determine cover thumbnail HTML
+                    let coverHtml = '';
+                    if (coverMedia) {
+                        if (coverMedia.type === 'video') {
+                            coverHtml = `
+                                <video src="${coverMedia.url}" class="w-full h-56 object-cover transition duration-500 group-hover:scale-105" muted playsinline preload="metadata"></video>
+                                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                    <div class="bg-black/50 rounded-full p-3 shadow-lg">
+                                        <svg class="w-8 h-8 text-white translate-x-[2px]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            coverHtml = `<img src="${coverMedia.url}" class="w-full h-56 object-cover transition duration-500 group-hover:scale-105">`;
+                        }
+                    }
+
                     card.innerHTML = `
-                        ${coverImg ? `
-                            <div class="relative group cursor-pointer overflow-hidden" onclick="openPost('${post.id}')">
-                                <img src="${coverImg}" class="w-full h-56 object-cover transition duration-500 group-hover:scale-105">
-                                ${displayImages.length > 1 ? `
-                                    <div class="absolute top-3 right-3 bg-black/60 text-white text-[10px] font-bold px-2 py-1 rounded backdrop-blur-sm">
-                                        +${displayImages.length - 1} PHOTOS
+                        ${coverMedia ? `
+                            <div class="relative group cursor-pointer overflow-hidden bg-gray-200 dark:bg-gray-700" onclick="openPost('${post.id}')">
+                                ${coverHtml}
+                                ${displayMedia.length > 1 ? `
+                                    <div class="absolute top-3 right-3 bg-black/60 text-white text-[10px] font-bold px-2 py-1 rounded backdrop-blur-sm z-10">
+                                        +${displayMedia.length - 1} MEDIA
                                     </div>
                                 ` : ''}
                             </div>
@@ -437,7 +475,7 @@
             const post = posts.find(p => p.id === id);
             if (!post) return;
 
-            activeImages = post.imageUrls || (post.imageUrl ? [post.imageUrl] : []);
+            activeMedia = post.displayMedia || [];
             currentSlideIndex = 0;
 
             document.getElementById('modal-title').innerText = post.title;
@@ -461,25 +499,34 @@
             wrapper.innerHTML = '';
             pagination.innerHTML = '';
 
-            if (activeImages.length === 0) {
+            if (activeMedia.length === 0) {
                 gallery.classList.add('hidden');
                 return;
             }
 
             gallery.classList.remove('hidden');
-            controls.classList.toggle('hidden', activeImages.length <= 1);
+            controls.classList.toggle('hidden', activeMedia.length <= 1);
 
-            activeImages.forEach((url, idx) => {
+            activeMedia.forEach((mediaItem, idx) => {
                 const slide = document.createElement('div');
                 slide.className = `gallery-slide w-full h-full flex-shrink-0 ${idx === 0 ? 'active' : ''}`;
-                slide.innerHTML = `
-                    <a href="${url}" target="_blank" class="w-full flex justify-center">
-                        <img src="${url}" class="max-w-full h-auto max-h-[75vh] block object-contain" alt="Gallery image">
-                    </a>
-                `;
+                
+                if (mediaItem.type === 'video') {
+                    slide.innerHTML = `
+                        <div class="w-full flex justify-center items-center relative">
+                            <video src="${mediaItem.url}" controls class="max-w-full h-auto max-h-[75vh] block object-contain shadow-2xl"></video>
+                        </div>
+                    `;
+                } else {
+                    slide.innerHTML = `
+                        <a href="${mediaItem.url}" target="_blank" class="w-full flex justify-center">
+                            <img src="${mediaItem.url}" class="max-w-full h-auto max-h-[75vh] block object-contain" alt="Gallery image">
+                        </a>
+                    `;
+                }
                 wrapper.appendChild(slide);
 
-                if (activeImages.length > 1) {
+                if (activeMedia.length > 1) {
                     const dot = document.createElement('button');
                     dot.className = `w-2 h-2 rounded-full transition-all ${idx === 0 ? 'bg-white w-4' : 'bg-white/40'}`;
                     dot.onclick = () => showSlide(idx);
@@ -488,15 +535,24 @@
             });
         }
 
+        // Auto pause videos when switching slides or closing modal
+        function pauseAllVideos() {
+            document.querySelectorAll('#slides-wrapper video').forEach(vid => {
+                vid.pause();
+            });
+        }
+
         window.changeSlide = (n) => {
             showSlide(currentSlideIndex + n);
         };
 
         function showSlide(index) {
-            if (activeImages.length === 0) return;
+            if (activeMedia.length === 0) return;
             
-            if (index >= activeImages.length) index = 0;
-            if (index < 0) index = activeImages.length - 1;
+            pauseAllVideos();
+
+            if (index >= activeMedia.length) index = 0;
+            if (index < 0) index = activeMedia.length - 1;
 
             currentSlideIndex = index;
 
@@ -513,6 +569,7 @@
         }
 
         window.closeModal = () => {
+            pauseAllVideos();
             modal.classList.add('hidden');
             document.body.style.overflow = 'auto';
         };
