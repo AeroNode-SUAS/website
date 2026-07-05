@@ -52,6 +52,17 @@
 
         #mobile-menu { transform: translateX(100%); transition: transform 0.3s ease-out; pointer-events: none; }
         #mobile-menu.open { transform: translateX(0); pointer-events: auto; }
+
+        #member-modal-backdrop.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        #member-modal-backdrop.open #member-modal-card {
+            transform: scale(1);
+        }
+        #member-modal-card {
+            position: relative;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center transition-colors duration-300 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
@@ -163,72 +174,59 @@
         </div>
 
         <!-- Team Members Section -->
-        <div class="w-full">
-            <h2 class="text-3xl font-extrabold text-gray-900 dark:text-gray-100 mb-8 pl-2 border-l-4 border-primary dark:border-primary-dark">
-                Meet the Team
-            </h2>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                
-                <!-- Team Member 1 -->
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300">
-                    <div class="w-24 h-24 bg-indigo-100 dark:bg-indigo-900 text-primary dark:text-primary-dark rounded-full flex items-center justify-center text-3xl font-bold mb-4 shadow-inner">
-                        CY
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Caden Y.</h3>
-                    <p class="text-sm text-primary dark:text-primary-dark font-medium mb-3">Hardware</p>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">
-                        (No Content)
-                    </p>
-                </div>
+<div class="w-full">
+    <h2 class="text-3xl font-extrabold text-gray-900 dark:text-gray-100 mb-8 pl-2 border-l-4 border-primary dark:border-primary-dark">
+        Meet the Team
+    </h2>
 
-                <!-- Team Member 2 -->
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300">
-                    <div class="w-24 h-24 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 rounded-full flex items-center justify-center text-3xl font-bold mb-4 shadow-inner">
-                        RZ
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Rick Z.</h3>
-                    <p class="text-sm text-primary dark:text-primary-dark font-medium mb-3">Software</p>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">
-                        (No Content)<!--Develops the autonomous flight logic, computer vision targeting, and the ground control station backend.-->
-                    </p>
-                </div>
+    <!-- Hardware Subteam -->
+    <h3 class="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4">Hardware</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
 
-                <!-- Team Member 3 -->
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300">
-                    <div class="w-24 h-24 bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300 rounded-full flex items-center justify-center text-3xl font-bold mb-4 shadow-inner">
-                        KZ
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Kevin Z.</h3>
-                    <p class="text-sm text-primary dark:text-primary-dark font-medium mb-3">Hardware</p>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">
-                        (No Content)
-                    </p>
-                </div>
+        <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="caden">
+            <img src="Caden Y.jpg" alt="Caden Y." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Caden Y.</h3>
+            <p class="text-sm text-primary dark:text-primary-dark font-medium">Hardware</p>
+        </div>
 
-                 <!-- Team Member 4 -->
-                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300">
-                    <div class="w-24 h-24 bg-orange-100 dark:bg-orange-900 text-orange-600 dark:text-orange-300 rounded-full flex items-center justify-center text-3xl font-bold mb-4 shadow-inner">
-                        LO
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Lauren O.</h3>
-                    <p class="text-sm text-primary dark:text-primary-dark font-medium mb-3">Software</p>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">
-                        (No Content)
-                    </p>
-                </div>
-								<!-- Team Member 5 -->
-                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300">
-                    <div class="w-24 h-24 bg-yellow-100 dark:bg-yellow-900 text-orange-600 dark:text-orange-300 rounded-full flex items-center justify-center text-3xl font-bold mb-4 shadow-inner">
-                        AO
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Angela O.</h3>
-                    <p class="text-sm text-primary dark:text-primary-dark font-medium mb-3">Outreach</p>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">
-                        (No Content)
-                    </p>
-                </div>
-            </div>
+        <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="kevin">
+            <img src="Kevin Z..JPG" alt="Kevin Z." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Kevin Z.</h3>
+            <p class="text-sm text-primary dark:text-primary-dark font-medium">Hardware</p>
+        </div>
+
+    </div>
+
+    <!-- Software Subteam -->
+    <h3 class="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4">Software</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+
+        <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="rick">
+            <img src="Rick Z..JPG" alt="Rick Z." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Rick Z.</h3>
+            <p class="text-sm text-primary dark:text-primary-dark font-medium">Software</p>
+        </div>
+
+        <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="lauren">
+            <img src="R.jpg" alt="Lauren O." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Lauren O.</h3>
+            <p class="text-sm text-primary dark:text-primary-dark font-medium">Software</p>
+        </div>
+
+    </div>
+
+    <!-- Outreach Subteam -->
+    <h3 class="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4">Outreach</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="angela">
+            <img src="Angela O._2.jpg" alt="Angela O." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Angela O.</h3>
+            <p class="text-sm text-primary dark:text-primary-dark font-medium">Outreach</p>
+        </div>
+
+    </div>
+</div>
         </div>
 
         <!-- Sponsors Section -->
@@ -281,6 +279,20 @@
         
     </footer>
 
+    <!-- Team Member Detail Modal -->
+    <div id="member-modal-backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="min-h-screen flex items-center justify-center p-4">
+            <div id="member-modal-card" class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-8 text-center transform scale-75 transition-transform duration-300 ease-out">
+                <button id="member-modal-close" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-2xl leading-none">&times;</button>
+
+                <img id="member-modal-photo" src="" alt="" class="w-48 h-48 rounded-full object-cover mx-auto mb-6 shadow-md">
+                <h3 id="member-modal-name" class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1"></h3>
+                <p id="member-modal-role" class="text-sm text-primary dark:text-primary-dark font-semibold mb-4"></p>
+                <p id="member-modal-bio" class="text-gray-600 dark:text-gray-400 leading-relaxed"></p>
+            </div>
+        </div>
+    </div>
+
     <!-- Cookie Banner -->
     <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 p-4 md:p-6 bg-gray-800/40 backdrop-blur-md text-white shadow-2xl transition-all duration-500 transform translate-y-0 z-50 opacity-100">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
@@ -300,6 +312,38 @@
         const THEME_KEY = 'app-theme-mode';
         const NAV_STYLE_KEY = 'app-nav-style'; 
         const COOKIE_KEY = 'cookiesAccepted';
+        const MEMBER_DATA = {
+            caden: {
+                name: "Caden Y.",
+                role: "Hardware",
+                photo: "Caden Y.jpg",
+                bio: "Works on the airframe design, machining, and mechanical integration of the aircraft."
+            },
+            kevin: {
+                name: "Kevin Z.",
+                role: "Hardware",
+                photo: "Kevin Z..JPG",
+                bio: "Focuses on the power system, ESCs, and structural assembly of the drone."
+            },
+            rick: {
+                name: "Rick Z.",
+                role: "Software",
+                photo: "Rick Z..JPG",
+                bio: "Develops the autonomous flight logic, computer vision targeting, and the ground control station backend."
+            },
+            lauren: {
+                name: "Lauren O.",
+                role: "Software",
+                photo: "R.jpg",
+                bio: "Works on the flight software stack and mission planning algorithms."
+            },
+            angela: {
+                name: "Angela O.",
+                role: "Outreach",
+                photo: "Angela O._2.jpg",
+                bio: "Branding, website, and graphic design."
+            }
+        };
         
         // --- DOM Elements ---
         let mobileMenuButton, mobileMenu, hamburgerIcon, closeIcon;
@@ -405,6 +449,23 @@
                 mobileMenuButton.setAttribute('aria-expanded', 'true');
             }
         }
+        // --- TEAM MEMBER MODAL LOGIC ---
+        function openMemberModal(id) {
+            const data = MEMBER_DATA[id];
+            if (!data) return;
+
+            document.getElementById('member-modal-photo').src = data.photo;
+            document.getElementById('member-modal-photo').alt = data.name;
+            document.getElementById('member-modal-name').textContent = data.name;
+            document.getElementById('member-modal-role').textContent = data.role;
+            document.getElementById('member-modal-bio').textContent = data.bio;
+
+            document.getElementById('member-modal-backdrop').classList.add('open');
+        }
+
+        function closeMemberModal() {
+            document.getElementById('member-modal-backdrop').classList.remove('open');
+        }
         
         // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -472,6 +533,22 @@
                     });
                 }
             }
+
+            // Team Member Modal Listeners
+            document.querySelectorAll('.team-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    openMemberModal(card.dataset.member);
+                });
+            });
+
+            document.getElementById('member-modal-close').addEventListener('click', closeMemberModal);
+            document.getElementById('member-modal-backdrop').addEventListener('click', (e) => {
+                if (e.target.id === 'member-modal-backdrop') closeMemberModal();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeMemberModal();
+            });
+
         });
     </script>
 </body>
