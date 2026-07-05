@@ -2,15 +2,14 @@
 <html lang="en">
 <head>
     <link rel="icon" type="image/png" href="AeroNode-Icon.png">
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-1LJM9Y2HZS"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1LJM9Y2HZS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-  gtag('config', 'G-1LJM9Y2HZS');
-</script>
+      gtag('config', 'G-1LJM9Y2HZS');
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage | AeroNode</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -34,7 +33,7 @@
         /* Set the Inter font globally and ensure a smooth background */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; }
+        body { font-family: 'Inter', sans-serif; }
         h1, h2, h3 { letter-spacing: -0.02em; }
 
         .glow-primary {
@@ -78,7 +77,7 @@
 
         .fade-out { opacity: 0 !important; transform: translateY(100%) !important; pointer-events: none; }
         
-        /* CSS to hide the dropdown by default and manage transitions */
+        /* Custom scrollbar configurations */
         .dropdown-menu { opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.2s ease-out; }
         .dropdown-menu.visible { opacity: 1; visibility: visible; transform: translateY(0); }
 
@@ -99,12 +98,11 @@
             flex-direction: column !important;
             justify-content: center !important;
             align-items: center !important;
-            text-align: center !important; /* Ensure text is centered */
+            text-align: center !important; 
             margin: 0 !important;
             overflow-y: auto !important;
         }
 
-        /* Hide specific elements when fullscreen is active to remove distractions */
         body.has-fullscreen-element nav,
         body.has-fullscreen-element footer,
         body.has-fullscreen-element #mobile-menu,
@@ -112,11 +110,6 @@
         body.has-fullscreen-element h1,
         body.has-fullscreen-element > main > div > p {
              display: none !important;
-        }
-        
-        /* Keep the section visible */
-        body.has-fullscreen-element > :not(.fullscreen-mode) {
-           /* Handled by specific hiding above for better stability */
         }
         
         .fullscreen-mode .fullscreen-hide {
@@ -202,51 +195,33 @@
         }
     </style>
 </head>
-<!-- Body now uses responsive dark/light mode classes -->
-<body class="min-h-screen flex flex-col items-center transition-colors duration-300 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+<body class="min-h-screen flex flex-col items-center transition-colors duration-300 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 w-full">
 
-    <!-- 🔴 START: NAVIGATION BAR 🔴 -->
-    <!-- Added ID "main-nav" and "z-50" to match settings page -->
     <nav id="main-nav" class="w-full bg-white/30 backdrop-blur-md shadow-lg sticky top-0 z-50 dark:bg-gray-800/30 dark:shadow-xl transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <!-- Logo/Name -->
                 <div class="flex-shrink-0">
                     <span class="text-xl text-primary dark:text-primary-dark">AERO<b>NODE</b></span>
                 </div>
                 
-                <!-- Desktop Links & Dropdown (Hidden on Mobile) -->
-                <!-- Added ID "desktop-nav" for settings control -->
                 <div id="desktop-nav" class="hidden md:flex items-center space-x-3 md:space-x-4 text-sm md:text-base">
                     <a href="#" class="text-gray-900 dark:text-gray-100 font-bold p-2 rounded-md bg-indigo-100 dark:bg-indigo-800 hover:bg-indigo-200 dark:hover:bg-indigo-700 transition">Home</a>
                     <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150">About</a>
                     <a href="blog.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150">Blog</a>
                     <a href="contact.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150">Contact</a>
                     
-                    <!-- DROPDOWN MENU -->
                     <div id="more-dropdown" class="relative group">
-                        <!-- Dropdown Button -->
                         <button type="button" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150 flex items-center" aria-expanded="false" aria-controls="more-menu-items">
                             More
                             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         
-                        <!-- Dropdown Content uses responsive dark/light mode classes -->
                         <div id="more-menu-items" class="dropdown-menu absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-700 ring-1 ring-black ring-opacity-5 dark:ring-gray-600 z-30">
                             <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="more-dropdown">
-                                <a href="specs.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-primary transition duration-150" role="menuitem">
-                                    Aircraft Info
-                                </a>
-                                <a href="PLACEHOLDER.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-primary transition duration-150" role="menuitem">
-                                    PLACEHOLDER
-                                </a>
-                                
-                                <a href="PLACEHOLDER.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-primary transition duration-150" role="menuitem">
-                                    PLACEHOLDER
-                                </a>
-                                <a href="settings.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-primary transition duration-150" role="menuitem">
-                                    Page Settings
-                                </a>
+                                <a href="specs.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-primary transition duration-150" role="menuitem">Aircraft Info</a>
+                                <a href="PLACEHOLDER.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-primary transition duration-150" role="menuitem">PLACEHOLDER</a>
+                                <a href="PLACEHOLDER.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-primary transition duration-150" role="menuitem">PLACEHOLDER</a>
+                                <a href="settings.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-primary transition duration-150" role="menuitem">Page Settings</a>
                             </div>
                         </div>
                     </div>
@@ -255,11 +230,9 @@
                 <div id="mobile-toggle" class="md:hidden">
                     <button id="mobile-menu-button" type="button" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 inline-flex items-center justify-center p-2 rounded-md transition duration-150" aria-controls="mobile-menu" aria-expanded="false">
                         <span class="sr-only">Open main menu</span>
-                        <!-- Hamburger Icon -->
                         <svg id="hamburger-icon" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
-                    
                         <svg id="close-icon" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
@@ -268,50 +241,36 @@
             </div>
         </div>
     </nav>
-    <!-- 🔴 END: NAVIGATION BAR 🔴 -->
     
-    <!-- 🔴 START: MOBILE MENU PANEL 🔴 -->
-    <!-- Added z-40 to sit below nav (z-50) but above content -->
     <div id="mobile-menu" class="fixed inset-0 top-16 w-full h-full md:hidden z-40 bg-white dark:bg-gray-900">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col">
-            <!-- Highlighted item -->
             <a href="#" class="text-lg block px-3 py-2 rounded-md text-primary dark:text-primary-dark bg-indigo-50 dark:bg-indigo-900 font-semibold transition duration-150">Home</a>
-            
-            <!-- Other links use responsive dark/light mode classes -->
             <a href="about.html" class="text-lg font-medium block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">About</a>
             <a href="blog.html" class="text-lg font-medium block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">Blog</a>
             <a href="contact.html" class="text-lg font-medium block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">Contact</a>
             
-          
             <div class="h-px w-full my-2 bg-gray-200 dark:bg-gray-700"></div>
 
-         
             <a href="specs.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">Aircraft Info</a>
             <a href="PLACEHOLDER.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">PLACEHOLDER</a>
             <a href="PLACEHOLDER.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">PLACEHOLDER</a>
             <a href="settings.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">Page Settings</a>
         </div>
     </div>
-    <!-- 🔴 END: MOBILE MENU PANEL 🔴 -->
 
     <main class="relative w-full h-[90vh] flex items-center justify-center overflow-hidden">
-
-        <!-- Background Video -->
         <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
             <source src="dron eflihgt.mp4" type="video/mp4">
         </video>
 
-        <!-- Dark gradient overlay for text readability -->
         <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80"></div>
 
-        <!-- Hero Content -->
-        <div class="relative z-10 text-center px-4 max-w-4xl animate-on-scroll">
-            <h1 class="hero-rise text-6xl md:text-7xl font-extrabold text-white leading-tight mb-10">
+        <div class="relative z-10 text-center px-4 max-w-4xl hero-rise">
+            <h1 class="text-6xl md:text-7xl font-extrabold text-white leading-tight mb-10">
                 The next era <span class="text-gradient">of flight</span>.
             </h1>
-
-            <p class="hero-rise text-3xl md:text-4xl font-semibold text-white" style="animation-delay: 0.2s;">AeroNode</p>
-            <p class="hero-rise flex items-center justify-center gap-1.5 text-gray-300 mt-2" style="animation-delay: 0.4s;">
+            <p class="text-3xl md:text-4xl font-semibold text-white">AeroNode</p>
+            <p class="flex items-center justify-center gap-1.5 text-gray-300 mt-2">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
                 </svg>
@@ -319,7 +278,6 @@
             </p>
         </div>
 
-        <!-- Scroll cue -->
         <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
             <svg class="w-6 h-6 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -327,90 +285,77 @@
         </div>
     </main>
 
-    <!-- Our Story Section -->
     <section class="w-full max-w-6xl mx-auto px-4 py-16 md:py-24">
         <div class="grid md:grid-cols-2 gap-12 items-center">
-
-            <!-- Image side -->
             <div class="relative">
-                <!-- Corner accent -->
                 <div class="absolute -top-3 -left-3 w-16 h-16 border-t-4 border-l-4 border-primary dark:border-primary-dark"></div>
-
                 <img src="Group_Microsoft.jpeg" alt="Our team" class="w-full rounded-lg shadow-xl relative z-10">
+            </div>
+            <div>
+                <h2 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">Our Base Core</h2>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    Collaborating with industry paradigms to test and construct elite flight systems ready for industrial environments.
+                </p>
+            </div>
+        </div>
+    </section>
 
-                
+    <hr class="w-full max-w-6xl border-gray-200 dark:border-gray-700 mx-auto">
+
+    <section class="w-full max-w-6xl mx-auto px-4 py-16 md:py-24">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="relative">
+                <div class="absolute -top-3 -left-3 w-16 h-16 border-t-4 border-l-4 border-primary dark:border-primary-dark"></div>
+                <img src="teamphoto.jpg" alt="Our team" class="w-full rounded-lg shadow-xl relative z-10" onerror="this.onerror=null; this.src='https://placehold.co/600x400/4f46e5/ffffff?text=Team+Photo';">
             </div>
 
-            <hr class="border-gray-200 dark:border-gray-700 mb-16">
+            <div>
+                <h2 class="text-4xl italic font-light text-primary dark:text-primary-dark mb-6 leading-tight">
+                    Who we are
+                </h2>
+                <div class="w-16 h-0.5 bg-primary dark:bg-primary-dark mb-6"></div>
+                <p class="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+                    AeroNode is a student-led team of engineers, programmers, and aviation enthusiasts dedicated to designing and building an autonomous aircraft for the SUAS competition. Our mission is to push the boundaries of what students can achieve in aerospace technology.
+                </p>
+                <p class="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+                    Founded in 2026, we are based in Bellevue, Washington, and our team is composed of passionate students from various disciplines. We believe in hands-on learning, innovation, and collaboration to create a competitive autonomous aircraft that can perform complex tasks in real-world scenarios.
+                </p>
+                <a href="about.html" class="inline-block border-2 border-primary dark:border-primary-dark text-primary dark:text-primary-dark font-semibold uppercase text-sm tracking-wider px-8 py-3 rounded-md hover:bg-primary hover:text-white dark:hover:bg-primary-dark dark:hover:text-gray-900 transition duration-300">
+                    Learn More About Us
+                </a>
+            </div>
+        </div>
+    </section>
 
-            <!-- Our Story Section -->
-            <section class="w-full mx-auto mb-16">
-                <div class="grid md:grid-cols-2 gap-12 items-center">
-
-                    <!-- Image side -->
-                    <div class="relative">
-                        <!-- Corner accent -->
-                        <div class="absolute -top-3 -left-3 w-16 h-16 border-t-4 border-l-4 border-primary dark:border-primary-dark"></div>
-                        <img src="teamphoto.jpg" alt="Our team" class="w-full rounded-lg shadow-xl relative z-10" onerror="this.onerror=null; this.src='https://placehold.co/600x400/4f46e5/ffffff?text=Team+Photo';">
-                    </div>
-
-                    <!-- Text side -->
-                    <div>
-                        <h2 class="text-4xl italic font-light text-primary dark:text-primary-dark mb-6 leading-tight">
-                            Who we are
-                        </h2>
-
-                        <div class="w-16 h-0.5 bg-primary dark:bg-primary-dark mb-6"></div>
-
-                        <p class="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
-                            AeroNode is a student-led team of engineers, programmers, and aviation enthusiasts dedicated to designing and building an autonomous aircraft for the SUAS competition. Our mission is to push the boundaries of what students can achieve in aerospace technology.
-                        </p>
-                        <p class="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
-                            Founded in 2026, we are based in Bellevue, Washington, and our team is composed of passionate students from various disciplines. We believe in hands-on learning, innovation, and collaboration to create a competitive autonomous aircraft that can perform complex tasks in real-world scenarios.
-                        </p>
-
-                        <a href="about.html"
-                        class="inline-block border-2 border-primary dark:border-primary-dark text-primary dark:text-primary-dark font-semibold uppercase text-sm tracking-wider px-8 py-3 rounded-md hover:bg-primary hover:text-white dark:hover:bg-primary-dark dark:hover:text-gray-900 transition duration-300">
-                            Learn More About Us
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-
-    <!-- Stats Section -->
     <section class="w-full max-w-6xl mx-auto px-4 py-12">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 animate-on-scroll">
             <div class="text-center bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
-                <p class="stat-counter text-4xl md:text-5xl font-bold text-gradient" data-target="5">0</p>
+                <p class="stat-counter text-4xl md:text-5xl font-bold text-gradient" data-target="5">5</p>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 uppercase tracking-wide">Team Members</p>
             </div>
             <div class="text-center bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
-                <p class="stat-counter text-4xl md:text-5xl font-bold text-gradient" data-target="4">0</p>
+                <p class="stat-counter text-4xl md:text-5xl font-bold text-gradient" data-target="4">4</p>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 uppercase tracking-wide">Sponsors</p>
             </div>
             <div class="text-center bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
-                <p class="stat-counter text-4xl md:text-5xl font-bold text-gradient" data-target="3">0</p>
+                <p class="stat-counter text-4xl md:text-5xl font-bold text-gradient" data-target="3">3</p>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 uppercase tracking-wide">Subteams</p>
             </div>
             <div class="text-center bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
-                <p class="stat-counter text-4xl md:text-5xl font-bold text-gradient" data-target="1" data-suffix="st">0</p>
+                <p class="stat-counter text-4xl md:text-5xl font-bold text-gradient" data-target="1" data-suffix="st">1st</p>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 uppercase tracking-wide">Year Competing</p>
             </div>
         </div>
     </section>
 
-     <!-- Season Timeline Section -->
-    <section class="w-full max-w-4xl mx-auto px-4 py-16 md:py-24">
+     <section class="w-full max-w-4xl mx-auto px-4 py-16 md:py-24">
         <h2 class="text-3xl md:text-4xl font-extrabold text-center text-gray-900 dark:text-gray-100 mb-16">
             Our Season Roadmap
         </h2>
 
         <div class="relative pl-8 md:pl-0">
-            <!-- Vertical line -->
             <div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-0.5 bg-gray-200 dark:bg-gray-700"></div>
 
-            <!-- Milestone 1 -->
             <div class="timeline-item relative mb-12 md:w-1/2 md:pr-10 animate-on-scroll">
                 <div class="absolute -left-8 md:left-auto md:-right-[7px] top-1 w-3.5 h-3.5 rounded-full bg-primary dark:bg-primary-dark"></div>
                 <p class="text-sm text-primary dark:text-primary-dark font-semibold uppercase tracking-wide mb-1">April 2026</p>
@@ -418,7 +363,6 @@
                 <p class="text-gray-600 dark:text-gray-400">AeroNode forms as a rookie team, subteams are organized, and mission planning begins.</p>
             </div>
 
-            <!-- Milestone 2 -->
             <div class="timeline-item relative mb-12 md:w-1/2 md:ml-auto md:pl-10 animate-on-scroll">
                 <div class="absolute -left-8 md:left-[-7px] top-1 w-3.5 h-3.5 rounded-full bg-primary dark:bg-primary-dark"></div>
                 <p class="text-sm text-primary dark:text-primary-dark font-semibold uppercase tracking-wide mb-1">May 2026</p>
@@ -426,7 +370,6 @@
                 <p class="text-gray-600 dark:text-gray-400">Airframe layout, avionics architecture, and flight-control systems are locked in.</p>
             </div>
 
-            <!-- Milestone 3 -->
             <div class="timeline-item relative mb-12 md:w-1/2 md:pr-10 animate-on-scroll">
                 <div class="absolute -left-8 md:left-auto md:-right-[7px] top-1 w-3.5 h-3.5 rounded-full bg-primary dark:bg-primary-dark"></div>
                 <p class="text-sm text-primary dark:text-primary-dark font-semibold uppercase tracking-wide mb-1">June 2026</p>
@@ -434,7 +377,6 @@
                 <p class="text-gray-600 dark:text-gray-400">First full airframe assembly, integrating power, sensors, and software systems.</p>
             </div>
 
-            <!-- Milestone 4 -->
             <div class="timeline-item relative mb-12 md:w-1/2 md:ml-auto md:pl-10 animate-on-scroll">
                 <div class="absolute -left-8 md:left-[-7px] top-1 w-3.5 h-3.5 rounded-full bg-primary dark:bg-primary-dark"></div>
                 <p class="text-sm text-primary dark:text-primary-dark font-semibold uppercase tracking-wide mb-1">June 2027</p>
@@ -442,7 +384,6 @@
                 <p class="text-gray-600 dark:text-gray-400">Ground tests and flight trials to validate autonomy, targeting, and payload delivery.</p>
             </div>
 
-            <!-- Milestone 5 -->
             <div class="timeline-item relative md:w-1/2 md:pr-10 animate-on-scroll">
                 <div class="absolute -left-8 md:left-auto md:-right-[7px] top-1 w-3.5 h-3.5 rounded-full bg-primary dark:bg-primary-dark ring-4 ring-primary/20 dark:ring-primary-dark/20"></div>
                 <p class="text-sm text-primary dark:text-primary-dark font-semibold uppercase tracking-wide mb-1">September 2027</p>
@@ -452,76 +393,61 @@
         </div>
     </section>
 
-
-    <!-- Design. Build. Fly. Section -->
     <section class="w-full max-w-6xl mx-auto px-4 py-16 md:py-24">
+        <div class="grid md:grid-cols-2 gap-8 items-center mb-16 animate-on-scroll">
+            <div>
+                <h2 class="text-6xl md:text-7xl font-extrabold leading-none text-gray-900 dark:text-gray-100">Learn.</h2>
+                <h2 class="text-6xl md:text-7xl font-extrabold leading-none text-gray-400 dark:text-gray-600">Team.</h2>
+                <h2 class="text-6xl md:text-7xl font-extrabold leading-none text-gray-300 dark:text-gray-700">Grow.</h2>
+            </div>
 
-            <!-- Design. Build. Fly. Section -->
-            <section class="w-full mx-auto">
-                <!-- Stacked Headline + Image -->
-                <div class="grid md:grid-cols-2 gap-8 items-center mb-16 animate-on-scroll">
-                    <div>
-                        <h2 class="text-6xl md:text-7xl font-extrabold leading-none text-gray-900 dark:text-gray-100">Learn.</h2>
-                        <h2 class="text-6xl md:text-7xl font-extrabold leading-none text-gray-400 dark:text-gray-600">Team.</h2>
-                        <h2 class="text-6xl md:text-7xl font-extrabold leading-none text-gray-300 dark:text-gray-700">Grow.</h2>
-                    </div>
-
-                    <div class="grid grid-cols-2 grid-rows-2 gap-3 h-80 md:h-96">
-                        <img src="groupphoto3.jpg" alt="AeroNode drone photo 1" class="col-span-1 row-span-2 w-full h-full object-cover rounded-2xl shadow-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x800/4f46e5/ffffff?text=Photo+1';">
-                        <img src="groupphoto4.jpg" alt="AeroNode drone photo 2" class="w-full h-full object-cover rounded-2xl shadow-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x400/a5b4fc/ffffff?text=Photo+2';">
-                        <img src="groupphoto5.jpg" alt="AeroNode drone photo 3" class="w-full h-full object-cover rounded-2xl shadow-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x400/4f46e5/ffffff?text=Photo+3';">
-                    </div>
-                </div>
-
-                <!-- Process Cards -->
-                <div class="grid md:grid-cols-3 gap-6">
-                    <!-- Card 1 -->
-                    <div class="process-card animate-on-scroll bg-gray-50 dark:bg-gray-900 rounded-xl p-8 border border-gray-200 dark:border-gray-700">
-                        <div class="flex items-center gap-3 mb-6">
-                            <span class="step-number text-3xl font-bold text-gray-300 dark:text-gray-600">01</span>
-                            <div class="step-line h-px flex-grow bg-gray-200 dark:bg-gray-700"></div>
-                        </div>
-                        <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1">Design</h3>
-                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                            We conceptualize and design the aircraft, selecting the best airframe, power system, sensors, and software to meet competition requirements.
-                        </p>
-                    </div>
-
-                    <!-- Card 2 - starts active -->
-                    <div class="process-card active-step animate-on-scroll bg-gray-50 dark:bg-gray-900 rounded-xl p-8 border border-gray-200 dark:border-gray-700">
-                        <div class="flex items-center gap-3 mb-6">
-                            <span class="step-number text-3xl font-bold text-gray-300 dark:text-gray-600">02</span>
-                            <div class="step-line h-px flex-grow bg-gray-200 dark:bg-gray-700"></div>
-                        </div>
-                        <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1">Assemble</h3>
-                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                            Our team meticulously assembles the aircraft, integrating all components and ensuring that the system is ready for rigorous testing and flight trials.
-                        </p>
-                    </div>
-
-                    <!-- Card 3 -->
-                    <div class="process-card animate-on-scroll bg-gray-50 dark:bg-gray-900 rounded-xl p-8 border border-gray-200 dark:border-gray-700">
-                        <div class="flex items-center gap-3 mb-6">
-                            <span class="step-number text-3xl font-bold text-gray-300 dark:text-gray-600">03</span>
-                            <div class="step-line h-px flex-grow bg-gray-200 dark:bg-gray-700"></div>
-                        </div>
-                        <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1">Trial</h3>
-                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                            We conduct extensive flight trials and testing to validate the aircraft's performance, refine its systems, and ensure it meets all competition criteria.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
+            <div class="grid grid-cols-2 grid-rows-2 gap-3 h-80 md:h-96">
+                <img src="groupphoto3.jpg" alt="AeroNode drone photo 1" class="col-span-1 row-span-2 w-full h-full object-cover rounded-2xl shadow-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x800/4f46e5/ffffff?text=Photo+1';">
+                <img src="groupphoto4.jpg" alt="AeroNode drone photo 2" class="w-full h-full object-cover rounded-2xl shadow-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x400/a5b4fc/ffffff?text=Photo+2';">
+                <img src="groupphoto5.jpg" alt="AeroNode drone photo 3" class="w-full h-full object-cover rounded-2xl shadow-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x400/4f46e5/ffffff?text=Photo+3';">
+            </div>
         </div>
-    </main>
 
-    <!-- Footer uses responsive dark/light mode classes -->
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="process-card animate-on-scroll bg-gray-50 dark:bg-gray-900 rounded-xl p-8 border border-gray-200 dark:border-gray-700">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="step-number text-3xl font-bold text-gray-300 dark:text-gray-600">01</span>
+                    <div class="step-line h-px flex-grow bg-gray-200 dark:bg-gray-700"></div>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1">Design</h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    We conceptualize and design the aircraft, selecting the best airframe, power system, sensors, and software to meet competition requirements.
+                </p>
+            </div>
+
+            <div class="process-card active-step animate-on-scroll bg-gray-50 dark:bg-gray-900 rounded-xl p-8 border border-gray-200 dark:border-gray-700">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="step-number text-3xl font-bold text-gray-300 dark:text-gray-600">02</span>
+                    <div class="step-line h-px flex-grow bg-gray-200 dark:bg-gray-700"></div>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1">Assemble</h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    Our team meticulously assembles the aircraft, integrating all components and ensuring that the system is ready for rigorous testing and flight trials.
+                </p>
+            </div>
+
+            <div class="process-card animate-on-scroll bg-gray-50 dark:bg-gray-900 rounded-xl p-8 border border-gray-200 dark:border-gray-700">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="step-number text-3xl font-bold text-gray-300 dark:text-gray-600">03</span>
+                    <div class="step-line h-px flex-grow bg-gray-200 dark:bg-gray-700"></div>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1">Trial</h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    We conduct extensive flight trials and testing to validate the aircraft's performance, refine its systems, and ensure it meets all competition criteria.
+                </p>
+            </div>
+        </div>
+    </section>
+
     <footer class="w-full bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-center text-sm py-4 border-t dark:border-gray-700 mt-auto">
         <p>Last Updated: 04/03/2026</p>
     </footer>
 
-    <!-- Cookie Banner (Original code preserved) -->
     <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 p-4 md:p-6 bg-gray-800/40 backdrop-blur-md text-white shadow-2xl transition-all duration-500 transform translate-y-0 z-50 opacity-100">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
             <p class="text-sm mb-3 md:mb-0 md:mr-6">
@@ -533,12 +459,10 @@
         </div>
     </div>
 
-    <!-- FIREBASE & LYRIC LOGIC -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
         import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-        // Same config as your other files
         const firebaseConfig = {
             apiKey: "AIzaSyCJTduHsoftZ9jxzK2zGt89JKXhLhkeGk8",
             authDomain: "bobbyreichertwebpage.firebaseapp.com",
@@ -550,8 +474,6 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-
-        
     </script>
 
     <script>
@@ -560,412 +482,7 @@
         const THEME_KEY = 'app-theme-mode';
         const NAV_STYLE_KEY = 'app-nav-style'; 
         const COOKIE_KEY = 'cookiesAccepted';
-        const MS_PER_DAY = 1000 * 60 * 60 * 24; // Milliseconds in a day
-        
-        // --- DOM Elements ---
-        let mobileMenuButton;
-        let mobileMenu;
-        let hamburgerIcon;
-        let closeIcon;
-
-        // Nav Element
-        const navElement = document.getElementById('main-nav');
-
-        // Match Media Query for OS preference
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-        // --- NAVIGATION STYLE LOGIC ---
-        /**
-         * Applies the Blur or Solid style to the Navigation Bar and Mobile Menu.
-         * @param {string} style 'blur' or 'solid'.
-         */
-        function applyNavStyle(style) {
-            // Classes specific to the Main Nav (#main-nav)
-            const navBlurClasses = ['bg-white/30', 'backdrop-blur-md', 'dark:bg-gray-800/30'];
-            const navSolidClasses = ['bg-white', 'bg-opacity-100', 'backdrop-blur-none', 'dark:bg-gray-800', 'dark:bg-opacity-100'];
-
-            const menuBlurClasses = ['bg-white/30', 'backdrop-blur-md', 'dark:bg-gray-900/40'];
-            const menuSolidClasses = ['bg-white', 'bg-opacity-100', 'backdrop-blur-none', 'dark:bg-gray-900', 'dark:bg-opacity-100'];
-            
-            const allNavClasses = [...navBlurClasses, ...navSolidClasses];
-            const allMenuClasses = [...menuBlurClasses, ...menuSolidClasses];
-
-            if (navElement) navElement.classList.remove(...allNavClasses);
-            if (mobileMenu) mobileMenu.classList.remove(...allMenuClasses);
-
-            if (style === 'blur') {
-                if (navElement) navElement.classList.add(...navBlurClasses);
-                if (mobileMenu) mobileMenu.classList.add(...menuBlurClasses);
-            } else { // 'solid'
-                if (navElement) navElement.classList.add(...navSolidClasses);
-                if (mobileMenu) mobileMenu.classList.add(...menuSolidClasses);
-            }
-        }
-
-        // --- MENU MODE LOGIC ---
-        function applyMenuMode(mode) {
-            const desktopNav = document.getElementById('desktop-nav');
-            const mobileToggle = document.getElementById('mobile-toggle');
-            const mobileMenuPanel = document.getElementById('mobile-menu');
-
-            if (!desktopNav || !mobileToggle || !mobileMenuPanel) return;
-
-            if (!desktopNav.dataset.originalClasses) desktopNav.dataset.originalClasses = desktopNav.className;
-            if (!mobileToggle.dataset.originalClasses) mobileToggle.dataset.originalClasses = mobileToggle.className;
-            if (!mobileMenuPanel.dataset.originalClasses) mobileMenuPanel.dataset.originalClasses = mobileMenuPanel.className;
-
-            if (mode === 'auto') {
-                desktopNav.className = desktopNav.dataset.originalClasses;
-                mobileToggle.className = mobileToggle.dataset.originalClasses;
-                mobileMenuPanel.className = mobileMenuPanel.dataset.originalClasses;
-                mobileMenuPanel.classList.remove('open');
-            } 
-            else if (mode === 'desktop') {
-                desktopNav.className = desktopNav.dataset.originalClasses;
-                desktopNav.classList.remove('hidden');
-                desktopNav.classList.add('flex');
-                
-                mobileToggle.className = mobileToggle.dataset.originalClasses;
-                mobileToggle.classList.add('hidden');
-
-                mobileMenuPanel.classList.remove('open');
-                mobileMenuPanel.classList.add('hidden'); 
-            } 
-            else if (mode === 'mobile') {
-                desktopNav.className = desktopNav.dataset.originalClasses;
-                desktopNav.classList.add('hidden');
-                desktopNav.classList.remove('flex', 'md:flex');
-                
-                mobileToggle.className = mobileToggle.dataset.originalClasses;
-                mobileToggle.classList.remove('md:hidden');
-                
-                mobileMenuPanel.className = mobileMenuPanel.dataset.originalClasses;
-                mobileMenuPanel.classList.remove('md:hidden');
-            }
-
-            // Re-apply navigation style as setting className might wipe classes
-            const currentNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'blur';
-            applyNavStyle(currentNavStyle);
-        }
-
-        // --- COUNTDOWN LOGIC ---
-        /**
-         * Updates the date countdowns and count-ups on the page.
-         * Runs every second to ensure the New Year's countdown is accurate.
-         */
-        function updateCountdowns() {
-            const now = new Date();
-            const MS_PER_SECOND = 1000;
-            const MS_PER_MINUTE = MS_PER_SECOND * 60;
-            const MS_PER_HOUR = MS_PER_MINUTE * 60;
-
-            // --- HELPER FOR HOLIDAYS ---
-            function getDaysUntil(month, day) {
-                const currentYear = now.getFullYear();
-                let targetDate = new Date(currentYear, month - 1, day); // Month is 0-indexed in JS
-                
-                // If the date has passed this year, look at next year
-                if (now.getTime() > targetDate.getTime() + MS_PER_DAY) {
-                    targetDate = new Date(currentYear + 1, month - 1, day);
-                }
-                
-                const diff = targetDate.getTime() - now.getTime();
-                return Math.ceil(diff / MS_PER_DAY);
-            }
-
-            // --- NEW YEAR'S COUNTDOWN (Days, Hours, Minutes, Seconds) ---
-            const newYearCountdownEl = document.getElementById('new-year-countdown');
-
-            if (newYearCountdownEl) {
-                const currentYear = now.getFullYear();
-                let nextNewYear = new Date(`${currentYear + 1}-01-01T00:00:00`); 
-                let timeDifference = nextNewYear.getTime() - now.getTime();
-                
-                // If the target has passed, aim for the year after next
-                if (timeDifference < 0) {
-                    newYearCountdownEl.textContent = "Happy New Year!";
-                    nextNewYear = new Date(`${currentYear + 2}-01-01T00:00:00`);
-                    timeDifference = nextNewYear.getTime() - now.getTime();
-                }
-
-                // Logic to change display based on remaining time
-                const tenMinutesInMs = 10 * 60 * 1000;
-                const oneMinuteInMs = 1 * 60 * 1000;
-
-                const days = Math.floor(timeDifference / MS_PER_DAY);
-                let remaining = timeDifference % MS_PER_DAY;
-
-                const hours = Math.floor(remaining / MS_PER_HOUR);
-                remaining %= MS_PER_HOUR;
-
-                const minutes = Math.floor(remaining / MS_PER_MINUTE);
-                remaining %= MS_PER_MINUTE;
-
-                const seconds = Math.floor(remaining / MS_PER_SECOND);
-                
-                const pad = (num) => String(num).padStart(2, '0');
-
-                // Standard Styling Reset
-                newYearCountdownEl.classList.remove('text-yellow-500', 'text-red-500', 'text-6xl', 'text-8xl');
-                
-                // --- SPECIAL LOGIC FOR < 10 MINUTES ---
-                if (timeDifference < tenMinutesInMs) {
-                    newYearCountdownEl.classList.add('text-yellow-500'); // Make text yellow
-                    
-                    if (timeDifference < oneMinuteInMs) {
-                         // --- SPECIAL LOGIC FOR < 1 MINUTE ---
-                        // Remove minutes, enlarge seconds greatly
-                        newYearCountdownEl.textContent = `${seconds}`;
-                        newYearCountdownEl.classList.add('text-8xl'); // Massive text
-                        newYearCountdownEl.classList.remove('text-yellow-500'); // Optional: change color to red or keep yellow
-                        newYearCountdownEl.classList.add('text-red-500'); // Let's make it red for urgency
-                    } else {
-                        // < 10 mins but > 1 min: Remove days/hours, show MM:SS
-                        newYearCountdownEl.textContent = `${pad(minutes)}:${pad(seconds)}`;
-                        newYearCountdownEl.classList.add('text-6xl'); // Larger text
-                    }
-                } else {
-                    // Standard Display
-                    if (days >= 0) {
-                        newYearCountdownEl.textContent = 
-                            `${days}d ${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s`;
-                    }
-                }
-            }
-            // --- END NEW YEAR'S COUNTDOWN ---
-
-
-            // 1. Holiday Countdowns
-            const valentinesEl = document.getElementById('valentine-countdown');
-            if (valentinesEl) valentinesEl.textContent = getDaysUntil(2, 14); // Feb 14
-
-            const halloweenEl = document.getElementById('halloween-countdown');
-            if (halloweenEl) halloweenEl.textContent = getDaysUntil(10, 31); // Oct 31
-
-            const christmasEl = document.getElementById('christmas-countdown');
-            if (christmasEl) christmasEl.textContent = getDaysUntil(12, 25); // Dec 25
-
-            // 3. Since June 19th, 2025 Count-up (Day-only)
-            const june19th2025 = new Date('2025-06-19T00:00:00');
-            const diffSinceJune = now.getTime() - june19th2025.getTime();
-            const daysSinceJune = Math.floor(diffSinceJune / MS_PER_DAY);
-            
-            const juneEl = document.getElementById('june-countup');
-            if (juneEl) {
-                juneEl.textContent = daysSinceJune > 0 ? daysSinceJune : 0;
-            }
-        }
-
-        // --- STATS COUNTER ANIMATION ---
-        function setupStatCounters() {
-            const counters = document.querySelectorAll('.stat-counter');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && !entry.target.dataset.done) {
-                        entry.target.dataset.done = 'true';
-                        const target = parseInt(entry.target.dataset.target, 10);
-                        const suffix = entry.target.dataset.suffix || '';
-                        const duration = 1200;
-                        const startTime = performance.now();
-
-                        function tick(now) {
-                            const progress = Math.min((now - startTime) / duration, 1);
-                            entry.target.textContent = Math.floor(progress * target) + suffix;
-                            if (progress < 1) requestAnimationFrame(tick);
-                            else entry.target.textContent = target + suffix;
-                        }
-                        requestAnimationFrame(tick);
-                    }
-                });
-            }, { threshold: 0.4 });
-
-            counters.forEach(c => observer.observe(c));
-        }
-
-
-        // --- PROCESS CARD SWITCHING ---
-        function setupProcessCards() {
-            const cards = document.querySelectorAll('.process-card');
-            cards.forEach(card => {
-                card.addEventListener('click', () => {
-                    cards.forEach(c => c.classList.remove('active-step'));
-                    card.classList.add('active-step');
-                });
-            });
-        }
-
-        
-        // --- FULLSCREEN TOGGLE ---
-        function toggleFullscreen() {
-            const section = document.getElementById('countdown-section');
-            const hint = document.getElementById('exit-fullscreen-hint');
-            if(!section) return;
-            
-            section.classList.toggle('fullscreen-mode');
-            
-            // Toggle body class to help with hiding scrolling
-            if (section.classList.contains('fullscreen-mode')) {
-                document.body.classList.add('has-fullscreen-element');
-                document.body.style.overflow = 'hidden'; // Prevent background scrolling
-                hint.style.opacity = '1';
-                
-                // Add bg class for better contrast in fullscreen
-                section.classList.add('bg-white', 'dark:bg-gray-900');
-            } else {
-                document.body.classList.remove('has-fullscreen-element');
-                document.body.style.overflow = '';
-                hint.style.opacity = '0';
-                
-                section.classList.remove('bg-white', 'dark:bg-gray-900');
-            }
-        }
-
-        // --- THEME MODE LOGIC (Original code preserved) ---
-        function applyTheme(theme) {
-            const html = document.documentElement;
-            let resolvedTheme = theme;
-            if (theme === 'system') {
-                resolvedTheme = mediaQuery.matches ? 'dark' : 'light';
-            }
-            if (resolvedTheme === 'dark') {
-                html.classList.add('dark');
-            } else {
-                html.classList.remove('dark');
-            }
-        }
-        
-        function setupSystemThemeListener() {
-            mediaQuery.addEventListener('change', () => {
-                const currentPreference = localStorage.getItem(THEME_KEY) || 'system';
-                if (currentPreference === 'system') {
-                    applyTheme('system');
-                }
-            });
-        }
-        
-        // --- MOBILE MENU LOGIC (Original code preserved) ---
-        function toggleMobileMenu() {
-            if (!mobileMenu || !mobileMenuButton) return; 
-
-            const isOpen = mobileMenu.classList.contains('open');
-            mobileMenu.classList.toggle('open');
-            
-            // Toggle icons and aria-expanded state
-            if (isOpen) {
-                hamburgerIcon.classList.remove('hidden');
-                closeIcon.classList.add('hidden');
-                mobileMenuButton.setAttribute('aria-expanded', 'false');
-            } else {
-                hamburgerIcon.classList.add('hidden');
-                closeIcon.classList.remove('hidden');
-                mobileMenuButton.setAttribute('aria-expanded', 'true');
-            }
-        }
-        
-        // --- INITIALIZATION ---
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. Initialize mobile menu elements first so apply functions can find them
-            mobileMenuButton = document.getElementById('mobile-menu-button');
-            mobileMenu = document.getElementById('mobile-menu');
-            hamburgerIcon = document.getElementById('hamburger-icon');
-            closeIcon = document.getElementById('close-icon');
-
-            // 2. Initialize Theme Mode
-            const initialThemeMode = localStorage.getItem(THEME_KEY) || 'system';
-            applyTheme(initialThemeMode);
-            setupSystemThemeListener();
-
-            // 3. Initialize Menu Mode
-            const initialMenuMode = localStorage.getItem(MENU_KEY) || 'auto';
-            applyMenuMode(initialMenuMode);
-            
-            // 4. Initialize Nav Style
-            const initialNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'blur';
-            applyNavStyle(initialNavStyle);
-
-            // 5. Start Automatic Countdowns
-            updateCountdowns();
-            setInterval(updateCountdowns, 1000); 
-
-            // 6. Fullscreen Button Logic
-            const fsBtn = document.getElementById('fullscreen-btn');
-            if (fsBtn) {
-                fsBtn.addEventListener('click', toggleFullscreen);
-            }
-            // 7. Process Card Click Switching
-            setupProcessCards();
-            // 8. Stats Counter Animation
-            setupStatCounters();
-            // Allow Exit via Escape key
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    const section = document.getElementById('countdown-section');
-                    if (section && section.classList.contains('fullscreen-mode')) {
-                        toggleFullscreen();
-                    }
-                }
-            });
-
-            // --- Cookie Consent Logic ---
-            const banner = document.getElementById('cookie-banner');
-            const acceptButton = document.getElementById('accept-cookies');
-            const accepted = localStorage.getItem(COOKIE_KEY);
-
-            if (accepted === 'true') {
-                if (banner) { banner.style.display = 'none'; }
-            } else {
-                if (banner) { banner.style.display = 'block'; }
-                if (acceptButton) {
-                    acceptButton.addEventListener('click', () => {
-                        localStorage.setItem(COOKIE_KEY, 'true');
-                        if (banner) {
-                            banner.classList.add('fade-out');
-                            setTimeout(() => { banner.style.display = 'none'; }, 500); 
-                        }
-                    });
-                }
-            }
-
-            // --- Dropdown Toggle Logic (More Menu) ---
-            const dropdown = document.getElementById('more-dropdown');
-            const menu = document.getElementById('more-menu-items');
-            
-            const hideMenu = () => {
-                menu.classList.remove('visible');
-                dropdown.querySelector('button').setAttribute('aria-expanded', 'false');
-            };
-
-            // Hover Listeners (for desktop)
-            dropdown.addEventListener('mouseenter', () => {
-                 if (window.innerWidth >= 768) menu.classList.add('visible');
-            });
-            dropdown.addEventListener('mouseleave', () => {
-                 if (window.innerWidth >= 768) hideMenu();
-            });
-
-            // Optional: Close menu when clicking outside of it
-            document.addEventListener('click', (event) => {
-                if (window.innerWidth >= 768 && !dropdown.contains(event.target) && menu.classList.contains('visible')) {
-                    hideMenu();
-                }
-            });
-
-            // --- Mobile Menu Listeners ---
-            if (mobileMenuButton) {
-                mobileMenuButton.addEventListener('click', toggleMobileMenu);
-
-                // Close mobile menu when a link inside is clicked
-                if (mobileMenu) {
-                    mobileMenu.querySelectorAll('a').forEach(link => {
-                        link.addEventListener('click', () => {
-                            if (mobileMenu.classList.contains('open')) {
-                                toggleMobileMenu();
-                            }
-                        });
-                    });
-                }
-            }
-        });
+        const MS_PER_DAY = 1000 * 60 * 60 * 24;
     </script>
 </body>
 </html>
