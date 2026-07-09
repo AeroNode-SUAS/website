@@ -271,7 +271,8 @@
 
     <main class="relative w-full h-[90vh] flex items-center justify-center overflow-hidden">
         <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
-            <source src="dron eflihgt.mp4" type="video/mp4">
+            <!-- Media file updated to be located in files/ folder -->
+            <source src="files/dron eflihgt.mp4" type="video/mp4">
         </video>
 
         <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80"></div>
@@ -302,7 +303,8 @@
         <div class="grid md:grid-cols-2 gap-12 items-center">
             <div class="relative">
                 <div class="absolute -top-3 -left-3 w-16 h-16 border-t-4 border-l-4 border-primary dark:border-primary-dark"></div>
-                <img src="teamphoto.jpg" alt="Our team" class="w-full rounded-lg shadow-xl relative z-10" onerror="this.onerror=null; this.src='https://placehold.co/600x400/4f46e5/ffffff?text=Team+Photo';">
+                <!-- Media file updated to be located in files/ folder -->
+                <img src="files/teamphoto.jpg" alt="Our team" class="w-full rounded-lg shadow-xl relative z-10" onerror="this.onerror=null; this.src='https://placehold.co/600x400/4f46e5/ffffff?text=Team+Photo';">
             </div>
 
             <div>
@@ -398,9 +400,10 @@
             </div>
 
             <div class="grid grid-cols-2 grid-rows-2 gap-3 h-80 md:h-96">
-                <img src="groupphoto3.jpg" alt="AeroNode drone photo 1" class="col-span-1 row-span-2 w-full h-full object-cover rounded-2xl shadow-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x800/4f46e5/ffffff?text=Photo+1';">
-                <img src="groupphoto4.jpg" alt="AeroNode drone photo 2" class="w-full h-full object-cover rounded-2xl shadow-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x400/a5b4fc/ffffff?text=Photo+2';">
-                <img src="groupphoto5.jpg" alt="AeroNode drone photo 3" class="w-full h-full object-cover rounded-2xl shadow-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x400/4f46e5/ffffff?text=Photo+3';">
+                <!-- Media files updated to be located in files/ folder -->
+                <img src="files/groupphoto3.jpg" alt="AeroNode drone photo 1" class="col-span-1 row-span-2 w-full h-full object-cover rounded-2xl shadow-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x800/4f46e5/ffffff?text=Photo+1';">
+                <img src="files/groupphoto4.jpg" alt="AeroNode drone photo 2" class="w-full h-full object-cover rounded-2xl shadow-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x400/a5b4fc/ffffff?text=Photo+2';">
+                <img src="files/groupphoto5.jpg" alt="AeroNode drone photo 3" class="w-full h-full object-cover rounded-2xl shadow-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x400/4f46e5/ffffff?text=Photo+3';">
             </div>
         </div>
 
@@ -555,6 +558,7 @@
             }
         }
 
+        // Apply visual configuration for Menu behavior
         function applyMenuMode(mode) {
             const desktopNav = document.getElementById('desktop-nav');
             const mobileToggle = document.getElementById('mobile-toggle');
@@ -593,7 +597,7 @@
                 mobileMenuPanel.classList.remove('md:hidden');
             }
 
-            // Re-apply navigation style to override the class wipes
+            // Re-apply navigation style to override class wipes
             const currentNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'blur';
             applyNavStyle(currentNavStyle);
         }
