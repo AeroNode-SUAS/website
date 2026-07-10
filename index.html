@@ -429,9 +429,52 @@
         </div>
     </section>
 
-    <footer class="w-full bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-center text-sm py-4 border-t dark:border-gray-700 mt-auto">
-        <p>Last Updated: 04/03/2026</p>
-    </footer>
+<!-- Site Footer -->
+<footer class="relative w-full mt-auto overflow-hidden">
+
+    <!-- Blurred background image -->
+    <div class="absolute inset-0 -z-10">
+        <img src="Group_Microsoft (1).jpeg" alt="" class="w-full h-full object-cover scale-110 blur-sm" onerror="this.onerror=null; this.src='https://placehold.co/1600x800/1e1b4b/1e1b4b';">
+        <div class="absolute inset-0 bg-black/60"></div>
+    </div>
+
+    <div class="relative z-10 max-w-6xl mx-auto px-4 py-4 text-center">
+
+        <!-- Wordmark -->
+        <p class="text-5xl md:text-6xl font-extrabold text-white tracking-tight mb-14">
+            AERO<span class="text-gradient">NODE</span>
+        </p>
+
+        <!-- Nav Links -->
+        <nav class="flex flex-wrap justify-center gap-x-12 gap-y-4 mb-16 text-lg md:text-xl text-gray-300">
+            <a href="index.html" class="hover:text-white transition">Home</a>
+            <a href="about.html" class="hover:text-white transition">About</a>
+            <a href="blog.html" class="hover:text-white transition">Blog</a>
+            <a href="specs.html" class="hover:text-white transition">Aircraft Info</a>
+            <a href="contact.html" class="hover:text-white transition">Contact</a>
+        </nav>
+
+        <!-- Sponsor Logos -->
+<div class="flex flex-wrap justify-center items-center gap-8 mb-16">
+    <a href="https://www.apple.com/" target="_blank" class="bg-white rounded-xl p-4 w-24 h-24 flex items-center justify-center hover:scale-105 transition">
+        <img src="appleLogo.png" alt="Apple" class="max-w-full max-h-full object-contain">
+    </a>
+    <a href="https://www.microsoft.com" target="_blank" class="bg-white rounded-xl p-4 w-24 h-24 flex items-center justify-center hover:scale-105 transition">
+        <img src="microsoftLogo.png" alt="Microsoft" class="max-w-full max-h-full object-contain">
+    </a>
+    <a href="https://www.societyforscience.org/" target="_blank" class="bg-white rounded-xl p-4 w-24 h-24 flex items-center justify-center hover:scale-105 transition">
+        <img src="societyforscienceLogo.png" alt="Society for Science" class="max-w-full max-h-full object-contain">
+    </a>
+    <a href="https://www.stembridgecenter.org/" target="_blank" class="bg-white rounded-xl p-4 w-24 h-24 flex items-center justify-center hover:scale-105 transition">
+        <img src="stembridgefoundationLogo.png" alt="STEM Bridge" class="max-w-full max-h-full object-contain">
+    </a>
+</div>
+
+        <p class="text-base text-gray-400 tracking-wide">
+            2026 AERONODE &nbsp;|&nbsp; ALL RIGHTS RESERVED
+        </p>
+    </div>
+</footer>
 
     <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 p-4 md:p-6 bg-gray-800/40 backdrop-blur-md text-white shadow-2xl transition-all duration-500 transform translate-y-0 z-50 opacity-100">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
@@ -461,13 +504,175 @@
         const db = getFirestore(app);
     </script>
 
-    <script>
-        // --- CONSTANTS ---
-        const MENU_KEY = 'app-menu-mode';
-        const THEME_KEY = 'app-theme-mode';
-        const NAV_STYLE_KEY = 'app-nav-style'; 
-        const COOKIE_KEY = 'cookiesAccepted';
-        const MS_PER_DAY = 1000 * 60 * 60 * 24;
-    </script>
+ <script>
+    // --- CONSTANTS ---
+    const THEME_KEY = 'app-theme-mode';
+    const COOKIE_KEY = 'cookiesAccepted';
+
+    // --- DOM Elements ---
+    let mobileMenuButton, mobileMenu, hamburgerIcon, closeIcon;
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    // --- THEME MODE LOGIC ---
+    function applyTheme(theme) {
+        const html = document.documentElement;
+        let resolvedTheme = theme;
+        if (theme === 'system') {
+            resolvedTheme = mediaQuery.matches ? 'dark' : 'light';
+        }
+        if (resolvedTheme === 'dark') {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+    }
+
+    function setupSystemThemeListener() {
+        mediaQuery.addEventListener('change', () => {
+            const currentPreference = localStorage.getItem(THEME_KEY) || 'system';
+            if (currentPreference === 'system') applyTheme('system');
+        });
+    }
+
+    // --- MOBILE MENU LOGIC ---
+    function toggleMobileMenu() {
+        if (!mobileMenu || !mobileMenuButton) return;
+        const isOpen = mobileMenu.classList.contains('open');
+        mobileMenu.classList.toggle('open');
+
+        if (isOpen) {
+            hamburgerIcon.classList.remove('hidden');
+            closeIcon.classList.add('hidden');
+            mobileMenuButton.setAttribute('aria-expanded', 'false');
+        } else {
+            hamburgerIcon.classList.add('hidden');
+            closeIcon.classList.remove('hidden');
+            mobileMenuButton.setAttribute('aria-expanded', 'true');
+        }
+    }
+
+    // --- STATS COUNTER ANIMATION ---
+    function setupStatCounters() {
+        const counters = document.querySelectorAll('.stat-counter');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.dataset.done) {
+                    entry.target.dataset.done = 'true';
+                    const target = parseInt(entry.target.dataset.target, 10);
+                    const suffix = entry.target.dataset.suffix || '';
+                    const duration = 1200;
+                    const startTime = performance.now();
+
+                    function tick(now) {
+                        const progress = Math.min((now - startTime) / duration, 1);
+                        entry.target.textContent = Math.floor(progress * target) + suffix;
+                        if (progress < 1) requestAnimationFrame(tick);
+                        else entry.target.textContent = target + suffix;
+                    }
+                    requestAnimationFrame(tick);
+                }
+            });
+        }, { threshold: 0.4 });
+
+        counters.forEach(c => observer.observe(c));
+    }
+
+    // --- PROCESS CARD SWITCHING ---
+    function setupProcessCards() {
+        const cards = document.querySelectorAll('.process-card');
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                cards.forEach(c => c.classList.remove('active-step'));
+                card.classList.add('active-step');
+            });
+        });
+    }
+
+    // --- SCROLL-TRIGGERED FADE-IN ANIMATIONS ---
+    function setupScrollAnimations() {
+        const elements = document.querySelectorAll('.animate-on-scroll');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        elements.forEach(el => observer.observe(el));
+    }
+
+    // --- INITIALIZATION ---
+    document.addEventListener('DOMContentLoaded', () => {
+        mobileMenuButton = document.getElementById('mobile-menu-button');
+        mobileMenu = document.getElementById('mobile-menu');
+        hamburgerIcon = document.getElementById('hamburger-icon');
+        closeIcon = document.getElementById('close-icon');
+
+        // 1. Theme
+        const initialThemeMode = localStorage.getItem(THEME_KEY) || 'system';
+        applyTheme(initialThemeMode);
+        setupSystemThemeListener();
+
+        // 2. Stats counters
+        setupStatCounters();
+
+        // 3. Process card switching
+        setupProcessCards();
+
+        // 4. Scroll fade-in animations
+        setupScrollAnimations();
+
+        // --- Cookie Consent Logic ---
+        const banner = document.getElementById('cookie-banner');
+        const acceptButton = document.getElementById('accept-cookies');
+        const accepted = localStorage.getItem(COOKIE_KEY);
+
+        if (accepted === 'true' && banner) {
+            banner.style.display = 'none';
+        } else if (banner && acceptButton) {
+            banner.style.display = 'block';
+            acceptButton.addEventListener('click', () => {
+                localStorage.setItem(COOKIE_KEY, 'true');
+                banner.classList.add('fade-out');
+                setTimeout(() => { banner.style.display = 'none'; }, 500);
+            });
+        }
+
+        // --- Dropdown Toggle Logic ---
+        const dropdown = document.getElementById('more-dropdown');
+        const menu = document.getElementById('more-menu-items');
+        const hideMenu = () => {
+            menu.classList.remove('visible');
+            dropdown.querySelector('button').setAttribute('aria-expanded', 'false');
+        };
+
+        if (dropdown && menu) {
+            dropdown.addEventListener('mouseenter', () => {
+                if (window.innerWidth >= 768) menu.classList.add('visible');
+            });
+            dropdown.addEventListener('mouseleave', () => {
+                if (window.innerWidth >= 768) hideMenu();
+            });
+            document.addEventListener('click', (event) => {
+                if (window.innerWidth >= 768 && !dropdown.contains(event.target) && menu.classList.contains('visible')) {
+                    hideMenu();
+                }
+            });
+        }
+
+        // --- Mobile Menu Listeners ---
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', toggleMobileMenu);
+            if (mobileMenu) {
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (mobileMenu.classList.contains('open')) toggleMobileMenu();
+                    });
+                });
+            }
+        }
+    });
+</script>
 </body>
 </html>

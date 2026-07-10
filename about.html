@@ -53,6 +53,20 @@
         #mobile-menu { transform: translateX(100%); transition: transform 0.3s ease-out; pointer-events: none; }
         #mobile-menu.open { transform: translateX(0); pointer-events: auto; }
 
+        #member-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(6px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease-out;
+        }
         #member-modal-backdrop.open {
             opacity: 1;
             pointer-events: auto;
@@ -62,6 +76,83 @@
         }
         #member-modal-card {
             position: relative;
+        }
+
+        /* Scroll fade-in animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #4f46e5, #818cf8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .glow-primary {
+            box-shadow: 0 0 40px -10px rgba(79, 70, 229, 0.35);
+        }
+        .dark .glow-primary {
+            box-shadow: 0 0 40px -10px rgba(165, 180, 252, 0.25);
+        }
+
+        .team-filter-btn {
+            background: #e5e7eb;
+            color: #374151;
+            transition: all 0.2s ease;
+        }
+        .dark .team-filter-btn {
+            background: #374151;
+            color: #d1d5db;
+        }
+        .team-filter-btn.active {
+            background: #4f46e5;
+            color: white;
+        }
+        .dark .team-filter-btn.active {
+            background: #a5b4fc;
+            color: #1e1b4b;
+        }
+
+        .team-card {
+            border-top: 4px solid transparent;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .team-card[data-team="hardware"] { border-top-color: #4f46e5; }
+        .team-card[data-team="software"] { border-top-color: #10b981; }
+        .team-card[data-team="outreach"] { border-top-color: #f59e0b; }
+        .team-card .role-hardware { color: #4f46e5; }
+        .dark .team-card .role-hardware { color: #a5b4fc; }
+        .team-card .role-software { color: #10b981; }
+        .dark .team-card .role-software { color: #6ee7b7; }
+        .team-card .role-outreach { color: #f59e0b; }
+        .dark .team-card .role-outreach { color: #fcd34d; }
+
+        .team-card:hover .view-hint {
+            opacity: 1;
+        }
+
+    
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .faq-item.open .faq-answer {
+            max-height: 400px;
+        }
+        .faq-item.open .faq-chevron {
+            transform: rotate(180deg);
+        }
+        .faq-chevron {
+            transition: transform 0.25s ease;
         }
     </style>
 </head>
@@ -139,6 +230,17 @@
 
     <!-- MAIN CONTENT -->
     <main class="flex-grow w-full max-w-5xl mx-auto px-4 py-12 md:px-8">
+    
+    <!-- Our Team Hero Banner -->
+    <div class="mb-12 animate-on-scroll">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-gray-100 mb-6">
+            Our <span class="text-gradient">Team</span>
+        </h1>
+        <div class="relative rounded-2xl overflow-hidden shadow-2xl glow-primary">
+            <img src="Group_Microsoft (1).jpeg" alt="AeroNode team" class="w-full h-64 md:h-96 object-cover" onerror="this.onerror=null; this.src='https://placehold.co/1200x500/4f46e5/ffffff?text=Team+Photo';">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+        </div>
+    </div>
         
         <!-- About Section -->
         <div class="w-full bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-8 md:p-12 mb-10 transition duration-300 ease-in-out dark:shadow-2xl">
@@ -174,60 +276,144 @@
         </div>
 
         <!-- Team Members Section -->
-<div class="w-full">
-    <h2 class="text-3xl font-extrabold text-gray-900 dark:text-gray-100 mb-8 pl-2 border-l-4 border-primary dark:border-primary-dark">
-        Meet the Team
-    </h2>
+        <div class="w-full animate-on-scroll">
+            <h2 class="text-3xl font-extrabold text-gray-900 dark:text-gray-100 mb-8 pl-2 border-l-4 border-primary dark:border-primary-dark">
+                Meet the Team
+            </h2>
 
-    <!-- Hardware Subteam -->
-    <h3 class="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4">Hardware</h3>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+            <!-- Filter Tabs -->
+            <div class="flex flex-wrap gap-2 mb-10">
+                <button class="team-filter-btn active px-4 py-2 rounded-full text-sm font-semibold" data-filter="all">All</button>
+                <button class="team-filter-btn px-4 py-2 rounded-full text-sm font-semibold" data-filter="hardware">Hardware</button>
+                <button class="team-filter-btn px-4 py-2 rounded-full text-sm font-semibold" data-filter="software">Software</button>
+                <button class="team-filter-btn px-4 py-2 rounded-full text-sm font-semibold" data-filter="outreach">Outreach</button>
+            </div>
 
-        <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="caden">
-            <img src="Caden Y.jpg" alt="Caden Y." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
-            <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Caden Y.</h3>
-            <p class="text-sm text-primary dark:text-primary-dark font-medium">Hardware</p>
+            <!-- Hardware Subteam -->
+            <div class="team-group mb-14" data-team="hardware">
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">Hardware</h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-8 max-w-3xl">
+                    The Hardware subteam is responsible for the mechanical design, fabrication, and structural integrity of our aircraft. This includes airframe design, material selection, propulsion systems, and payload delivery mechanisms. Members gain hands-on experience with CAD design, carbon fiber layup, 3D printing, and precision machining — replace this paragraph with a full write-up of your team's design philosophy, tools used, and key engineering decisions for the competition documentation.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="caden" data-team="hardware">
+                        <img src="Caden Y.jpg" alt="Caden Y." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Caden Y.</h3>
+                        <p class="text-sm role-hardware font-medium">Hardware</p>
+                        <p class="view-hint text-xs text-gray-400 dark:text-gray-500 mt-2 opacity-0 transition-opacity duration-300">Click to view profile →</p>
+                    </div>
+
+                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="kevin" data-team="hardware">
+                        <img src="Kevin Z..JPG" alt="Kevin Z." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Kevin Z.</h3>
+                        <p class="text-sm role-hardware font-medium">Hardware</p>
+                        <p class="view-hint text-xs text-gray-400 dark:text-gray-500 mt-2 opacity-0 transition-opacity duration-300">Click to view profile →</p>
+                    </div>
+
+                    <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-2xl p-6 flex flex-col items-center justify-center text-center text-gray-400 dark:text-gray-500">
+                        <div class="w-24 h-24 rounded-full border-2 border-dashed border-gray-300 dark:border-gray-600 flex items-center justify-center mb-4 text-3xl">+</div>
+                        <p class="font-semibold">Open Seat</p>
+                        <p class="text-xs mt-1">Interested in hardware? <a href="contact.html" class="text-primary dark:text-primary-dark hover:underline">Reach out</a>.</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Software Subteam -->
+            <div class="team-group mb-14" data-team="software">
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">Software</h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-8 max-w-3xl">
+                    The Software subteam develops the autonomous flight logic, computer vision targeting systems, and ground control station software that powers our aircraft's mission capabilities. This includes GPS waypoint navigation, obstacle detection, target classification, and payload deployment logic — replace this paragraph with detail on your software architecture, languages/frameworks used, testing methodology, and notable technical challenges solved this season.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="rick" data-team="software">
+                        <img src="Rick Z..JPG" alt="Rick Z." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Rick Z.</h3>
+                        <p class="text-sm role-software font-medium">Software</p>
+                        <p class="view-hint text-xs text-gray-400 dark:text-gray-500 mt-2 opacity-0 transition-opacity duration-300">Click to view profile →</p>
+                    </div>
+
+                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="lauren" data-team="software">
+                        <img src="R.jpg" alt="Lauren O." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Lauren O.</h3>
+                        <p class="text-sm role-software font-medium">Software</p>
+                        <p class="view-hint text-xs text-gray-400 dark:text-gray-500 mt-2 opacity-0 transition-opacity duration-300">Click to view profile →</p>
+                    </div>
+
+                    <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-2xl p-6 flex flex-col items-center justify-center text-center text-gray-400 dark:text-gray-500">
+                        <div class="w-24 h-24 rounded-full border-2 border-dashed border-gray-300 dark:border-gray-600 flex items-center justify-center mb-4 text-3xl">+</div>
+                        <p class="font-semibold">Open Seat</p>
+                        <p class="text-xs mt-1">Interested in software? <a href="contact.html" class="text-primary dark:text-primary-dark hover:underline">Reach out</a>.</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Outreach Subteam -->
+            <div class="team-group" data-team="outreach">
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">Outreach</h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-8 max-w-3xl">
+                    The Outreach subteam manages sponsorships, community engagement, branding, and communications for AeroNode. This includes securing funding, building our web presence, and representing the team at STEM events — replace this paragraph with details on sponsorship outreach strategy, community partnerships, and any events or presentations your team has participated in this season.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="angela" data-team="outreach">
+                        <img src="Angela O._2.jpg" alt="Angela O." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Angela O.</h3>
+                        <p class="text-sm role-outreach font-medium">Outreach</p>
+                        <p class="view-hint text-xs text-gray-400 dark:text-gray-500 mt-2 opacity-0 transition-opacity duration-300">Click to view profile →</p>
+                    </div>
+                    <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-2xl p-6 flex flex-col items-center justify-center text-center text-gray-400 dark:text-gray-500">
+                        <div class="w-24 h-24 rounded-full border-2 border-dashed border-gray-300 dark:border-gray-600 flex items-center justify-center mb-4 text-3xl">+</div>
+                        <p class="font-semibold">Open Seat</p>
+                        <p class="text-xs mt-1">Interested in outreach? <a href="contact.html" class="text-primary dark:text-primary-dark hover:underline">Reach out</a>.</p>
+                    </div>
+
+                </div>
+            </div>
         </div>
 
-        <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="kevin">
-            <img src="Kevin Z..JPG" alt="Kevin Z." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
-            <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Kevin Z.</h3>
-            <p class="text-sm text-primary dark:text-primary-dark font-medium">Hardware</p>
+        <!-- FAQ Section -->
+        <div class="w-full bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-8 md:p-12 mt-16 mb-16">
+            <h2 class="text-3xl font-extrabold text-gray-900 dark:text-gray-100 mb-8">Frequently Asked Questions</h2>
+            <div class="space-y-3">
+
+                <div class="faq-item border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
+                    <button class="faq-question w-full flex items-center justify-between p-4 text-left font-semibold">
+                        Who can join AeroNode?
+                        <svg class="faq-chevron w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-answer px-4">
+                        <p class="pb-4 text-gray-600 dark:text-gray-400">Anyone interested in drone technology and innovation.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
+                    <button class="faq-question w-full flex items-center justify-between p-4 text-left font-semibold">
+                        How often do you meet?
+                        <svg class="faq-chevron w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-answer px-4">
+                        <p class="pb-4 text-gray-600 dark:text-gray-400">We meet weekly to discuss projects and collaborate.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
+                    <button class="faq-question w-full flex items-center justify-between p-4 text-left font-semibold">
+                        Do I need prior drone or coding experience?
+                        <svg class="faq-chevron w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-answer px-4">
+                        <p class="pb-4 text-gray-600 dark:text-gray-400">No, we welcome beginners and provide training and support.</p>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
-    </div>
-
-    <!-- Software Subteam -->
-    <h3 class="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4">Software</h3>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-
-        <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="rick">
-            <img src="Rick Z..JPG" alt="Rick Z." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
-            <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Rick Z.</h3>
-            <p class="text-sm text-primary dark:text-primary-dark font-medium">Software</p>
-        </div>
-
-        <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="lauren">
-            <img src="R.jpg" alt="Lauren O." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
-            <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Lauren O.</h3>
-            <p class="text-sm text-primary dark:text-primary-dark font-medium">Software</p>
-        </div>
-
-    </div>
-
-    <!-- Outreach Subteam -->
-    <h3 class="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4">Outreach</h3>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-        <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="angela">
-            <img src="Angela O._2.jpg" alt="Angela O." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
-            <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Angela O.</h3>
-            <p class="text-sm text-primary dark:text-primary-dark font-medium">Outreach</p>
-        </div>
-
-    </div>
-</div>
-        </div>
+</parameter>
 
         <!-- Sponsors Section -->
         <div class="w-full mt-16">
@@ -273,25 +459,66 @@
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="w-full bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-center text-sm py-6 border-t dark:border-gray-700 mt-auto">
-        <p>Last Updated: 04/17/2026</p>
+<!-- Site Footer -->
+<footer class="relative w-full mt-auto overflow-hidden">
+
+    <!-- Blurred background image -->
+    <div class="absolute inset-0 -z-10">
+        <img src="Group_Microsoft (1).jpeg" alt="" class="w-full h-full object-cover scale-110 blur-sm" onerror="this.onerror=null; this.src='https://placehold.co/1600x800/1e1b4b/1e1b4b';">
+        <div class="absolute inset-0 bg-black/60"></div>
+    </div>
+
+    <div class="relative z-10 max-w-6xl mx-auto px-4 py-4 text-center">
+
+        <!-- Wordmark -->
+        <p class="text-5xl md:text-6xl font-extrabold text-white tracking-tight mb-14">
+            AERO<span class="text-gradient">NODE</span>
+        </p>
+
+        <!-- Nav Links -->
+        <nav class="flex flex-wrap justify-center gap-x-12 gap-y-4 mb-16 text-lg md:text-xl text-gray-300">
+            <a href="index.html" class="hover:text-white transition">Home</a>
+            <a href="about.html" class="hover:text-white transition">About</a>
+            <a href="blog.html" class="hover:text-white transition">Blog</a>
+            <a href="specs.html" class="hover:text-white transition">Aircraft Info</a>
+            <a href="contact.html" class="hover:text-white transition">Contact</a>
+        </nav>
+
+        <!-- Sponsor Logos -->
+<div class="flex flex-wrap justify-center items-center gap-8 mb-16">
+    <a href="https://www.apple.com/" target="_blank" class="bg-white rounded-xl p-4 w-24 h-24 flex items-center justify-center hover:scale-105 transition">
+        <img src="appleLogo.png" alt="Apple" class="max-w-full max-h-full object-contain">
+    </a>
+    <a href="https://www.microsoft.com" target="_blank" class="bg-white rounded-xl p-4 w-24 h-24 flex items-center justify-center hover:scale-105 transition">
+        <img src="microsoftLogo.png" alt="Microsoft" class="max-w-full max-h-full object-contain">
+    </a>
+    <a href="https://www.societyforscience.org/" target="_blank" class="bg-white rounded-xl p-4 w-24 h-24 flex items-center justify-center hover:scale-105 transition">
+        <img src="societyforscienceLogo.png" alt="Society for Science" class="max-w-full max-h-full object-contain">
+    </a>
+    <a href="https://www.stembridgecenter.org/" target="_blank" class="bg-white rounded-xl p-4 w-24 h-24 flex items-center justify-center hover:scale-105 transition">
+        <img src="stembridgefoundationLogo.png" alt="STEM Bridge" class="max-w-full max-h-full object-contain">
+    </a>
+</div>
+
+        <p class="text-base text-gray-400 tracking-wide">
+            2026 AERONODE &nbsp;|&nbsp; ALL RIGHTS RESERVED
+        </p>
+    </div>
+</footer>
         
     </footer>
 
-    <!-- Team Member Detail Modal -->
-    <div id="member-modal-backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="min-h-screen flex items-center justify-center p-4">
-            <div id="member-modal-card" class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-8 text-center transform scale-75 transition-transform duration-300 ease-out">
-                <button id="member-modal-close" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-2xl leading-none">&times;</button>
+<div id="member-modal-backdrop">
+    <div id="member-modal-card" class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-lg w-full p-8 text-center transform scale-75 transition-transform duration-300 ease-out max-h-[85vh] overflow-y-auto">
+        <button id="member-modal-close" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-2xl leading-none">&times;</button>
 
-                <img id="member-modal-photo" src="" alt="" class="w-48 h-48 rounded-full object-cover mx-auto mb-6 shadow-md">
-                <h3 id="member-modal-name" class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1"></h3>
-                <p id="member-modal-role" class="text-sm text-primary dark:text-primary-dark font-semibold mb-4"></p>
-                <p id="member-modal-bio" class="text-gray-600 dark:text-gray-400 leading-relaxed"></p>
-            </div>
-        </div>
+        <img id="member-modal-photo" src="" alt="" class="w-40 h-40 rounded-full object-cover mx-auto mb-6 shadow-md">
+        <h3 id="member-modal-name" class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1"></h3>
+        <p id="member-modal-role" class="text-sm text-primary dark:text-primary-dark font-semibold mb-1"></p>
+        <p id="member-modal-meta" class="text-sm text-gray-400 dark:text-gray-500 mb-6"></p>
+        <p id="member-modal-bio" class="text-gray-600 dark:text-gray-400 leading-relaxed text-left"></p>
     </div>
+</div>
 
     <!-- Cookie Banner -->
     <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 p-4 md:p-6 bg-gray-800/40 backdrop-blur-md text-white shadow-2xl transition-all duration-500 transform translate-y-0 z-50 opacity-100">
@@ -316,35 +543,40 @@
             caden: {
                 name: "Caden Y.",
                 role: "Hardware",
+                meta: "Year: — · Major: —",
                 photo: "Caden Y.jpg",
-                bio: "Works on the airframe design, machining, and mechanical integration of the aircraft."
+                bio: "Works on the airframe design, machining, and mechanical integration of the aircraft. Replace this with a full write-up: what specifically this person designed or built, key decisions they made, tools/software used, and any personal highlights from the season — competition judges love detail here."
             },
             kevin: {
                 name: "Kevin Z.",
                 role: "Hardware",
+                meta: "Year: — · Major: —",
                 photo: "Kevin Z..JPG",
-                bio: "Focuses on the power system, ESCs, and structural assembly of the drone."
+                bio: "Focuses on the power system, ESCs, and structural assembly of the drone. Replace with full detail on responsibilities, technical contributions, and any challenges overcome."
             },
             rick: {
                 name: "Rick Z.",
                 role: "Software",
+                meta: "Year: — · Major: —",
                 photo: "Rick Z..JPG",
-                bio: "Develops the autonomous flight logic, computer vision targeting, and the ground control station backend."
+                bio: "Develops the autonomous flight logic, computer vision targeting, and the ground control station backend. Replace with detail on specific algorithms, frameworks, and technical accomplishments."
             },
             lauren: {
                 name: "Lauren O.",
                 role: "Software",
+                meta: "Year: — · Major: —",
                 photo: "R.jpg",
-                bio: "Works on the flight software stack and mission planning algorithms."
+                bio: "Works on the flight software stack and mission planning algorithms. Replace with a fuller write-up of contributions and technical depth."
             },
             angela: {
                 name: "Angela O.",
                 role: "Outreach",
+                meta: "Year: — · Major: —",
                 photo: "Angela O._2.jpg",
-                bio: "Branding, website, and graphic design."
+                bio: "Branding, website, and graphic design. Replace with detail on sponsorship work, outreach events, and communications strategy."
             }
         };
-        
+                
         // --- DOM Elements ---
         let mobileMenuButton, mobileMenu, hamburgerIcon, closeIcon;
         const navElement = document.getElementById('main-nav');
@@ -449,7 +681,6 @@
                 mobileMenuButton.setAttribute('aria-expanded', 'true');
             }
         }
-        // --- TEAM MEMBER MODAL LOGIC ---
         function openMemberModal(id) {
             const data = MEMBER_DATA[id];
             if (!data) return;
@@ -458,6 +689,7 @@
             document.getElementById('member-modal-photo').alt = data.name;
             document.getElementById('member-modal-name').textContent = data.name;
             document.getElementById('member-modal-role').textContent = data.role;
+            document.getElementById('member-modal-meta').textContent = data.meta;
             document.getElementById('member-modal-bio').textContent = data.bio;
 
             document.getElementById('member-modal-backdrop').classList.add('open');
@@ -465,6 +697,44 @@
 
         function closeMemberModal() {
             document.getElementById('member-modal-backdrop').classList.remove('open');
+        }
+
+        function setupTeamFilters() {
+            const buttons = document.querySelectorAll('.team-filter-btn');
+            const groups = document.querySelectorAll('.team-group');
+
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    buttons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const filter = btn.dataset.filter;
+                    groups.forEach(group => {
+                        group.style.display = (filter === 'all' || group.dataset.team === filter) ? '' : 'none';
+                    });
+                });
+            });
+        }
+
+        function setupFAQ() {
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const button = item.querySelector('.faq-question');
+                button.addEventListener('click', () => {
+                    const wasOpen = item.classList.contains('open');
+                    document.querySelectorAll('.faq-item.open').forEach(other => other.classList.remove('open'));
+                    if (!wasOpen) item.classList.add('open');
+                });
+            });
+        }
+
+        function setupScrollAnimations() {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('is-visible');
+                });
+            }, { threshold: 0.15 });
+            elements.forEach(el => observer.observe(el));
         }
         
         // --- INITIALIZATION ---
@@ -483,6 +753,13 @@
             
             const initialNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'blur';
             applyNavStyle(initialNavStyle);
+
+            setupTeamFilters();
+            setupScrollAnimations();    
+
+            setupTeamFilters();
+            setupScrollAnimations();
+            setupFAQ();
 
             // Cookie Consent Logic
             const banner = document.getElementById('cookie-banner');
