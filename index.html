@@ -12,6 +12,17 @@
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage | AeroNode</title>
+    
+    <!-- Script to prevent FOUC (Flash of Unstyled Content) by immediately applying the saved theme -->
+    <script>
+        const THEME_KEY_FOUC = 'app-theme-mode';
+        const initialTheme = localStorage.getItem(THEME_KEY_FOUC) || 'system';
+        const mqFOUC = window.matchMedia('(prefers-color-scheme: dark)');
+        if (initialTheme === 'dark' || (initialTheme === 'system' && mqFOUC.matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -242,7 +253,7 @@
         </div>
     </nav>
     
-    <div id="mobile-menu" class="fixed inset-0 top-16 w-full h-full md:hidden z-40 bg-white dark:bg-gray-900">
+    <div id="mobile-menu" class="fixed inset-0 top-16 w-full h-full md:hidden z-40 bg-white/30 backdrop-blur-md dark:bg-gray-900/40">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col">
             <a href="#" class="text-lg block px-3 py-2 rounded-md text-primary dark:text-primary-dark bg-indigo-50 dark:bg-indigo-900 font-semibold transition duration-150">Home</a>
             <a href="about.html" class="text-lg font-medium block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">About</a>
@@ -260,7 +271,8 @@
 
     <main class="relative w-full h-[90vh] flex items-center justify-center overflow-hidden">
         <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
-            <source src="dron eflihgt.mp4" type="video/mp4">
+            <!-- Media file updated to be located in files/ folder -->
+            <source src="files/dron eflihgt.mp4" type="video/mp4">
         </video>
 
         <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80"></div>
@@ -291,7 +303,8 @@
         <div class="grid md:grid-cols-2 gap-12 items-center">
             <div class="relative">
                 <div class="absolute -top-3 -left-3 w-16 h-16 border-t-4 border-l-4 border-primary dark:border-primary-dark"></div>
-                <img src="teamphoto.jpg" alt="Our team" class="w-full rounded-lg shadow-xl relative z-10" onerror="this.onerror=null; this.src='https://placehold.co/600x400/4f46e5/ffffff?text=Team+Photo';">
+                <!-- Media file updated to be located in files/ folder -->
+                <img src="files/teamphoto.jpg" alt="Our team" class="w-full rounded-lg shadow-xl relative z-10" onerror="this.onerror=null; this.src='https://placehold.co/600x400/4f46e5/ffffff?text=Team+Photo';">
             </div>
 
             <div>
@@ -387,9 +400,10 @@
             </div>
 
             <div class="grid grid-cols-2 grid-rows-2 gap-3 h-80 md:h-96">
-                <img src="groupphoto3.jpg" alt="AeroNode drone photo 1" class="col-span-1 row-span-2 w-full h-full object-cover rounded-2xl shadow-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x800/4f46e5/ffffff?text=Photo+1';">
-                <img src="groupphoto4.jpg" alt="AeroNode drone photo 2" class="w-full h-full object-cover rounded-2xl shadow-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x400/a5b4fc/ffffff?text=Photo+2';">
-                <img src="groupphoto5.jpg" alt="AeroNode drone photo 3" class="w-full h-full object-cover rounded-2xl shadow-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x400/4f46e5/ffffff?text=Photo+3';">
+                <!-- Media files updated to be located in files/ folder -->
+                <img src="files/groupphoto3.jpg" alt="AeroNode drone photo 1" class="col-span-1 row-span-2 w-full h-full object-cover rounded-2xl shadow-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x800/4f46e5/ffffff?text=Photo+1';">
+                <img src="files/groupphoto4.jpg" alt="AeroNode drone photo 2" class="w-full h-full object-cover rounded-2xl shadow-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x400/a5b4fc/ffffff?text=Photo+2';">
+                <img src="files/groupphoto5.jpg" alt="AeroNode drone photo 3" class="w-full h-full object-cover rounded-2xl shadow-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x400/4f46e5/ffffff?text=Photo+3';">
             </div>
         </div>
 
@@ -648,6 +662,169 @@
         };
 
         if (dropdown && menu) {
+    <script>
+        // --- CONSTANTS ---
+        const MENU_KEY = 'app-menu-mode';
+        const THEME_KEY = 'app-theme-mode';
+        const NAV_STYLE_KEY = 'app-nav-style'; 
+        const COOKIE_KEY = 'cookiesAccepted';
+        
+        // --- DOM Elements ---
+        const navElement = document.getElementById('main-nav');
+        const cookieBanner = document.getElementById('cookie-banner');
+        const acceptButton = document.getElementById('accept-cookies');
+
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const closeIcon = document.getElementById('close-icon');
+
+        // --- THEME MODE LOGIC ---
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+        function applyTheme(theme) {
+            const html = document.documentElement;
+            let resolvedTheme = theme;
+
+            if (theme === 'system') {
+                resolvedTheme = mediaQuery.matches ? 'dark' : 'light';
+            }
+
+            if (resolvedTheme === 'dark') {
+                html.classList.add('dark');
+            } else {
+                html.classList.remove('dark');
+            }
+        }
+
+        function setupSystemThemeListener() {
+            mediaQuery.addEventListener('change', () => {
+                const currentPreference = localStorage.getItem(THEME_KEY) || 'system';
+                if (currentPreference === 'system') {
+                    applyTheme('system');
+                }
+            });
+        }
+
+        // --- NAVIGATION STYLE LOGIC ---
+        function applyNavStyle(style) {
+            const navBlurClasses = ['bg-white/30', 'backdrop-blur-md', 'dark:bg-gray-800/30'];
+            const navSolidClasses = ['bg-white', 'bg-opacity-100', 'backdrop-blur-none', 'dark:bg-gray-800', 'dark:bg-opacity-100'];
+
+            const menuBlurClasses = ['bg-white/30', 'backdrop-blur-md', 'dark:bg-gray-900/40'];
+            const menuSolidClasses = ['bg-white', 'bg-opacity-100', 'backdrop-blur-none', 'dark:bg-gray-900', 'dark:bg-opacity-100'];
+            
+            const allNavClasses = [...navBlurClasses, ...navSolidClasses];
+            const allMenuClasses = [...menuBlurClasses, ...menuSolidClasses];
+
+            navElement.classList.remove(...allNavClasses);
+            mobileMenu.classList.remove(...allMenuClasses);
+
+            if (style === 'blur') {
+                navElement.classList.add(...navBlurClasses);
+                mobileMenu.classList.add(...menuBlurClasses);
+            } else { // 'solid'
+                navElement.classList.add(...navSolidClasses);
+                mobileMenu.classList.add(...menuSolidClasses);
+            }
+        }
+
+        // --- MENU MODE LOGIC ---
+        function toggleMobileMenu() {
+            const isOpen = mobileMenu.classList.contains('open');
+            mobileMenu.classList.toggle('open');
+            
+            if (isOpen) {
+                hamburgerIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+            } else {
+                hamburgerIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'true');
+            }
+        }
+
+        // Apply visual configuration for Menu behavior
+        function applyMenuMode(mode) {
+            const desktopNav = document.getElementById('desktop-nav');
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const mobileMenuPanel = document.getElementById('mobile-menu');
+
+            if (!desktopNav.dataset.originalClasses) desktopNav.dataset.originalClasses = desktopNav.className;
+            if (!mobileToggle.dataset.originalClasses) mobileToggle.dataset.originalClasses = mobileToggle.className;
+            if (!mobileMenuPanel.dataset.originalClasses) mobileMenuPanel.dataset.originalClasses = mobileMenuPanel.className;
+
+            if (mode === 'auto') {
+                desktopNav.className = desktopNav.dataset.originalClasses;
+                mobileToggle.className = mobileToggle.dataset.originalClasses;
+                mobileMenuPanel.className = mobileMenuPanel.dataset.originalClasses;
+                mobileMenuPanel.classList.remove('open');
+            } 
+            else if (mode === 'desktop') {
+                desktopNav.className = desktopNav.dataset.originalClasses;
+                desktopNav.classList.remove('hidden');
+                desktopNav.classList.add('flex');
+                
+                mobileToggle.className = mobileToggle.dataset.originalClasses;
+                mobileToggle.classList.add('hidden');
+
+                mobileMenuPanel.classList.remove('open');
+                mobileMenuPanel.classList.add('hidden'); 
+            } 
+            else if (mode === 'mobile') {
+                desktopNav.className = desktopNav.dataset.originalClasses;
+                desktopNav.classList.add('hidden');
+                desktopNav.classList.remove('flex', 'md:flex');
+                
+                mobileToggle.className = mobileToggle.dataset.originalClasses;
+                mobileToggle.classList.remove('md:hidden');
+                
+                mobileMenuPanel.className = mobileMenuPanel.dataset.originalClasses;
+                mobileMenuPanel.classList.remove('md:hidden');
+            }
+
+            // Re-apply navigation style to override class wipes
+            const currentNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'blur';
+            applyNavStyle(currentNavStyle);
+        }
+
+        // --- COOKIE BANNER LOGIC ---
+        function initializeCookieBanner() {
+            if (!cookieBanner || !acceptButton) return;
+            const accepted = localStorage.getItem(COOKIE_KEY);
+            if (accepted === 'true') {
+                cookieBanner.style.display = 'none';
+            } else {
+                cookieBanner.style.display = 'block';
+            }
+            acceptButton.addEventListener('click', () => {
+                localStorage.setItem(COOKIE_KEY, 'true');
+                cookieBanner.classList.add('fade-out');
+                setTimeout(() => {
+                    cookieBanner.style.display = 'none';
+                }, 500);
+            });
+        }
+
+        // --- MORE DROPDOWN LOGIC ---
+        function initializeDropdownListeners() {
+            const dropdown = document.getElementById('more-dropdown');
+            if (!dropdown) return;
+            const dropdownButton = dropdown.querySelector('button');
+            const menu = document.getElementById('more-menu-items');
+
+            const toggleMenu = () => {
+                menu.classList.toggle('visible');
+                const isExpanded = menu.classList.contains('visible');
+                dropdownButton.setAttribute('aria-expanded', isExpanded);
+            };
+
+            const hideMenu = () => {
+                menu.classList.remove('visible');
+                dropdownButton.setAttribute('aria-expanded', 'false');
+            };
+
             dropdown.addEventListener('mouseenter', () => {
                 if (window.innerWidth >= 768) menu.classList.add('visible');
             });
@@ -656,6 +833,18 @@
             });
             document.addEventListener('click', (event) => {
                 if (window.innerWidth >= 768 && !dropdown.contains(event.target) && menu.classList.contains('visible')) {
+                if (window.innerWidth >= 768) menu.classList.remove('visible');
+            });
+
+            dropdownButton.addEventListener('click', (e) => {
+                if (window.innerWidth < 768) {
+                    toggleMenu();
+                    e.stopPropagation();
+                }
+            });
+            
+            document.addEventListener('click', (event) => {
+                if (!dropdown.contains(event.target) && menu.classList.contains('visible')) {
                     hideMenu();
                 }
             });
@@ -674,5 +863,39 @@
         }
     });
 </script>
+        // --- Core Initialization ---
+        function initializeSettings() {
+            // Theme
+            const initialThemeMode = localStorage.getItem(THEME_KEY) || 'system';
+            applyTheme(initialThemeMode);
+            setupSystemThemeListener(); 
+
+            // Menu Mode
+            const initialMenuMode = localStorage.getItem(MENU_KEY) || 'auto';
+            applyMenuMode(initialMenuMode);
+            
+            // Nav Style
+            const initialNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'blur';
+            applyNavStyle(initialNavStyle);
+
+            // Setup Dropdown and Cookies
+            initializeDropdownListeners();
+            initializeCookieBanner();
+
+            // Mobile Menu Listeners
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', toggleMobileMenu);
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (mobileMenu.classList.contains('open')) {
+                            toggleMobileMenu();
+                        }
+                    });
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeSettings);
+    </script>
 </body>
 </html>
