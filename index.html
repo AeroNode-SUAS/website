@@ -452,15 +452,15 @@
         <div class="absolute inset-0 bg-black/60"></div>
     </div>
 
-    <div class="relative z-10 max-w-6xl mx-auto px-4 py-4 text-center">
+    <div class="relative z-10 max-w-6xl mx-auto px-4 py-3 text-center">
 
-        <!-- Wordmark -->
-        <p class="text-5xl md:text-6xl font-extrabold text-white tracking-tight mb-14">
+<!-- Wordmark -->
+        <p class="text-xl font-extrabold text-white tracking-tight mb-2">
             AERO<span class="text-gradient">NODE</span>
         </p>
 
         <!-- Nav Links -->
-        <nav class="flex flex-wrap justify-center gap-x-12 gap-y-4 mb-16 text-lg md:text-xl text-gray-300">
+        <nav class="flex flex-wrap justify-center gap-x-4 gap-y-1 mb-3 text-xs text-gray-300">
             <a href="index.html" class="hover:text-white transition">Home</a>
             <a href="about.html" class="hover:text-white transition">About</a>
             <a href="blog.html" class="hover:text-white transition">Blog</a>
@@ -469,22 +469,22 @@
         </nav>
 
         <!-- Sponsor Logos -->
-<div class="flex flex-wrap justify-center items-center gap-8 mb-16">
-    <a href="https://www.apple.com/" target="_blank" class="bg-white rounded-xl p-4 w-24 h-24 flex items-center justify-center hover:scale-105 transition">
+<div class="flex flex-wrap justify-center items-center gap-3 mb-3">
+    <a href="https://www.apple.com/" target="_blank" class="bg-white rounded-lg p-2 w-10 h-10 flex items-center justify-center hover:scale-105 transition">
         <img src="appleLogo.png" alt="Apple" class="max-w-full max-h-full object-contain">
     </a>
-    <a href="https://www.microsoft.com" target="_blank" class="bg-white rounded-xl p-4 w-24 h-24 flex items-center justify-center hover:scale-105 transition">
+    <a href="https://www.microsoft.com" target="_blank" class="bg-white rounded-lg p-2 w-10 h-10 flex items-center justify-center hover:scale-105 transition">
         <img src="microsoftLogo.png" alt="Microsoft" class="max-w-full max-h-full object-contain">
     </a>
-    <a href="https://www.societyforscience.org/" target="_blank" class="bg-white rounded-xl p-4 w-24 h-24 flex items-center justify-center hover:scale-105 transition">
+    <a href="https://www.societyforscience.org/" target="_blank" class="bg-white rounded-lg p-2 w-10 h-10 flex items-center justify-center hover:scale-105 transition">
         <img src="societyforscienceLogo.png" alt="Society for Science" class="max-w-full max-h-full object-contain">
     </a>
-    <a href="https://www.stembridgecenter.org/" target="_blank" class="bg-white rounded-xl p-4 w-24 h-24 flex items-center justify-center hover:scale-105 transition">
+    <a href="https://www.stembridgecenter.org/" target="_blank" class="bg-white rounded-lg p-2 w-10 h-10 flex items-center justify-center hover:scale-105 transition">
         <img src="stembridgefoundationLogo.png" alt="STEM Bridge" class="max-w-full max-h-full object-contain">
     </a>
 </div>
 
-        <p class="text-base text-gray-400 tracking-wide">
+        <p class="text-[10px] text-gray-400 tracking-wide">
             2026 AERONODE &nbsp;|&nbsp; ALL RIGHTS RESERVED
         </p>
     </div>
@@ -518,178 +518,24 @@
         const db = getFirestore(app);
     </script>
 
- <script>
-    // --- CONSTANTS ---
-    const THEME_KEY = 'app-theme-mode';
-    const COOKIE_KEY = 'cookiesAccepted';
-
-    // --- DOM Elements ---
-    let mobileMenuButton, mobileMenu, hamburgerIcon, closeIcon;
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-    // --- THEME MODE LOGIC ---
-    function applyTheme(theme) {
-        const html = document.documentElement;
-        let resolvedTheme = theme;
-        if (theme === 'system') {
-            resolvedTheme = mediaQuery.matches ? 'dark' : 'light';
-        }
-        if (resolvedTheme === 'dark') {
-            html.classList.add('dark');
-        } else {
-            html.classList.remove('dark');
-        }
-    }
-
-    function setupSystemThemeListener() {
-        mediaQuery.addEventListener('change', () => {
-            const currentPreference = localStorage.getItem(THEME_KEY) || 'system';
-            if (currentPreference === 'system') applyTheme('system');
-        });
-    }
-
-    // --- MOBILE MENU LOGIC ---
-    function toggleMobileMenu() {
-        if (!mobileMenu || !mobileMenuButton) return;
-        const isOpen = mobileMenu.classList.contains('open');
-        mobileMenu.classList.toggle('open');
-
-        if (isOpen) {
-            hamburgerIcon.classList.remove('hidden');
-            closeIcon.classList.add('hidden');
-            mobileMenuButton.setAttribute('aria-expanded', 'false');
-        } else {
-            hamburgerIcon.classList.add('hidden');
-            closeIcon.classList.remove('hidden');
-            mobileMenuButton.setAttribute('aria-expanded', 'true');
-        }
-    }
-
-    // --- STATS COUNTER ANIMATION ---
-    function setupStatCounters() {
-        const counters = document.querySelectorAll('.stat-counter');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !entry.target.dataset.done) {
-                    entry.target.dataset.done = 'true';
-                    const target = parseInt(entry.target.dataset.target, 10);
-                    const suffix = entry.target.dataset.suffix || '';
-                    const duration = 1200;
-                    const startTime = performance.now();
-
-                    function tick(now) {
-                        const progress = Math.min((now - startTime) / duration, 1);
-                        entry.target.textContent = Math.floor(progress * target) + suffix;
-                        if (progress < 1) requestAnimationFrame(tick);
-                        else entry.target.textContent = target + suffix;
-                    }
-                    requestAnimationFrame(tick);
-                }
-            });
-        }, { threshold: 0.4 });
-
-        counters.forEach(c => observer.observe(c));
-    }
-
-    // --- PROCESS CARD SWITCHING ---
-    function setupProcessCards() {
-        const cards = document.querySelectorAll('.process-card');
-        cards.forEach(card => {
-            card.addEventListener('click', () => {
-                cards.forEach(c => c.classList.remove('active-step'));
-                card.classList.add('active-step');
-            });
-        });
-    }
-
-    // --- SCROLL-TRIGGERED FADE-IN ANIMATIONS ---
-    function setupScrollAnimations() {
-        const elements = document.querySelectorAll('.animate-on-scroll');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                }
-            });
-        }, { threshold: 0.15 });
-
-        elements.forEach(el => observer.observe(el));
-    }
-
-    // --- INITIALIZATION ---
-    document.addEventListener('DOMContentLoaded', () => {
-        mobileMenuButton = document.getElementById('mobile-menu-button');
-        mobileMenu = document.getElementById('mobile-menu');
-        hamburgerIcon = document.getElementById('hamburger-icon');
-        closeIcon = document.getElementById('close-icon');
-
-        // 1. Theme
-        const initialThemeMode = localStorage.getItem(THEME_KEY) || 'system';
-        applyTheme(initialThemeMode);
-        setupSystemThemeListener();
-
-        // 2. Stats counters
-        setupStatCounters();
-
-        // 3. Process card switching
-        setupProcessCards();
-
-        // 4. Scroll fade-in animations
-        setupScrollAnimations();
-
-        // --- Cookie Consent Logic ---
-        const banner = document.getElementById('cookie-banner');
-        const acceptButton = document.getElementById('accept-cookies');
-        const accepted = localStorage.getItem(COOKIE_KEY);
-
-        if (accepted === 'true' && banner) {
-            banner.style.display = 'none';
-        } else if (banner && acceptButton) {
-            banner.style.display = 'block';
-            acceptButton.addEventListener('click', () => {
-                localStorage.setItem(COOKIE_KEY, 'true');
-                banner.classList.add('fade-out');
-                setTimeout(() => { banner.style.display = 'none'; }, 500);
-            });
-        }
-
-        // --- Dropdown Toggle Logic ---
-        const dropdown = document.getElementById('more-dropdown');
-        const menu = document.getElementById('more-menu-items');
-        const hideMenu = () => {
-            menu.classList.remove('visible');
-            dropdown.querySelector('button').setAttribute('aria-expanded', 'false');
-        };
-
-        if (dropdown && menu) {
-    <script>
+<script>
         // --- CONSTANTS ---
         const MENU_KEY = 'app-menu-mode';
         const THEME_KEY = 'app-theme-mode';
-        const NAV_STYLE_KEY = 'app-nav-style'; 
+        const NAV_STYLE_KEY = 'app-nav-style';
         const COOKIE_KEY = 'cookiesAccepted';
-        
+
         // --- DOM Elements ---
-        const navElement = document.getElementById('main-nav');
-        const cookieBanner = document.getElementById('cookie-banner');
-        const acceptButton = document.getElementById('accept-cookies');
-
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const hamburgerIcon = document.getElementById('hamburger-icon');
-        const closeIcon = document.getElementById('close-icon');
-
-        // --- THEME MODE LOGIC ---
+        let mobileMenuButton, mobileMenu, hamburgerIcon, closeIcon, navElement, cookieBanner, acceptButton;
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
+        // --- THEME MODE LOGIC ---
         function applyTheme(theme) {
             const html = document.documentElement;
             let resolvedTheme = theme;
-
             if (theme === 'system') {
                 resolvedTheme = mediaQuery.matches ? 'dark' : 'light';
             }
-
             if (resolvedTheme === 'dark') {
                 html.classList.add('dark');
             } else {
@@ -700,9 +546,7 @@
         function setupSystemThemeListener() {
             mediaQuery.addEventListener('change', () => {
                 const currentPreference = localStorage.getItem(THEME_KEY) || 'system';
-                if (currentPreference === 'system') {
-                    applyTheme('system');
-                }
+                if (currentPreference === 'system') applyTheme('system');
             });
         }
 
@@ -710,30 +554,27 @@
         function applyNavStyle(style) {
             const navBlurClasses = ['bg-white/30', 'backdrop-blur-md', 'dark:bg-gray-800/30'];
             const navSolidClasses = ['bg-white', 'bg-opacity-100', 'backdrop-blur-none', 'dark:bg-gray-800', 'dark:bg-opacity-100'];
-
             const menuBlurClasses = ['bg-white/30', 'backdrop-blur-md', 'dark:bg-gray-900/40'];
             const menuSolidClasses = ['bg-white', 'bg-opacity-100', 'backdrop-blur-none', 'dark:bg-gray-900', 'dark:bg-opacity-100'];
-            
-            const allNavClasses = [...navBlurClasses, ...navSolidClasses];
-            const allMenuClasses = [...menuBlurClasses, ...menuSolidClasses];
 
-            navElement.classList.remove(...allNavClasses);
-            mobileMenu.classList.remove(...allMenuClasses);
+            if (navElement) navElement.classList.remove(...navBlurClasses, ...navSolidClasses);
+            if (mobileMenu) mobileMenu.classList.remove(...menuBlurClasses, ...menuSolidClasses);
 
             if (style === 'blur') {
-                navElement.classList.add(...navBlurClasses);
-                mobileMenu.classList.add(...menuBlurClasses);
-            } else { // 'solid'
-                navElement.classList.add(...navSolidClasses);
-                mobileMenu.classList.add(...menuSolidClasses);
+                if (navElement) navElement.classList.add(...navBlurClasses);
+                if (mobileMenu) mobileMenu.classList.add(...menuBlurClasses);
+            } else {
+                if (navElement) navElement.classList.add(...navSolidClasses);
+                if (mobileMenu) mobileMenu.classList.add(...menuSolidClasses);
             }
         }
 
-        // --- MENU MODE LOGIC ---
+        // --- MOBILE MENU LOGIC ---
         function toggleMobileMenu() {
+            if (!mobileMenu || !mobileMenuButton) return;
             const isOpen = mobileMenu.classList.contains('open');
             mobileMenu.classList.toggle('open');
-            
+
             if (isOpen) {
                 hamburgerIcon.classList.remove('hidden');
                 closeIcon.classList.add('hidden');
@@ -745,11 +586,13 @@
             }
         }
 
-        // Apply visual configuration for Menu behavior
+        // --- MENU MODE LOGIC (desktop / mobile / auto) ---
         function applyMenuMode(mode) {
             const desktopNav = document.getElementById('desktop-nav');
             const mobileToggle = document.getElementById('mobile-toggle');
             const mobileMenuPanel = document.getElementById('mobile-menu');
+
+            if (!desktopNav || !mobileToggle || !mobileMenuPanel) return;
 
             if (!desktopNav.dataset.originalClasses) desktopNav.dataset.originalClasses = desktopNav.className;
             if (!mobileToggle.dataset.originalClasses) mobileToggle.dataset.originalClasses = mobileToggle.className;
@@ -760,33 +603,79 @@
                 mobileToggle.className = mobileToggle.dataset.originalClasses;
                 mobileMenuPanel.className = mobileMenuPanel.dataset.originalClasses;
                 mobileMenuPanel.classList.remove('open');
-            } 
-            else if (mode === 'desktop') {
+            } else if (mode === 'desktop') {
                 desktopNav.className = desktopNav.dataset.originalClasses;
                 desktopNav.classList.remove('hidden');
                 desktopNav.classList.add('flex');
-                
+
                 mobileToggle.className = mobileToggle.dataset.originalClasses;
                 mobileToggle.classList.add('hidden');
 
                 mobileMenuPanel.classList.remove('open');
-                mobileMenuPanel.classList.add('hidden'); 
-            } 
-            else if (mode === 'mobile') {
+                mobileMenuPanel.classList.add('hidden');
+            } else if (mode === 'mobile') {
                 desktopNav.className = desktopNav.dataset.originalClasses;
                 desktopNav.classList.add('hidden');
                 desktopNav.classList.remove('flex', 'md:flex');
-                
+
                 mobileToggle.className = mobileToggle.dataset.originalClasses;
                 mobileToggle.classList.remove('md:hidden');
-                
+
                 mobileMenuPanel.className = mobileMenuPanel.dataset.originalClasses;
                 mobileMenuPanel.classList.remove('md:hidden');
             }
 
-            // Re-apply navigation style to override class wipes
             const currentNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'blur';
             applyNavStyle(currentNavStyle);
+        }
+
+        // --- STATS COUNTER ANIMATION ---
+        function setupStatCounters() {
+            const counters = document.querySelectorAll('.stat-counter');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !entry.target.dataset.done) {
+                        entry.target.dataset.done = 'true';
+                        const target = parseInt(entry.target.dataset.target, 10);
+                        const suffix = entry.target.dataset.suffix || '';
+                        const duration = 1200;
+                        const startTime = performance.now();
+
+                        function tick(now) {
+                            const progress = Math.min((now - startTime) / duration, 1);
+                            entry.target.textContent = Math.floor(progress * target) + suffix;
+                            if (progress < 1) requestAnimationFrame(tick);
+                            else entry.target.textContent = target + suffix;
+                        }
+                        requestAnimationFrame(tick);
+                    }
+                });
+            }, { threshold: 0.4 });
+
+            counters.forEach(c => observer.observe(c));
+        }
+
+        // --- PROCESS CARD SWITCHING ---
+        function setupProcessCards() {
+            const cards = document.querySelectorAll('.process-card');
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+                    cards.forEach(c => c.classList.remove('active-step'));
+                    card.classList.add('active-step');
+                });
+            });
+        }
+
+        // --- SCROLL-TRIGGERED FADE-IN ANIMATIONS ---
+        function setupScrollAnimations() {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('is-visible');
+                });
+            }, { threshold: 0.15 });
+
+            elements.forEach(el => observer.observe(el));
         }
 
         // --- COOKIE BANNER LOGIC ---
@@ -801,9 +690,7 @@
             acceptButton.addEventListener('click', () => {
                 localStorage.setItem(COOKIE_KEY, 'true');
                 cookieBanner.classList.add('fade-out');
-                setTimeout(() => {
-                    cookieBanner.style.display = 'none';
-                }, 500);
+                setTimeout(() => { cookieBanner.style.display = 'none'; }, 500);
             });
         }
 
@@ -831,10 +718,6 @@
             dropdown.addEventListener('mouseleave', () => {
                 if (window.innerWidth >= 768) hideMenu();
             });
-            document.addEventListener('click', (event) => {
-                if (window.innerWidth >= 768 && !dropdown.contains(event.target) && menu.classList.contains('visible')) {
-                if (window.innerWidth >= 768) menu.classList.remove('visible');
-            });
 
             dropdownButton.addEventListener('click', (e) => {
                 if (window.innerWidth < 768) {
@@ -842,7 +725,7 @@
                     e.stopPropagation();
                 }
             });
-            
+
             document.addEventListener('click', (event) => {
                 if (!dropdown.contains(event.target) && menu.classList.contains('visible')) {
                     hideMenu();
@@ -850,46 +733,43 @@
             });
         }
 
-        // --- Mobile Menu Listeners ---
-        if (mobileMenuButton) {
-            mobileMenuButton.addEventListener('click', toggleMobileMenu);
-            if (mobileMenu) {
-                mobileMenu.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', () => {
-                        if (mobileMenu.classList.contains('open')) toggleMobileMenu();
-                    });
-                });
-            }
-        }
-    });
-</script>
-        // --- Core Initialization ---
+        // --- CORE INITIALIZATION ---
         function initializeSettings() {
+            mobileMenuButton = document.getElementById('mobile-menu-button');
+            mobileMenu = document.getElementById('mobile-menu');
+            hamburgerIcon = document.getElementById('hamburger-icon');
+            closeIcon = document.getElementById('close-icon');
+            navElement = document.getElementById('main-nav');
+            cookieBanner = document.getElementById('cookie-banner');
+            acceptButton = document.getElementById('accept-cookies');
+
             // Theme
             const initialThemeMode = localStorage.getItem(THEME_KEY) || 'system';
             applyTheme(initialThemeMode);
-            setupSystemThemeListener(); 
+            setupSystemThemeListener();
 
-            // Menu Mode
+            // Menu mode + nav style
             const initialMenuMode = localStorage.getItem(MENU_KEY) || 'auto';
             applyMenuMode(initialMenuMode);
-            
-            // Nav Style
+
             const initialNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'blur';
             applyNavStyle(initialNavStyle);
 
-            // Setup Dropdown and Cookies
+            // Stats, process cards, scroll animations
+            setupStatCounters();
+            setupProcessCards();
+            setupScrollAnimations();
+
+            // Dropdown + cookies
             initializeDropdownListeners();
             initializeCookieBanner();
 
-            // Mobile Menu Listeners
+            // Mobile menu button + auto-close on link click
             if (mobileMenuButton) {
                 mobileMenuButton.addEventListener('click', toggleMobileMenu);
                 mobileMenu.querySelectorAll('a').forEach(link => {
                     link.addEventListener('click', () => {
-                        if (mobileMenu.classList.contains('open')) {
-                            toggleMobileMenu();
-                        }
+                        if (mobileMenu.classList.contains('open')) toggleMobileMenu();
                     });
                 });
             }
