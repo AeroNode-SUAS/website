@@ -175,6 +175,7 @@
                     <a href="blog.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150">Blog</a>
                     <a href="contact.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150">Contact</a>
                     <a href="specs.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150" role="menuitem">Aircraft Info</a>
+                    <a href="gallery.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150" role="menuitem">Gallery</a>
 
                     <!-- DROPDOWN MENU -->
                     <div id="more-dropdown" class="relative group">
@@ -217,6 +218,7 @@
             <a href="about.html" class="text-lg block px-3 py-2 rounded-md text-primary dark:text-primary-dark bg-indigo-50 dark:bg-indigo-900 font-semibold transition duration-150">About</a>
             <a href="blog.html" class="text-lg font-medium block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">Blog</a>
             <a href="contact.html" class="text-lg font-medium block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">Contact</a>
+            <a href="gallery.html" class="text-lg font-medium block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">Gallery</a>
             
             <div class="h-px w-full my-2 bg-gray-200 dark:bg-gray-700"></div>
 
@@ -297,18 +299,26 @@
                 </p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="caden" data-team="hardware">
-                        <img src="files/Caden Y.jpg" alt="Caden Y." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Caden Y.</h3>
-                        <p class="text-sm role-hardware font-medium">Hardware</p>
-                        <p class="view-hint text-xs text-gray-400 dark:text-gray-500 mt-2 opacity-0 transition-opacity duration-300">Click to view profile →</p>
+                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden relative hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="caden" data-team="hardware">
+                        <div class="relative h-96 overflow-hidden">
+                            <img src="files/Caden Y.jpg" alt="Caden Y." class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-5 text-left">
+                                <h3 class="text-2xl font-bold text-white">Caden Y.</h3>
+                                <p class="text-sm text-gray-200 font-medium">Hardware</p>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="kevin" data-team="hardware">
-                        <img src="files/Kevin Z..JPG" alt="Kevin Z." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Kevin Z.</h3>
-                        <p class="text-sm role-hardware font-medium">Hardware</p>
-                        <p class="view-hint text-xs text-gray-400 dark:text-gray-500 mt-2 opacity-0 transition-opacity duration-300">Click to view profile →</p>
+                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden relative hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="kevin" data-team="hardware">
+                        <div class="relative h-96 overflow-hidden">
+                            <img src="files/Kevin Z..JPG" alt="Kevin Z." class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-5 text-left">
+                                <h3 class="text-2xl font-bold text-white">Kevin Z.</h3>
+                                <p class="text-sm text-gray-200 font-medium">Hardware</p>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -318,21 +328,30 @@
             <div class="team-group mb-14" data-team="software">
                 <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">Software</h3>
                 <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-8 max-w-3xl">
-                    The Software subteam develops the autonomous flight logic, computer vision targeting systems, and ground control station software that powers our aircraft's mission capabilities. This includes GPS waypoint navigation, obstacle detection, target classification, and payload deployment logic             </p>
+                    The Software subteam develops the autonomous flight logic, computer vision targeting systems, and ground control station software that powers our aircraft's mission capabilities. This includes GPS waypoint navigation, obstacle detection, target classification, and payload deployment logic
+                </p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="rick" data-team="software">
-                        <img src="files/Rick Z..JPG" alt="Rick Z." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Rick Z.</h3>
-                        <p class="text-sm role-software font-medium">Software</p>
-                        <p class="view-hint text-xs text-gray-400 dark:text-gray-500 mt-2 opacity-0 transition-opacity duration-300">Click to view profile →</p>
+                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden relative hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="rick" data-team="software">
+                        <div class="relative h-96 overflow-hidden">
+                            <img src="files/Rick Z..JPG" alt="Rick Z." class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-5 text-left">
+                                <h3 class="text-2xl font-bold text-white">Rick Z.</h3>
+                                <p class="text-sm text-gray-200 font-medium">Software</p>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="lauren" data-team="software">
-                        <img src="files/R.jpg" alt="Lauren O." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Lauren O.</h3>
-                        <p class="text-sm role-software font-medium">Software</p>
-                        <p class="view-hint text-xs text-gray-400 dark:text-gray-500 mt-2 opacity-0 transition-opacity duration-300">Click to view profile →</p>
+                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden relative hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="lauren" data-team="software">
+                        <div class="relative h-96 overflow-hidden">
+                            <img src="files/R.jpg" alt="Lauren O." class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-5 text-left">
+                                <h3 class="text-2xl font-bold text-white">Lauren O.</h3>
+                                <p class="text-sm text-gray-200 font-medium">Software</p>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -342,21 +361,24 @@
             <div class="team-group" data-team="outreach">
                 <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">Outreach</h3>
                 <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-8 max-w-3xl">
-                    The Outreach subteam manages sponsorships, community engagement, branding, and communications for AeroNode. This includes securing funding, building our web presence, and representing the team at STEM events.               </p>
+                    The Outreach subteam manages sponsorships, community engagement, branding, and communications for AeroNode. This includes securing funding, building our web presence, and representing the team at STEM events.
+                </p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="angela" data-team="outreach">
-                        <img src="files/Angela O._2.jpg" alt="Angela O." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Angela O.</h3>
-                        <p class="text-sm role-outreach font-medium">Outreach</p>
-                        <p class="view-hint text-xs text-gray-400 dark:text-gray-500 mt-2 opacity-0 transition-opacity duration-300">Click to view profile →</p>
+                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden relative hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="angela" data-team="outreach">
+                        <div class="relative h-96 overflow-hidden">
+                            <img src="files/Angela O._2.jpg" alt="Angela O." class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-5 text-left">
+                                <h3 class="text-2xl font-bold text-white">Angela O.</h3>
+                                <p class="text-sm text-gray-200 font-medium">Outreach</p>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
             </div>
         </div>
-
-  
 
         <!-- Sponsors Section -->
         <div class="w-full mt-16">
@@ -487,35 +509,35 @@
                 name: "Caden Y.",
                 role: "Hardware",
                 meta: "Year: 9 · School: Tesla STEM High School",
-                photo: "Caden Y.jpg",
+                photo: "files/Caden Y.jpg",
                 bio: "Works on the airframe design, machining, and mechanical integration of the aircraft."
             },
             kevin: {
                 name: "Kevin Z.",
                 role: "Hardware",
                 meta: "Year: 10· School: Interlake",
-                photo: "Kevin Z..JPG",
+                photo: "files/Kevin Z..JPG",
                 bio: "Focuses on the power system, ESCs, and structural assembly of the drone."
             },
             rick: {
                 name: "Rick Z.",
                 role: "Software",
                 meta: "Year: 12· School: Interlake",
-                photo: "Rick Z..JPG",
+                photo: "files/Rick Z..JPG",
                 bio: "Develops the autonomous flight logic, computer vision targeting, and the ground control station backend."
             },
             lauren: {
                 name: "Lauren O.",
                 role: "Software",
                 meta: "Year: 12 · School: Tesla STEM High School",
-                photo: "R.jpg",
+                photo: "files/R.jpg",
                 bio: "Works on the flight software stack and mission planning algorithms."
             },
             angela: {
                 name: "Angela O.",
                 role: "Outreach",
                 meta: "Year: 8 · School: International Community",
-                photo: "Angela O._2.jpg",
+                photo: "files/Angela O._2.jpg",
                 bio: "Branding, website, and graphic design."
             }
         };

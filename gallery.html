@@ -1,1 +1,518 @@
-<!-- Maybe add a gallery page? -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="AeroNode-Icon.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1LJM9Y2HZS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-1LJM9Y2HZS');
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | AeroNode</title>
+
+    <!-- Script to prevent FOUC (Flash of Unstyled Content) by immediately applying the saved theme -->
+    <script>
+        const THEME_KEY_FOUC = 'app-theme-mode';
+        const initialTheme = localStorage.getItem(THEME_KEY_FOUC) || 'system';
+        const mqFOUC = window.matchMedia('(prefers-color-scheme: dark)');
+        if (initialTheme === 'dark' || (initialTheme === 'system' && mqFOUC.matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#4f46e5',
+                        'primary-dark': '#a5b4fc'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { letter-spacing: -0.02em; }
+
+        .glow-primary {
+            box-shadow: 0 0 40px -10px rgba(79, 70, 229, 0.35);
+        }
+        .dark .glow-primary {
+            box-shadow: 0 0 40px -10px rgba(165, 180, 252, 0.25);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #4f46e5, #818cf8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        @keyframes rise-up {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-rise {
+            opacity: 0;
+            animation: rise-up 0.9s ease-out forwards;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+        ::-webkit-scrollbar-track { background: #f7f9fc; }
+        .dark ::-webkit-scrollbar-thumb { background: #4b5563; }
+        .dark ::-webkit-scrollbar-track { background: #111827; }
+
+        .fade-out { opacity: 0 !important; transform: translateY(100%) !important; pointer-events: none; }
+
+        .dropdown-menu { opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.2s ease-out; }
+        .dropdown-menu.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+
+        #mobile-menu { transform: translateX(100%); transition: transform 0.3s ease-out; pointer-events: none; }
+        #mobile-menu.open { transform: translateX(0); pointer-events: auto; }
+
+        a, button {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        nav a:not(#more-dropdown a) {
+            position: relative;
+        }
+        nav a:not(#more-dropdown a)::after {
+            content: '';
+            position: absolute;
+            left: 8px;
+            right: 8px;
+            bottom: 2px;
+            height: 2px;
+            background: currentColor;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.25s ease;
+        }
+        nav a:not(#more-dropdown a):hover::after {
+            transform: scaleX(1);
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .img-hover-zoom {
+            overflow: hidden;
+            border-radius: 0.75rem;
+            display: block;
+        }
+        .img-hover-zoom img {
+            transition: transform 0.4s ease;
+        }
+        .img-hover-zoom:hover img {
+            transform: scale(1.08);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center transition-colors duration-300 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 w-full">
+
+    <!-- 🔴 NAVIGATION BAR 🔴 -->
+    <nav id="main-nav" class="w-full bg-white/30 backdrop-blur-md shadow-lg sticky top-0 z-50 dark:bg-gray-800/30 dark:shadow-xl transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="text-xl text-primary dark:text-primary-dark">AERO<b>NODE</b></a>
+                </div>
+
+                <div id="desktop-nav" class="hidden md:flex items-center space-x-3 md:space-x-4 text-sm md:text-base">
+                    <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150">Home</a>
+                    <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150">About</a>
+                    <a href="blog.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150">Blog</a>
+                    <a href="contact.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150">Contact</a>
+                    <a href="specs.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150">Aircraft Info</a>
+                    <a href="gallery.html" class="text-gray-900 dark:text-gray-100 font-bold p-2 rounded-md bg-indigo-100 dark:bg-indigo-800 hover:bg-indigo-200 dark:hover:bg-indigo-700 transition">Gallery</a>
+
+                    <div id="more-dropdown" class="relative group">
+                        <button type="button" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150 flex items-center" aria-expanded="false" aria-controls="more-menu-items">
+                            More
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+
+                        <div id="more-menu-items" class="dropdown-menu absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-700 ring-1 ring-black ring-opacity-5 dark:ring-gray-600 z-30">
+                            <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="more-dropdown">
+                                <a href="PLACEHOLDER.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-primary transition duration-150" role="menuitem">PLACEHOLDER</a>
+                                <a href="settings.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-primary transition duration-150" role="menuitem">Page Settings</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="mobile-toggle" class="md:hidden">
+                    <button id="mobile-menu-button" type="button" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 inline-flex items-center justify-center p-2 rounded-md transition duration-150" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg id="hamburger-icon" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="close-icon" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU PANEL -->
+    <div id="mobile-menu" class="fixed inset-0 top-16 w-full h-full md:hidden z-40 bg-white backdrop-blur-md dark:bg-gray-900/40">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col">
+            <a href="index.html" class="text-lg block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">Home</a>
+            <a href="about.html" class="text-lg block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">About</a>
+            <a href="blog.html" class="text-lg block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">Blog</a>
+            <a href="contact.html" class="text-lg block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">Contact</a>
+            <a href="specs.html" class="text-lg block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">Aircraft Info</a>
+
+            <div class="h-px w-full my-2 bg-gray-200 dark:bg-gray-700"></div>
+
+            <a href="gallery.html" class="text-lg block px-3 py-2 rounded-md text-primary dark:text-primary-dark bg-indigo-50 dark:bg-indigo-900 font-semibold">Gallery</a>
+            <a href="PLACEHOLDER.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">PLACEHOLDER</a>
+            <a href="settings.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Page Settings</a>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <header class="w-full py-16 px-4 bg-gradient-to-b from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border-b border-gray-200 dark:border-gray-800">
+        <div class="max-w-5xl mx-auto text-center hero-rise">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight text-gray-900 dark:text-gray-100">
+                Photo <span class="text-gradient">Gallery</span>
+            </h1>
+            <p class="text-lg text-gray-600 dark:text-gray-400 font-medium max-w-2xl mx-auto">
+                Moments from our build, testing, and flight days.
+            </p>
+        </div>
+    </header>
+
+    <main class="flex-grow w-full max-w-6xl mx-auto px-4 py-16 md:py-20">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 animate-on-scroll">
+            <div class="img-hover-zoom">
+                <img src="1.jpg" alt="Team photo" class="w-full h-48 md:h-64 object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x300/4f46e5/ffffff?text=Photo';">
+            </div>
+            <div class="img-hover-zoom">
+                <img src="2.jpg" alt="Team photo" class="w-full h-48 md:h-64 object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x300/4f46e5/ffffff?text=Photo';">
+            </div>
+            <div class="img-hover-zoom">
+                <img src="3.jpg" alt="Team photo" class="w-full h-48 md:h-64 object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x300/4f46e5/ffffff?text=Photo';">
+            </div>
+            <div class="img-hover-zoom">
+                <img src="4.jpg" alt="Team photo" class="w-full h-48 md:h-64 object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x300/4f46e5/ffffff?text=Photo';">
+            </div>
+            <div class="img-hover-zoom">
+                <img src="5.jpg" alt="Team photo" class="w-full h-48 md:h-64 object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x300/4f46e5/ffffff?text=Photo';">
+            </div>
+            <div class="img-hover-zoom">
+                <img src="6.jpg" alt="Team photo" class="w-full h-48 md:h-64 object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x300/4f46e5/ffffff?text=Photo';">
+            </div>
+            <div class="img-hover-zoom">
+                <img src="7.jpg" alt="Team photo" class="w-full h-48 md:h-64 object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x300/4f46e5/ffffff?text=Photo';">
+            </div>
+            <div class="img-hover-zoom">
+                <img src="8.jpg" alt="Team photo" class="w-full h-48 md:h-64 object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x300/4f46e5/ffffff?text=Photo';">
+            </div>
+            <div class="img-hover-zoom">
+                <img src="9.jpg" alt="Team photo" class="w-full h-48 md:h-64 object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x300/4f46e5/ffffff?text=Photo';">
+            </div>
+            <div class="img-hover-zoom">
+                <img src="10.jpg" alt="Team photo" class="w-full h-48 md:h-64 object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x300/4f46e5/ffffff?text=Photo';">
+            </div>
+        </div>
+    </main>
+
+<!-- Site Footer -->
+<footer class="relative w-full mt-auto overflow-hidden">
+    <div class="absolute inset-0 -z-10">
+        <img src="Group_Microsoft (1).jpeg" alt="" class="w-full h-full object-cover scale-110 blur-sm" onerror="this.onerror=null; this.src='https://placehold.co/1600x800/1e1b4b/1e1b4b';">
+        <div class="absolute inset-0 bg-black/60"></div>
+    </div>
+
+    <div class="relative z-10 max-w-6xl mx-auto px-4 py-3 text-center">
+        <p class="text-xl font-extrabold text-white tracking-tight mb-2">
+            AERO<span class="text-gradient">NODE</span>
+        </p>
+
+        <nav class="flex flex-wrap justify-center gap-x-4 gap-y-1 mb-3 text-xs text-gray-300">
+            <a href="index.html" class="hover:text-white transition">Home</a>
+            <a href="about.html" class="hover:text-white transition">About</a>
+            <a href="blog.html" class="hover:text-white transition">Blog</a>
+            <a href="specs.html" class="hover:text-white transition">Aircraft Info</a>
+            <a href="gallery.html" class="hover:text-white transition">Gallery</a>
+            <a href="contact.html" class="hover:text-white transition">Contact</a>
+        </nav>
+
+        <div class="flex flex-wrap justify-center items-center gap-3 mb-3">
+            <a href="https://www.apple.com/" target="_blank" class="bg-white rounded-lg p-2 w-10 h-10 flex items-center justify-center hover:scale-105 transition">
+                <img src="appleLogo.png" alt="Apple" class="max-w-full max-h-full object-contain">
+            </a>
+            <a href="https://www.microsoft.com" target="_blank" class="bg-white rounded-lg p-2 w-10 h-10 flex items-center justify-center hover:scale-105 transition">
+                <img src="microsoftLogo.png" alt="Microsoft" class="max-w-full max-h-full object-contain">
+            </a>
+            <a href="https://www.societyforscience.org/" target="_blank" class="bg-white rounded-lg p-2 w-10 h-10 flex items-center justify-center hover:scale-105 transition">
+                <img src="societyforscienceLogo.png" alt="Society for Science" class="max-w-full max-h-full object-contain">
+            </a>
+            <a href="https://www.stembridgecenter.org/" target="_blank" class="bg-white rounded-lg p-2 w-10 h-10 flex items-center justify-center hover:scale-105 transition">
+                <img src="stembridgefoundationLogo.png" alt="STEM Bridge" class="max-w-full max-h-full object-contain">
+            </a>
+        </div>
+
+        <p class="text-[10px] text-gray-400 tracking-wide">
+            2026 AERONODE &nbsp;
+        </p>
+    </div>
+</footer>
+    <footer class="w-full bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-center text-sm py-4 border-t dark:border-gray-700 mt-auto">
+        <p>Last Updated: 07/19/2026</p>
+    </footer>
+
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 p-4 md:p-6 bg-gray-800/40 backdrop-blur-md text-white shadow-2xl transition-all duration-500 transform translate-y-0 z-50 opacity-100">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
+            <p class="text-sm mb-3 md:mb-0 md:mr-6">
+                This website uses cookies to ensure you get the best experience and to track web traffic. By continuing to use this site, you agree to our use of cookies.
+            </p>
+            <button id="accept-cookies" class="w-full md:w-auto px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-lg shadow-md transition duration-300 text-sm">
+                Got it!
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- CONSTANTS ---
+        const MENU_KEY = 'app-menu-mode';
+        const THEME_KEY = 'app-theme-mode';
+        const NAV_STYLE_KEY = 'app-nav-style';
+        const COOKIE_KEY = 'cookiesAccepted';
+
+        // --- DOM Elements ---
+        let mobileMenuButton, mobileMenu, hamburgerIcon, closeIcon, navElement, cookieBanner, acceptButton;
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+        // --- THEME MODE LOGIC ---
+        function applyTheme(theme) {
+            const html = document.documentElement;
+            let resolvedTheme = theme;
+            if (theme === 'system') {
+                resolvedTheme = mediaQuery.matches ? 'dark' : 'light';
+            }
+            if (resolvedTheme === 'dark') {
+                html.classList.add('dark');
+            } else {
+                html.classList.remove('dark');
+            }
+        }
+
+        function setupSystemThemeListener() {
+            mediaQuery.addEventListener('change', () => {
+                const currentPreference = localStorage.getItem(THEME_KEY) || 'system';
+                if (currentPreference === 'system') applyTheme('system');
+            });
+        }
+
+        // --- NAVIGATION STYLE LOGIC ---
+        function applyNavStyle(style) {
+            const navBlurClasses = ['bg-white/30', 'backdrop-blur-md', 'dark:bg-gray-800/30'];
+            const navSolidClasses = ['bg-white', 'bg-opacity-100', 'backdrop-blur-none', 'dark:bg-gray-800', 'dark:bg-opacity-100'];
+            const menuBlurClasses = ['bg-white/30', 'backdrop-blur-md', 'dark:bg-gray-900/40'];
+            const menuSolidClasses = ['bg-white', 'bg-opacity-100', 'backdrop-blur-none', 'dark:bg-gray-900', 'dark:bg-opacity-100'];
+
+            if (navElement) navElement.classList.remove(...navBlurClasses, ...navSolidClasses);
+            if (mobileMenu) mobileMenu.classList.remove(...menuBlurClasses, ...menuSolidClasses);
+
+            if (style === 'blur') {
+                if (navElement) navElement.classList.add(...navBlurClasses);
+                if (mobileMenu) mobileMenu.classList.add(...menuBlurClasses);
+            } else {
+                if (navElement) navElement.classList.add(...navSolidClasses);
+                if (mobileMenu) mobileMenu.classList.add(...menuSolidClasses);
+            }
+        }
+
+        // --- MOBILE MENU LOGIC ---
+        function toggleMobileMenu() {
+            if (!mobileMenu || !mobileMenuButton) return;
+            const isOpen = mobileMenu.classList.contains('open');
+            mobileMenu.classList.toggle('open');
+
+            if (isOpen) {
+                if (hamburgerIcon) hamburgerIcon.classList.remove('hidden');
+                if (closeIcon) closeIcon.classList.add('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+            } else {
+                if (hamburgerIcon) hamburgerIcon.classList.add('hidden');
+                if (closeIcon) closeIcon.classList.remove('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'true');
+            }
+        }
+
+        // --- MENU MODE LOGIC (desktop / mobile / auto) ---
+        function applyMenuMode(mode) {
+            const desktopNav = document.getElementById('desktop-nav');
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const mobileMenuPanel = document.getElementById('mobile-menu');
+
+            if (!desktopNav || !mobileToggle || !mobileMenuPanel) return;
+
+            if (!desktopNav.dataset.originalClasses) desktopNav.dataset.originalClasses = desktopNav.className;
+            if (!mobileToggle.dataset.originalClasses) mobileToggle.dataset.originalClasses = mobileToggle.className;
+            if (!mobileMenuPanel.dataset.originalClasses) mobileMenuPanel.dataset.originalClasses = mobileMenuPanel.className;
+
+            if (mode === 'auto') {
+                desktopNav.className = desktopNav.dataset.originalClasses;
+                mobileToggle.className = mobileToggle.dataset.originalClasses;
+                mobileMenuPanel.className = mobileMenuPanel.dataset.originalClasses;
+                mobileMenuPanel.classList.remove('open');
+            } else if (mode === 'desktop') {
+                desktopNav.className = desktopNav.dataset.originalClasses;
+                desktopNav.classList.remove('hidden');
+                desktopNav.classList.add('flex');
+
+                mobileToggle.className = mobileToggle.dataset.originalClasses;
+                mobileToggle.classList.add('hidden');
+
+                mobileMenuPanel.classList.remove('open');
+                mobileMenuPanel.classList.add('hidden');
+            } else if (mode === 'mobile') {
+                desktopNav.className = desktopNav.dataset.originalClasses;
+                desktopNav.classList.add('hidden');
+                desktopNav.classList.remove('flex', 'md:flex');
+
+                mobileToggle.className = mobileToggle.dataset.originalClasses;
+                mobileToggle.classList.remove('md:hidden');
+
+                mobileMenuPanel.className = mobileMenuPanel.dataset.originalClasses;
+                mobileMenuPanel.classList.remove('md:hidden');
+            }
+
+            const currentNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'blur';
+            applyNavStyle(currentNavStyle);
+        }
+
+        // --- SCROLL-TRIGGERED FADE-IN ANIMATIONS ---
+        function setupScrollAnimations() {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('is-visible');
+                });
+            }, { threshold: 0.15 });
+
+            elements.forEach(el => observer.observe(el));
+        }
+
+        // --- COOKIE BANNER LOGIC ---
+        function initializeCookieBanner() {
+            if (!cookieBanner || !acceptButton) return;
+            const accepted = localStorage.getItem(COOKIE_KEY);
+            if (accepted === 'true') {
+                cookieBanner.style.display = 'none';
+            } else {
+                cookieBanner.style.display = 'block';
+            }
+            acceptButton.addEventListener('click', () => {
+                localStorage.setItem(COOKIE_KEY, 'true');
+                cookieBanner.classList.add('fade-out');
+                setTimeout(() => { cookieBanner.style.display = 'none'; }, 500);
+            });
+        }
+
+        // --- MORE DROPDOWN LOGIC ---
+        function initializeDropdownListeners() {
+            const dropdown = document.getElementById('more-dropdown');
+            if (!dropdown) return;
+            const dropdownButton = dropdown.querySelector('button');
+            const menu = document.getElementById('more-menu-items');
+
+            if (!menu || !dropdownButton) return;
+
+            const toggleMenu = () => {
+                menu.classList.toggle('visible');
+                const isExpanded = menu.classList.contains('visible');
+                dropdownButton.setAttribute('aria-expanded', isExpanded);
+            };
+
+            const hideMenu = () => {
+                menu.classList.remove('visible');
+                dropdownButton.setAttribute('aria-expanded', 'false');
+            };
+
+            dropdown.addEventListener('mouseenter', () => {
+                if (window.innerWidth >= 768) menu.classList.add('visible');
+            });
+            dropdown.addEventListener('mouseleave', () => {
+                if (window.innerWidth >= 768) hideMenu();
+            });
+
+            dropdownButton.addEventListener('click', (e) => {
+                if (window.innerWidth < 768) {
+                    toggleMenu();
+                    e.stopPropagation();
+                }
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!dropdown.contains(event.target) && menu.classList.contains('visible')) {
+                    hideMenu();
+                }
+            });
+        }
+
+        // --- CORE INITIALIZATION ---
+        function initializeSettings() {
+            mobileMenuButton = document.getElementById('mobile-menu-button');
+            mobileMenu = document.getElementById('mobile-menu');
+            hamburgerIcon = document.getElementById('hamburger-icon');
+            closeIcon = document.getElementById('close-icon');
+            navElement = document.getElementById('main-nav');
+            cookieBanner = document.getElementById('cookie-banner');
+            acceptButton = document.getElementById('accept-cookies');
+
+            const initialThemeMode = localStorage.getItem(THEME_KEY) || 'system';
+            applyTheme(initialThemeMode);
+            setupSystemThemeListener();
+
+            const initialMenuMode = localStorage.getItem(MENU_KEY) || 'auto';
+            applyMenuMode(initialMenuMode);
+
+            const initialNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'blur';
+            applyNavStyle(initialNavStyle);
+
+            setupScrollAnimations();
+            initializeDropdownListeners();
+            initializeCookieBanner();
+
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', toggleMobileMenu);
+                if (mobileMenu) {
+                    mobileMenu.querySelectorAll('a').forEach(link => {
+                        link.addEventListener('click', () => {
+                            if (mobileMenu.classList.contains('open')) toggleMobileMenu();
+                        });
+                    });
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeSettings);
+    </script>
+</body>
+</html>
