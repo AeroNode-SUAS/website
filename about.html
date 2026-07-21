@@ -14,6 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About the Team | AeroNode</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class', // Enable dark mode via the 'dark' class on <html>
@@ -153,6 +155,34 @@
         }
         .faq-chevron {
             transition: transform 0.25s ease;
+            
+            }
+
+        #location-map {
+            height: 400px;
+            width: 100%;
+            z-index: 0;
+        }
+        .leaflet-popup-content-wrapper {
+            background: #1e1b4b;
+            color: white;
+            border-radius: 0.75rem;
+        }
+        .leaflet-popup-tip {
+            background: #1e1b4b;
+        }
+        .pulse-marker {
+            width: 20px;
+            height: 20px;
+            background: #4f46e5;
+            border-radius: 50%;
+            box-shadow: 0 0 0 rgba(79, 70, 229, 0.6);
+            animation: pulse-ring 2s infinite;
+        }
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.6); }
+            70% { box-shadow: 0 0 0 20px rgba(79, 70, 229, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
         }
     </style>
 </head>
@@ -175,6 +205,7 @@
                     <a href="blog.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150">Blog</a>
                     <a href="contact.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150">Contact</a>
                     <a href="specs.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150" role="menuitem">Aircraft Info</a>
+                    <a href="gallery.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150" role="menuitem">Gallery</a>
 
                     <!-- DROPDOWN MENU -->
                     <div id="more-dropdown" class="relative group">
@@ -217,10 +248,11 @@
             <a href="about.html" class="text-lg block px-3 py-2 rounded-md text-primary dark:text-primary-dark bg-indigo-50 dark:bg-indigo-900 font-semibold transition duration-150">About</a>
             <a href="blog.html" class="text-lg font-medium block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">Blog</a>
             <a href="contact.html" class="text-lg font-medium block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">Contact</a>
-            <a href="specs.html" class="text-lg font-medium block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">Aircraft Info</a>
+            <a href="gallery.html" class="text-lg font-medium block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">Gallery</a>
             
             <div class="h-px w-full my-2 bg-gray-200 dark:bg-gray-700"></div>
 
+            <a href="specs.html" class="text-lg font-medium block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">Aircraft Info</a>
             <a href="PLACEHOLDER.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">PLACEHOLDER</a>
             <a href="PLACEHOLDER.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">PLACEHOLDER</a>
             <a href="settings.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary transition duration-150">Page Settings</a>
@@ -275,6 +307,20 @@
             </div>
         </div>
 
+         <!-- Location Section -->
+        <div class="w-full bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-8 md:p-12 mb-10 transition duration-300 ease-in-out dark:shadow-2xl">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-gray-100 tracking-tight mb-2">
+                Where We're Located
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6 text-lg flex items-center gap-1.5">
+                <svg class="w-5 h-5 text-primary dark:text-primary-dark" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                </svg>
+                Bellevue, Washington
+            </p>
+            <div id="location-map" class="rounded-2xl overflow-hidden shadow-2xl glow-primary"></div>
+        </div>
+
         <!-- Team Members Section -->
         <div class="w-full animate-on-scroll">
             <h2 class="text-3xl font-extrabold text-gray-900 dark:text-gray-100 mb-8 pl-2 border-l-4 border-primary dark:border-primary-dark">
@@ -297,18 +343,26 @@
                 </p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="caden" data-team="hardware">
-                        <img src="files/Caden Y.jpg" alt="Caden Y." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Caden Y.</h3>
-                        <p class="text-sm role-hardware font-medium">Hardware</p>
-                        <p class="view-hint text-xs text-gray-400 dark:text-gray-500 mt-2 opacity-0 transition-opacity duration-300">Click to view profile →</p>
+                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden relative hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="caden" data-team="hardware">
+                        <div class="relative h-96 overflow-hidden">
+                            <img src="files/Caden Y.jpg" alt="Caden Y." class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-5 text-left">
+                                <h3 class="text-2xl font-bold text-white">Caden Y.</h3>
+                                <p class="text-sm text-gray-200 font-medium">Hardware</p>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="kevin" data-team="hardware">
-                        <img src="files/Kevin Z..JPG" alt="Kevin Z." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Kevin Z.</h3>
-                        <p class="text-sm role-hardware font-medium">Hardware</p>
-                        <p class="view-hint text-xs text-gray-400 dark:text-gray-500 mt-2 opacity-0 transition-opacity duration-300">Click to view profile →</p>
+                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden relative hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="kevin" data-team="hardware">
+                        <div class="relative h-96 overflow-hidden">
+                            <img src="files/Kevin Z..JPG" alt="Kevin Z." class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-5 text-left">
+                                <h3 class="text-2xl font-bold text-white">Kevin Z.</h3>
+                                <p class="text-sm text-gray-200 font-medium">Hardware</p>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -318,21 +372,30 @@
             <div class="team-group mb-14" data-team="software">
                 <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">Software</h3>
                 <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-8 max-w-3xl">
-                    The Software subteam develops the autonomous flight logic, computer vision targeting systems, and ground control station software that powers our aircraft's mission capabilities. This includes GPS waypoint navigation, obstacle detection, target classification, and payload deployment logic             </p>
+                    The Software subteam develops the autonomous flight logic, computer vision targeting systems, and ground control station software that powers our aircraft's mission capabilities. This includes GPS waypoint navigation, obstacle detection, target classification, and payload deployment logic
+                </p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="rick" data-team="software">
-                        <img src="files/Rick Z..JPG" alt="Rick Z." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Rick Z.</h3>
-                        <p class="text-sm role-software font-medium">Software</p>
-                        <p class="view-hint text-xs text-gray-400 dark:text-gray-500 mt-2 opacity-0 transition-opacity duration-300">Click to view profile →</p>
+                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden relative hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="rick" data-team="software">
+                        <div class="relative h-96 overflow-hidden">
+                            <img src="files/Rick Z..JPG" alt="Rick Z." class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-5 text-left">
+                                <h3 class="text-2xl font-bold text-white">Rick Z.</h3>
+                                <p class="text-sm text-gray-200 font-medium">Software</p>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="lauren" data-team="software">
-                        <img src="files/R.jpg" alt="Lauren O." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Lauren O.</h3>
-                        <p class="text-sm role-software font-medium">Software</p>
-                        <p class="view-hint text-xs text-gray-400 dark:text-gray-500 mt-2 opacity-0 transition-opacity duration-300">Click to view profile →</p>
+                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden relative hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="lauren" data-team="software">
+                        <div class="relative h-96 overflow-hidden">
+                            <img src="files/R.jpg" alt="Lauren O." class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-5 text-left">
+                                <h3 class="text-2xl font-bold text-white">Lauren O.</h3>
+                                <p class="text-sm text-gray-200 font-medium">Software</p>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -342,21 +405,24 @@
             <div class="team-group" data-team="outreach">
                 <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">Outreach</h3>
                 <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-8 max-w-3xl">
-                    The Outreach subteam manages sponsorships, community engagement, branding, and communications for AeroNode. This includes securing funding, building our web presence, and representing the team at STEM events.               </p>
+                    The Outreach subteam manages sponsorships, community engagement, branding, and communications for AeroNode. This includes securing funding, building our web presence, and representing the team at STEM events.
+                </p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="angela" data-team="outreach">
-                        <img src="files/Angela O._2.jpg" alt="Angela O." class="w-24 h-24 rounded-full object-cover mb-4 shadow-inner">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Angela O.</h3>
-                        <p class="text-sm role-outreach font-medium">Outreach</p>
-                        <p class="view-hint text-xs text-gray-400 dark:text-gray-500 mt-2 opacity-0 transition-opacity duration-300">Click to view profile →</p>
+                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden relative hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="angela" data-team="outreach">
+                        <div class="relative h-96 overflow-hidden">
+                            <img src="files/Angela O._2.jpg" alt="Angela O." class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-5 text-left">
+                                <h3 class="text-2xl font-bold text-white">Angela O.</h3>
+                                <p class="text-sm text-gray-200 font-medium">Outreach</p>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
             </div>
         </div>
-
-  
 
         <!-- Sponsors Section -->
         <div class="w-full mt-16">
@@ -486,37 +552,37 @@
             caden: {
                 name: "Caden Y.",
                 role: "Hardware",
-                meta: "Grade: 9 · School: Tesla STEM High School",
-                photo: "Caden Y.jpg",
-                bio: "Works on the airframe design, machining, and mechanical integration of the aircraft."
+                meta: "Year: 9 · School: Tesla STEM High School",
+                photo: "files/Caden Y.jpg",
+                bio: "I'm Caden Yao and I'm a freshman at Tesla STEM High School. I enjoy playing basketball, coding, and building sand castles."
             },
             kevin: {
                 name: "Kevin Z.",
                 role: "Hardware",
-                meta: "Grade: 10· School: Interlake",
-                photo: "Kevin Z..JPG",
-                bio: "Focuses on the power system, ESCs, and structural assembly of the drone."
+                meta: "Year: 10· School: Interlake",
+                photo: "files/Kevin Z..JPG",
+                bio: " Hi, I'm Kevin Zhang and I'm a sophomore at Interlake High School. I enjoy playing soccer, coding, and dancing."
             },
             rick: {
                 name: "Rick Z.",
                 role: "Software",
-                meta: "Grade: 12· School: Interlake",
-                photo: "Rick Z..JPG",
-                bio: "Develops the autonomous flight logic, computer vision targeting, and the ground control station backend."
+                meta: "Year: 12· School: Interlake",
+                photo: "files/Rick Z..JPG",
+                bio: "Hi, I'm Rick Zhang and I'm a senior at Interlake High School. I enjoy skiing, biology, and playing the guitar."
             },
             lauren: {
                 name: "Lauren O.",
                 role: "Software",
-                meta: "Grade: 12 · School: Tesla STEM High School",
-                photo: "R.jpg",
-                bio: "Works on the flight software stack and mission planning algorithms."
+                meta: "Year: 12 · School: Tesla STEM High School",
+                photo: "files/R.jpg",
+                bio: "I'm Lauren Ouyang and I'm a senior at Tesla STEM High School. In my free time I enjoy doing nails and building LEGOS!"
             },
             angela: {
                 name: "Angela O.",
                 role: "Outreach",
-                meta: "Grade: 8 · School: International Community",
-                photo: "Angela O._2.jpg",
-                bio: "Branding, website, and graphic design."
+                meta: "Year: 8 · School: International Community",
+                photo: "files/Angela O._2.jpg",
+                bio: "I'm Angela Ouyang and I'm an 8th grader at International Community School. I enjoy eating food, and doing art in my free time."
             }
         };
                 
@@ -770,6 +836,61 @@
             });
 
         });
+    </script>
+
+    <script>
+       function initLocationMap() {
+            const mapEl = document.getElementById('location-map');
+            if (!mapEl || typeof L === 'undefined') return;
+
+            const bellevue = [47.6101, -122.2015];
+            const usaCenter = [39.8283, -98.5795];
+            const map = L.map('location-map', {
+                zoomControl: true,
+                scrollWheelZoom: false,
+                attributionControl: false
+            }).setView(usaCenter, 4);
+
+            function getTileLayer() {
+                const isDark = document.documentElement.classList.contains('dark');
+                return isDark
+                    ? L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                        attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+                        subdomains: 'abcd',
+                        maxZoom: 19
+                    })
+                    : L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                        attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+                        subdomains: 'abcd',
+                        maxZoom: 19
+                    });
+            }
+
+
+            let currentLayer = getTileLayer();
+            currentLayer.addTo(map);
+
+            const pulseIcon = L.divIcon({
+                className: '',
+                html: '<div class="pulse-marker"></div>',
+                iconSize: [20, 20],
+                iconAnchor: [10, 10]
+            });
+
+            L.marker(bellevue, { icon: pulseIcon })
+                .addTo(map)
+                .bindPopup('<b>AeroNode</b><br>Bellevue, WA')
+                .openPopup();
+
+            const observer = new MutationObserver(() => {
+                map.removeLayer(currentLayer);
+                currentLayer = getTileLayer();
+                currentLayer.addTo(map);
+            });
+            observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+        }
+
+        document.addEventListener('DOMContentLoaded', initLocationMap);
     </script>
 </body>
 </html>
