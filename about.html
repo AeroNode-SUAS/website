@@ -162,6 +162,26 @@
             height: 400px;
             width: 100%;
             z-index: 0;
+            position: relative;
+        }
+        .map-attribution {
+            position: absolute;
+            right: 0.75rem;
+            bottom: 0.75rem;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            color: #1f2937;
+            padding: 0.35rem 0.55rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            line-height: 1.3;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(4px);
+            pointer-events: none;
+        }
+        .map-attribution a {
+            color: inherit;
+            text-decoration: underline;
         }
         .leaflet-popup-content-wrapper {
             background: #1e1b4b;
@@ -844,31 +864,29 @@
             if (!mapEl || typeof L === 'undefined') return;
 
             const bellevue = [47.6101, -122.2015];
-            const usaCenter = [39.8283, -98.5795];
+            const pnwCenter = [47.5, -122.0];
             const map = L.map('location-map', {
                 zoomControl: true,
                 scrollWheelZoom: false,
                 attributionControl: false
-            }).setView(usaCenter, 4);
+            }).setView(pnwCenter, 7);
 
             function getTileLayer() {
                 const isDark = document.documentElement.classList.contains('dark');
-                return isDark
-                    ? L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-                        attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-                        subdomains: 'abcd',
-                        maxZoom: 19
-                    })
-                    : L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-                        attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-                        subdomains: 'abcd',
-                        maxZoom: 19
-                    });
+                return L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    maxZoom: 19
+                });
             }
 
 
             let currentLayer = getTileLayer();
             currentLayer.addTo(map);
+
+            const attributionLabel = document.createElement('div');
+            attributionLabel.className = 'map-attribution';
+            attributionLabel.innerHTML = 'Map provided by <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener">OpenStreetMap</a><br>© OpenStreetMap contributors';
+            mapEl.appendChild(attributionLabel);
 
             const pulseIcon = L.divIcon({
                 className: '',
