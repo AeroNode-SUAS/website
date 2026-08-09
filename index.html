@@ -535,6 +535,36 @@
         </div>
     </div>
 
+    <!-- EU Cookie Modal -->
+    <div id="cookie-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-950/80 backdrop-blur-md">
+        <div class="w-full max-w-lg bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-6 md:p-8 animate-fade-in">
+            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 mb-5 mx-auto">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                </svg>
+            </div>
+            
+            <h3 class="text-xl font-bold text-center text-gray-900 dark:text-white mb-3">Cookie & Privacy Settings</h3>
+            
+            <p class="text-sm text-gray-600 dark:text-gray-300 text-center mb-6 leading-relaxed">
+                In compliance with the General Data Protection Regulation (GDPR), I unfortunately have to request your consent to store cookies and other data on your device and with 3rd parties to optimize traffic, personalize site navigation, and measure our web performance. We will NEVER sell your data, and data sent to 3rd-party servers is meant for the sole purposes of web analytics, authentication (end-to-end encrypted), and fetching data (such as blog posts). Unless logged in, all of your data is anonymized, including web analytics data. Our cookies apply to this site only and do not track you outside of this site. If you do not consent to these terms and you are in the EU, LEAVE THIS WEBPAGE IMMEDIATELY.
+            </p>
+
+            <div class="space-y-3">
+                <button id="accept-modal-cookies" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow transition duration-300 text-sm">
+                    Accept All Cookies
+                </button>
+                <button id="reject-modal-cookies" class="w-full py-3 border border-gray-300 hover:bg-gray-100 text-gray-700 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-900 font-semibold rounded-xl transition duration-300 text-sm">
+                    Reject Non-Essential Cookies
+                </button>
+            </div>
+            
+            <p class="text-xs text-center text-gray-400 dark:text-gray-500 mt-4">
+                
+            </p>
+        </div>
+    </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
         import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
@@ -715,17 +745,55 @@
         // --- COOKIE BANNER LOGIC ---
         function initializeCookieBanner() {
             if (!cookieBanner || !acceptButton) return;
-            const accepted = localStorage.getItem(COOKIE_KEY);
-            if (accepted === 'true') {
-                cookieBanner.style.display = 'none';
-            } else {
-                cookieBanner.style.display = 'block';
-            }
-            acceptButton.addEventListener('click', () => {
-                localStorage.setItem(COOKIE_KEY, 'true');
+            const cookieModal = document.getElementById('cookie-modal');
+            const acceptModalButton = document.getElementById('accept-modal-cookies');
+            const rejectModalButton = document.getElementById('reject-modal-cookies');
+            const storedDecision = localStorage.getItem(COOKIE_KEY);
+
+            const hideCookieUI = () => {
                 cookieBanner.classList.add('fade-out');
                 setTimeout(() => { cookieBanner.style.display = 'none'; }, 500);
-            });
+                if (cookieModal) cookieModal.classList.add('hidden');
+            };
+
+            const showBanner = () => {
+                cookieBanner.style.display = 'block';
+            };
+
+            const showModal = () => {
+                if (cookieModal) cookieModal.classList.remove('hidden');
+            };
+
+            const setCookieDecision = (value) => {
+                localStorage.setItem(COOKIE_KEY, value);
+                hideCookieUI();
+            };
+
+            const isProbablyEU = () => {
+                const locale = navigator.language || navigator.userLanguage || '';
+                const languages = navigator.languages || [locale];
+                const languageRegions = languages.map(lang => (lang || '').split('-')[1] || '').filter(Boolean).map(region => region.toUpperCase());
+                const euRegions = ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','GB','UK','IS','LI','NO','CH'];
+                const hasEURegion = languageRegions.some(region => euRegions.includes(region));
+                const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+                const isEUTimezone = /^(Europe|Atlantic)\//.test(tz);
+                return hasEURegion || isEUTimezone;
+            };
+
+            cookieBanner.style.display = 'none';
+            if (cookieModal) cookieModal.classList.add('hidden');
+
+            if (storedDecision) {
+                hideCookieUI();
+            } else if (isProbablyEU()) {
+                showModal();
+            } else {
+                showBanner();
+            }
+
+            acceptButton.addEventListener('click', () => setCookieDecision('true'));
+            if (acceptModalButton) acceptModalButton.addEventListener('click', () => setCookieDecision('true'));
+            if (rejectModalButton) rejectModalButton.addEventListener('click', () => setCookieDecision('rejected'));
         }
 
         // --- MORE DROPDOWN LOGIC ---
