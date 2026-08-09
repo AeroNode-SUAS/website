@@ -626,20 +626,26 @@
             };
 
             const isProbablyEU = () => {
-                const locale = navigator.language || navigator.userLanguage || '';
-                const languages = navigator.languages || [locale];
-                const languageRegions = languages.map(lang => (lang || '').split('-')[1] || '').filter(Boolean).map(region => region.toUpperCase());
                 const euRegions = ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','GB','UK','IS','LI','NO','CH'];
+                const locale = (navigator.language || navigator.userLanguage || '').replace('_', '-');
+                const languages = Array.from(new Set([].concat(navigator.languages || [], locale, document.documentElement?.lang || '').filter(Boolean)));
+                const languageRegions = languages
+                    .map(lang => lang.replace('_', '-').split('-'))
+                    .map(parts => parts.length > 1 ? parts[parts.length - 1].toUpperCase() : '')
+                    .filter(Boolean);
                 const hasEURegion = languageRegions.some(region => euRegions.includes(region));
+                const exactLocaleMatch = languages
+                    .map(lang => lang.replace('_', '-').toLowerCase())
+                    .some(lang => euRegions.some(region => lang.endsWith(`-${region.toLowerCase()}`)));
                 const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
                 const isEUTimezone = /^(Europe|Atlantic)\//.test(tz);
-                return hasEURegion || isEUTimezone;
+                return hasEURegion || exactLocaleMatch || isEUTimezone;
             };
 
             cookieBanner.style.display = 'none';
             if (cookieModal) cookieModal.classList.add('hidden');
 
-            if (storedDecision) {
+            if (storedDecision !== null) {
                 hideCookieUI();
             } else if (isProbablyEU()) {
                 showModal();
