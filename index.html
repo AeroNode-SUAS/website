@@ -43,7 +43,6 @@
     <style>
         /* Set the Inter font globally and ensure a smooth background */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        /*html { scroll-behavior: smooth; }*/
         body { font-family: 'Inter', sans-serif; }
         h1, h2, h3 { letter-spacing: -0.02em; }
 
@@ -79,16 +78,13 @@
         
         /* Custom scrollbar for a cleaner look */
         ::-webkit-scrollbar { width: 8px; }
-        /* Light Mode Scrollbar */
         ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
         ::-webkit-scrollbar-track { background: #f7f9fc; }
-        /* Dark Mode Scrollbar Overrides */
         .dark ::-webkit-scrollbar-thumb { background: #4b5563; }
         .dark ::-webkit-scrollbar-track { background: #111827; }
 
         .fade-out { opacity: 0 !important; transform: translateY(100%) !important; pointer-events: none; }
         
-        /* Custom scrollbar configurations */
         .dropdown-menu { opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.2s ease-out; }
         .dropdown-menu.visible { opacity: 1; visibility: visible; transform: translateY(0); }
 
@@ -123,62 +119,35 @@
              display: none !important;
         }
         
-        .fullscreen-mode .fullscreen-hide {
-            display: none;
-        }
-        
-        .fullscreen-mode h3 {
-            font-size: 3rem;
-            margin-bottom: 2rem;
-        }
+        .fullscreen-mode .fullscreen-hide { display: none; }
+        .fullscreen-mode h3 { font-size: 3rem; margin-bottom: 2rem; }
+        .fullscreen-mode .countdown-item { font-size: 2rem; margin-bottom: 1.5rem; text-align: center; }
 
-        .fullscreen-mode .countdown-item {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
         .process-card {
             cursor: pointer;
             transition: border-color 0.3s ease, border-width 0.3s ease;
         }
         .process-card .step-number,
-        .process-card .step-subtitle {
-            transition: color 0.3s ease;
-        }
-        .process-card .step-line {
-            transition: background-color 0.3s ease;
-        }
+        .process-card .step-subtitle { transition: color 0.3s ease; }
+        .process-card .step-line { transition: background-color 0.3s ease; }
+        
         .process-card.active-step {
             border-color: #4f46e5;
             border-width: 2px;
             border-bottom-width: 4px;
         }
-        .dark .process-card.active-step {
-            border-color: #a5b4fc;
-        }
+        .dark .process-card.active-step { border-color: #a5b4fc; }
         .process-card.active-step .step-number,
-        .process-card.active-step .step-subtitle {
-            color: #4f46e5;
-        }
+        .process-card.active-step .step-subtitle { color: #4f46e5; }
         .dark .process-card.active-step .step-number,
-        .dark .process-card.active-step .step-subtitle {
-            color: #a5b4fc;
-        }
-        .process-card.active-step .step-line {
-            background-color: rgba(79, 70, 229, 0.3);
-        }
-        .dark .process-card.active-step .step-line {
-            background-color: rgba(165, 180, 252, 0.3);
-        }
+        .dark .process-card.active-step .step-subtitle { color: #a5b4fc; }
+        .process-card.active-step .step-line { background-color: rgba(79, 70, 229, 0.3); }
+        .dark .process-card.active-step .step-line { background-color: rgba(165, 180, 252, 0.3); }
 
         /* Hover Microinteractions */
-        a, button {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
+        a, button { transition: transform 0.2s ease, box-shadow 0.2s ease; }
 
-        nav a:not(#more-dropdown a) {
-            position: relative;
-        }
+        nav a:not(#more-dropdown a) { position: relative; }
         nav a:not(#more-dropdown a)::after {
             content: '';
             position: absolute;
@@ -191,54 +160,37 @@
             transform-origin: center;
             transition: transform 0.25s ease;
         }
-        nav a:not(#more-dropdown a):hover::after {
-            transform: scaleX(1);
-        }
+        nav a:not(#more-dropdown a):hover::after { transform: scaleX(1); }
 
-        .process-card:hover,
-        .timeline-item:hover h3 {
-            transform: translateY(-2px);
-        }
+        .process-card:hover, .timeline-item:hover h3 { transform: translateY(-2px); }
 
         section .grid > div.text-center:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 25px -8px rgba(79, 70, 229, 0.25);
         }
 
-                .img-hover-zoom {
+        .img-hover-zoom {
             overflow: hidden;
             border-radius: 0.75rem;
             display: block;
         }
-        .img-hover-zoom img {
-            transition: transform 0.4s ease;
-        }
-        .img-hover-zoom:hover img {
-            transform: scale(1.08);
-        }
+        .img-hover-zoom img { transition: transform 0.4s ease; }
+        .img-hover-zoom:hover img { transform: scale(1.08); }
 
         /* Recent Events Slider */
         .events-track {
             display: flex;
             transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
         }
-        .events-slide {
-            flex: 0 0 100%;
-        }
-        .event-dot {
-            transition: all 0.3s ease;
-        }
+        .events-slide { flex: 0 0 100%; }
+        .event-dot { transition: all 0.3s ease; }
         .event-dot.active {
             background-color: #4f46e5;
             width: 24px;
             border-radius: 9999px;
         }
-        .dark .event-dot.active {
-            background-color: #a5b4fc;
-        }
-        .event-nav-btn:hover {
-            transform: translateY(-50%) scale(1.1);
-        }
+        .dark .event-dot.active { background-color: #a5b4fc; }
+        .event-nav-btn:hover { transform: translateY(-50%) scale(1.1); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center transition-colors duration-300 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 w-full">
@@ -307,7 +259,6 @@
 
     <main class="relative w-full h-[90vh] flex items-center justify-center overflow-hidden">
         <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
-            <!-- Media file updated to be located in files/ folder -->
             <source src="files/dron eflihgt.mp4" type="video/mp4">
         </video>
 
@@ -339,7 +290,6 @@
         <div class="grid md:grid-cols-2 gap-12 items-center">
             <div class="relative">
                 <div class="absolute -top-3 -left-3 w-16 h-16 border-t-4 border-l-4 border-primary dark:border-primary-dark"></div>
-                <!-- Media file updated to be located in files/ folder -->
                 <img src="files/team.jpg" alt="Our team" class="w-full rounded-lg shadow-xl relative z-10" onerror="this.onerror=null; this.src='https://placehold.co/600x400/4f46e5/ffffff?text=Team+Photo';">
             </div>
 
@@ -382,7 +332,7 @@
         </div>
     </section>
 
-     <section class="w-full max-w-4xl mx-auto px-4 py-16 md:py-24">
+    <section class="w-full max-w-4xl mx-auto px-4 py-16 md:py-24">
         <h2 class="text-3xl md:text-4xl font-extrabold text-center text-gray-900 dark:text-gray-100 mb-16">
             Our Season Roadmap
         </h2>
@@ -436,7 +386,6 @@
             </div>
 
             <div class="grid grid-cols-2 grid-rows-2 gap-3 h-80 md:h-96">
-                <!-- Media files updated to be located in files/ folder -->
                 <img src="files/groupphoto3.jpg" alt="AeroNode drone photo 1" class="col-span-1 row-span-2 w-full h-full object-cover rounded-2xl shadow-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x800/4f46e5/ffffff?text=Photo+1';">
                 <img src="files/groupphoto4.jpg" alt="AeroNode drone photo 2" class="w-full h-full object-cover rounded-2xl shadow-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x400/a5b4fc/ffffff?text=Photo+2';">
                 <img src="files/groupphoto5.jpg" alt="AeroNode drone photo 3" class="w-full h-full object-cover rounded-2xl shadow-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x400/4f46e5/ffffff?text=Photo+3';">
@@ -479,144 +428,138 @@
         </div>
     </section>
 
-<section class="w-full max-w-6xl mx-auto px-4 py-16 md:py-24">
-    <h2 class="text-3xl md:text-4xl font-extrabold text-center text-gray-900 dark:text-gray-100 mb-4">
-        Recent Events
-    </h2>
-    <p class="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
-        A look back at what AeroNode has been up to this season.
-    </p>
+    <section class="w-full max-w-6xl mx-auto px-4 py-16 md:py-24">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-center text-gray-900 dark:text-gray-100 mb-4">
+            Recent Events
+        </h2>
+        <p class="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
+            A look back at what AeroNode has been up to this season.
+        </p>
 
-    <div class="relative">
-        <div class="overflow-hidden rounded-3xl shadow-xl">
-            <div id="events-track" class="events-track">
+        <div class="relative">
+            <div class="overflow-hidden rounded-3xl shadow-xl">
+                <div id="events-track" class="events-track">
 
-                <div class="events-slide">
-                    <div class="flex flex-col md:flex-row bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-                        <div class="w-full md:w-1/2 h-64 md:h-96 img-hover-zoom">
-                            <img src="files/outreach.jpg" alt="Team kickoff meeting" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/700x500/4f46e5/ffffff?text=Kickoff';">
-                        </div>
-                        <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
-                            <span class="inline-block text-xs font-bold text-primary dark:text-primary-dark uppercase tracking-wide mb-3">April 2026</span>
-                            <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">Team Outreach</h3>
-                            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                                Members of AeroNode showcased and explained the science behind Icarus.
-                            </p>
+                    <div class="events-slide">
+                        <div class="flex flex-col md:flex-row bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                            <div class="w-full md:w-1/2 h-64 md:h-96 img-hover-zoom">
+                                <img src="files/outreach.jpg" alt="Team kickoff meeting" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/700x500/4f46e5/ffffff?text=Kickoff';">
+                            </div>
+                            <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+                                <span class="inline-block text-xs font-bold text-primary dark:text-primary-dark uppercase tracking-wide mb-3">April 2026</span>
+                                <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">Team Outreach</h3>
+                                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                                    Members of AeroNode showcased and explained the science behind Icarus.
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="events-slide">
-                    <div class="flex flex-col md:flex-row bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-                        <div class="w-full md:w-1/2 h-64 md:h-96 img-hover-zoom">
-                            <img src="files/outreach 2.jpg" alt="Design review" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/700x500/a5b4fc/ffffff?text=Design+Review';">
-                        </div>
-                        <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
-                            <span class="inline-block text-xs font-bold text-primary dark:text-primary-dark uppercase tracking-wide mb-3">May 2026</span>
-                            <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">Team Outreach event 2</h3>
-                            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                                With a newly developed understanding of the aircraft's capabilities, members of AeroNode showcased and explained the science behind Icarus.
-                            </p>
+                    <div class="events-slide">
+                        <div class="flex flex-col md:flex-row bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                            <div class="w-full md:w-1/2 h-64 md:h-96 img-hover-zoom">
+                                <img src="files/outreach 2.jpg" alt="Design review" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/700x500/a5b4fc/ffffff?text=Design+Review';">
+                            </div>
+                            <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+                                <span class="inline-block text-xs font-bold text-primary dark:text-primary-dark uppercase tracking-wide mb-3">May 2026</span>
+                                <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">Team Outreach event 2</h3>
+                                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                                    With a newly developed understanding of the aircraft's capabilities, members of AeroNode showcased and explained the science behind Icarus.
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="events-slide">
-                    <div class="flex flex-col md:flex-row bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-                        <div class="w-full md:w-1/2 h-64 md:h-96 img-hover-zoom">
-                            <img src="files/tung.jpg" alt="First assembly" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/700x500/4f46e5/ffffff?text=Assembly';">
-                        </div>
-                        <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
-                            <span class="inline-block text-xs font-bold text-primary dark:text-primary-dark uppercase tracking-wide mb-3">June 2026</span>
-                            <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">First Full Assembly</h3>
-                            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                                The aircraft came together for the first time — power, sensors, and software all integrated on one airframe.
-                            </p>
+                    <div class="events-slide">
+                        <div class="flex flex-col md:flex-row bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                            <div class="w-full md:w-1/2 h-64 md:h-96 img-hover-zoom">
+                                <img src="files/tung.jpg" alt="First assembly" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/700x500/4f46e5/ffffff?text=Assembly';">
+                            </div>
+                            <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+                                <span class="inline-block text-xs font-bold text-primary dark:text-primary-dark uppercase tracking-wide mb-3">June 2026</span>
+                                <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">First Full Assembly</h3>
+                                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                                    The aircraft came together for the first time — power, sensors, and software all integrated on one airframe.
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="events-slide">
-                    <div class="flex flex-col md:flex-row bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-                        <div class="w-full md:w-1/2 h-64 md:h-96 img-hover-zoom">
-                            <img src="files/groupphoto3.jpg" alt="Sponsor showcase" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/700x500/a5b4fc/ffffff?text=Sponsors';">
-                        </div>
-                        <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
-                            <span class="inline-block text-xs font-bold text-primary dark:text-primary-dark uppercase tracking-wide mb-3">July 2026</span>
-                            <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">Test Runs</h3>
-                            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                                AeroNode conducted test runs to validate the aircraft's performance and refine its systems for competition readiness.
-                            </p>
+                    <div class="events-slide">
+                        <div class="flex flex-col md:flex-row bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                            <div class="w-full md:w-1/2 h-64 md:h-96 img-hover-zoom">
+                                <img src="files/groupphoto3.jpg" alt="Sponsor showcase" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/700x500/a5b4fc/ffffff?text=Sponsors';">
+                            </div>
+                            <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+                                <span class="inline-block text-xs font-bold text-primary dark:text-primary-dark uppercase tracking-wide mb-3">July 2026</span>
+                                <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">Test Runs</h3>
+                                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                                    AeroNode conducted test runs to validate the aircraft's performance and refine its systems for competition readiness.
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
+
+            <button id="events-prev" type="button" aria-label="Previous event" class="event-nav-btn absolute left-2 md:-left-5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white dark:bg-gray-700 shadow-lg flex items-center justify-center text-gray-700 dark:text-gray-200 z-10 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button id="events-next" type="button" aria-label="Next event" class="event-nav-btn absolute right-2 md:-right-5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white dark:bg-gray-700 shadow-lg flex items-center justify-center text-gray-700 dark:text-gray-200 z-10 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
         </div>
 
-        <button id="events-prev" type="button" aria-label="Previous event" class="event-nav-btn absolute left-2 md:-left-5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white dark:bg-gray-700 shadow-lg flex items-center justify-center text-gray-700 dark:text-gray-200 z-10 transition">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-        </button>
-        <button id="events-next" type="button" aria-label="Next event" class="event-nav-btn absolute right-2 md:-right-5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white dark:bg-gray-700 shadow-lg flex items-center justify-center text-gray-700 dark:text-gray-200 z-10 transition">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </button>
-    </div>
+        <div id="events-dots" class="flex items-center justify-center gap-2 mt-6"></div>
+    </section>
 
-    <div id="events-dots" class="flex items-center justify-center gap-2 mt-6"></div>
-</section>
+    <footer class="relative w-full mt-auto overflow-hidden">
+        <div class="absolute inset-0 -z-10">
+            <img src="Group_Microsoft (1).jpeg" alt="" class="w-full h-full object-cover scale-110 blur-sm" onerror="this.onerror=null; this.src='https://placehold.co/1600x800/1e1b4b/1e1b4b';">
+            <div class="absolute inset-0 bg-black/60"></div>
+        </div>
 
-<!-- Site Footer -->
-<footer class="relative w-full mt-auto overflow-hidden">
+        <div class="relative z-10 max-w-6xl mx-auto px-4 py-3 text-center">
+            <p class="text-xl font-extrabold text-white tracking-tight mb-2">
+                AERO<span class="text-gradient">NODE</span>
+            </p>
 
-    <!-- Blurred background image -->
-    <div class="absolute inset-0 -z-10">
-        <img src="Group_Microsoft (1).jpeg" alt="" class="w-full h-full object-cover scale-110 blur-sm" onerror="this.onerror=null; this.src='https://placehold.co/1600x800/1e1b4b/1e1b4b';">
-        <div class="absolute inset-0 bg-black/60"></div>
-    </div>
+            <nav class="flex flex-wrap justify-center gap-x-4 gap-y-1 mb-3 text-xs text-gray-300">
+                <a href="index.html" class="hover:text-white transition">Home</a>
+                <a href="about.html" class="hover:text-white transition">About</a>
+                <a href="blog.html" class="hover:text-white transition">Blog</a>
+                <a href="specs.html" class="hover:text-white transition">Aircraft Info</a>
+                <a href="contact.html" class="hover:text-white transition">Contact</a>
+            </nav>
 
-    <div class="relative z-10 max-w-6xl mx-auto px-4 py-3 text-center">
+            <div class="flex flex-wrap justify-center items-center gap-3 mb-3">
+                <a href="https://www.apple.com/" target="_blank" class="bg-white rounded-lg p-2 w-10 h-10 flex items-center justify-center hover:scale-105 transition">
+                    <img src="appleLogo.png" alt="Apple" class="max-w-full max-h-full object-contain">
+                </a>
+                <a href="https://www.microsoft.com" target="_blank" class="bg-white rounded-lg p-2 w-10 h-10 flex items-center justify-center hover:scale-105 transition">
+                    <img src="microsoftLogo.png" alt="Microsoft" class="max-w-full max-h-full object-contain">
+                </a>
+                <a href="https://www.societyforscience.org/" target="_blank" class="bg-white rounded-lg p-2 w-10 h-10 flex items-center justify-center hover:scale-105 transition">
+                    <img src="societyforscienceLogo.png" alt="Society for Science" class="max-w-full max-h-full object-contain">
+                </a>
+                <a href="https://www.stembridgecenter.org/" target="_blank" class="bg-white rounded-lg p-2 w-10 h-10 flex items-center justify-center hover:scale-105 transition">
+                    <img src="stembridgefoundationLogo.png" alt="STEM Bridge" class="max-w-full max-h-full object-contain">
+                </a>
+            </div>
 
-        <!-- Wordmark -->
-        <p class="text-xl font-extrabold text-white tracking-tight mb-2">
-            AERO<span class="text-gradient">NODE</span>
-        </p>
+            <p class="text-[10px] text-gray-400 tracking-wide">
+                2026 AERONODE &nbsp;
+            </p>
+        </div>
+    </footer>
 
-        <!-- Nav Links -->
-        <nav class="flex flex-wrap justify-center gap-x-4 gap-y-1 mb-3 text-xs text-gray-300">
-            <a href="index.html" class="hover:text-white transition">Home</a>
-            <a href="about.html" class="hover:text-white transition">About</a>
-            <a href="blog.html" class="hover:text-white transition">Blog</a>
-            <a href="specs.html" class="hover:text-white transition">Aircraft Info</a>
-            <a href="contact.html" class="hover:text-white transition">Contact</a>
-
-        </nav>
-
-        <!-- Sponsor Logos -->
-<div class="flex flex-wrap justify-center items-center gap-3 mb-3">
-    <a href="https://www.apple.com/" target="_blank" class="bg-white rounded-lg p-2 w-10 h-10 flex items-center justify-center hover:scale-105 transition">
-        <img src="appleLogo.png" alt="Apple" class="max-w-full max-h-full object-contain">
-    </a>
-    <a href="https://www.microsoft.com" target="_blank" class="bg-white rounded-lg p-2 w-10 h-10 flex items-center justify-center hover:scale-105 transition">
-        <img src="microsoftLogo.png" alt="Microsoft" class="max-w-full max-h-full object-contain">
-    </a>
-    <a href="https://www.societyforscience.org/" target="_blank" class="bg-white rounded-lg p-2 w-10 h-10 flex items-center justify-center hover:scale-105 transition">
-        <img src="societyforscienceLogo.png" alt="Society for Science" class="max-w-full max-h-full object-contain">
-    </a>
-    <a href="https://www.stembridgecenter.org/" target="_blank" class="bg-white rounded-lg p-2 w-10 h-10 flex items-center justify-center hover:scale-105 transition">
-        <img src="stembridgefoundationLogo.png" alt="STEM Bridge" class="max-w-full max-h-full object-contain">
-    </a>
-</div>
-
-        <p class="text-[10px] text-gray-400 tracking-wide">
-            2026 AERONODE &nbsp;
-        </p>
-    </div>
-</footer>
     <footer class="w-full bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-center text-sm py-4 border-t dark:border-gray-700 mt-auto">
         <p>Last Updated: 04/03/2026</p>
     </footer>
 
-    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 p-4 md:p-6 bg-gray-800/40 backdrop-blur-md text-white shadow-2xl transition-all duration-500 transform translate-y-0 z-50 opacity-100">
+    <!-- Non-EU Standard Cookie Banner -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 p-4 md:p-6 bg-gray-800/40 backdrop-blur-md text-white shadow-2xl transition-all duration-500 transform translate-y-0 z-50 opacity-100 hidden">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
             <p class="text-sm mb-3 md:mb-0 md:mr-6">
                 This website uses cookies to ensure you get the best experience and to track web traffic. By continuing to use this site, you agree to our use of cookies.
@@ -627,39 +570,28 @@
         </div>
     </div>
 
-    <!-- EU Cookie Modal -->
+    <!-- EU GDPR Cookie Modal -->
     <div id="cookie-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-950/80 backdrop-blur-md">
         <div class="w-full max-w-lg bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-6 md:p-8 animate-fade-in">
-            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 mb-5 mx-auto">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                </svg>
-            </div>
             
-            <h3 class="text-xl font-bold text-center text-gray-900 dark:text-white mb-3">Cookie & Privacy Settings</h3>
+            
+            <h3 class="text-xl font-bold text-center text-gray-900 dark:text-white mb-3">Cookie & Privacy Consent</h3>
             
             <p class="text-sm text-gray-600 dark:text-gray-300 text-center mb-6 leading-relaxed">
-                In compliance with the General Data Protection Regulation (GDPR), I unfortunately have to request your consent to store cookies and other data on your device and with 3rd parties to optimize traffic, personalize site navigation, and measure our web performance. We will NEVER sell your data, and data sent to 3rd-party servers is meant for the sole purposes of web analytics, authentication (end-to-end encrypted), and fetching data (such as blog posts). Unless logged in, all of your data is anonymized, including web analytics data. Our cookies apply to this site only and do not track you outside of this site. If you do not consent to these terms and you are in the EU, LEAVE THIS WEBPAGE IMMEDIATELY.
+                In compliance with the General Data Protection Regulation (GDPR), we have to request your consent to store cookies and other data locally on your device and with 3rd parties to optimize traffic, personalize site navigation, and measure our web performance. We will NEVER sell your data, and data sent to 3rd-party servers is meant for the sole purposes of web analytics, authentication (end-to-end encrypted), and fetching data (including blog posts and media files). Unless logged in with an AeroNode account, all of your data is anonymized, including web analytics data. Our cookies apply to this site only and do not track you outside of this site. If you are in the European Union and do not consent to these <u><a href="/terms">terms</a></u> and <u><a href="/privacy">privacy policy</a></u>, LEAVE THIS WEBPAGE IMMEDIATELY.
             </p>
 
             <div class="space-y-3">
                 <button id="accept-modal-cookies" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow transition duration-300 text-sm">
                     Accept All Cookies
                 </button>
-                <button id="reject-modal-cookies" class="w-full py-3 border border-gray-300 hover:bg-gray-100 text-gray-700 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-900 font-semibold rounded-xl transition duration-300 text-sm">
-                    Reject Non-Essential Cookies
-                </button>
             </div>
-            
-            <p class="text-xs text-center text-gray-400 dark:text-gray-500 mt-4">
-                
-            </p>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-        import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCJTduHsoftZ9jxzK2zGt89JKXhLhkeGk8",
@@ -674,7 +606,7 @@
         const db = getFirestore(app);
     </script>
 
-<script>
+    <script>
         // --- CONSTANTS ---
         const MENU_KEY = 'app-menu-mode';
         const THEME_KEY = 'app-theme-mode';
@@ -742,7 +674,7 @@
             }
         }
 
-        // --- MENU MODE LOGIC (desktop / mobile / auto) ---
+        // --- MENU MODE LOGIC ---
         function applyMenuMode(mode) {
             const desktopNav = document.getElementById('desktop-nav');
             const mobileToggle = document.getElementById('mobile-toggle');
@@ -810,6 +742,7 @@
 
             counters.forEach(c => observer.observe(c));
         }
+
         // --- RECENT EVENTS SLIDER ---
         function setupEventsSlider() {
             const track = document.getElementById('events-track');
@@ -891,37 +824,39 @@
             });
         }
 
-        // --- SCROLL-TRIGGERED FADE-IN ANIMATIONS ---
-        function setupScrollAnimations() {
-            const elements = document.querySelectorAll('.animate-on-scroll');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) entry.target.classList.add('is-visible');
-                });
-            }, { threshold: 0.15 });
-
-            elements.forEach(el => observer.observe(el));
-        }
-
-        // --- COOKIE BANNER LOGIC ---
-        function initializeCookieBanner() {
+        // --- COOKIE BANNER & GDPR MODAL LOGIC ---
+        async function initializeCookieBanner() {
             if (!cookieBanner || !acceptButton) return;
             const cookieModal = document.getElementById('cookie-modal');
             const acceptModalButton = document.getElementById('accept-modal-cookies');
             const rejectModalButton = document.getElementById('reject-modal-cookies');
+
+            // URL param check for testing / resetting cookie state (e.g. ?reset-cookies=true or ?gdpr=true)
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('reset-cookies') || urlParams.has('reset')) {
+                localStorage.removeItem(COOKIE_KEY);
+            }
+
             const storedDecision = localStorage.getItem(COOKIE_KEY);
 
             const hideCookieUI = () => {
-                cookieBanner.classList.add('fade-out');
-                setTimeout(() => { cookieBanner.style.display = 'none'; }, 500);
+                if (cookieBanner) {
+                    cookieBanner.classList.add('fade-out');
+                    setTimeout(() => { cookieBanner.style.display = 'none'; }, 500);
+                }
                 if (cookieModal) cookieModal.classList.add('hidden');
             };
 
             const showBanner = () => {
-                cookieBanner.style.display = 'block';
+                if (cookieModal) cookieModal.classList.add('hidden');
+                if (cookieBanner) {
+                    cookieBanner.style.display = 'block';
+                    cookieBanner.classList.remove('fade-out');
+                }
             };
 
             const showModal = () => {
+                if (cookieBanner) cookieBanner.style.display = 'none';
                 if (cookieModal) cookieModal.classList.remove('hidden');
             };
 
@@ -930,37 +865,63 @@
                 hideCookieUI();
             };
 
-            const isProbablyEU = () => {
-                const euRegions = ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','GB','UK','IS','LI','NO','CH'];
+            const euCountries = [
+                'AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR',
+                'DE','GR','HU','IE','IT','LV','LT','LU','MT','NL',
+                'PL','PT','RO','SK','SI','ES','SE','GB','UK','IS',
+                'LI','NO','CH'
+            ];
+
+            // Synchronous heuristic check (Browser TimeZone, language, locale)
+            const checkHeuristicEU = () => {
                 const locale = (navigator.language || navigator.userLanguage || '').replace('_', '-');
                 const languages = Array.from(new Set([].concat(navigator.languages || [], locale, document.documentElement?.lang || '').filter(Boolean)));
-                const languageRegions = languages
-                    .map(lang => lang.replace('_', '-').split('-'))
-                    .map(parts => parts.length > 1 ? parts[parts.length - 1].toUpperCase() : '')
-                    .filter(Boolean);
-                const hasEURegion = languageRegions.some(region => euRegions.includes(region));
-                const exactLocaleMatch = languages
-                    .map(lang => lang.replace('_', '-').toLowerCase())
-                    .some(lang => euRegions.some(region => lang.endsWith(`-${region.toLowerCase()}`)));
+                
+                // Check language regions (e.g. nl, nl-NL, de-DE)
+                const hasEURegion = languages.some(lang => {
+                    const parts = lang.toUpperCase().split('-');
+                    return parts.some(p => euCountries.includes(p));
+                });
+
                 const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-                const isEUTimezone = /^(Europe|Atlantic)\//.test(tz);
-                return hasEURegion || exactLocaleMatch || isEUTimezone;
+                const isEUTimezone = /^(Europe|Atlantic)\//i.test(tz);
+
+                return hasEURegion || isEUTimezone;
             };
 
-            cookieBanner.style.display = 'none';
-            if (cookieModal) cookieModal.classList.add('hidden');
-
-            if (storedDecision !== null) {
+            // If user previously accepted/rejected and wasn't forcing a test preview via URL
+            if (storedDecision !== null && !urlParams.has('gdpr')) {
                 hideCookieUI();
-            } else if (isProbablyEU()) {
+                return;
+            }
+
+            // Forced via URL parameter ?gdpr=true
+            if (urlParams.get('gdpr') === 'true') {
+                showModal();
+            } else if (checkHeuristicEU()) {
+                // Immediate show based on timezone / locale (e.g. Netherlands / Europe/Amsterdam)
                 showModal();
             } else {
                 showBanner();
             }
 
-            acceptButton.addEventListener('click', () => setCookieDecision('true'));
-            if (acceptModalButton) acceptModalButton.addEventListener('click', () => setCookieDecision('true'));
-            if (rejectModalButton) rejectModalButton.addEventListener('click', () => setCookieDecision('rejected'));
+            // Asynchronous IP Geolocation verification (ensures 100% accuracy for users in Netherlands / EU)
+            try {
+                const res = await fetch('https://get.geojs.io/v1/ip/geo.json', { cache: 'no-store' });
+                if (res.ok) {
+                    const data = await res.json();
+                    const countryCode = (data.country_code || data.country || '').toUpperCase();
+                    if (euCountries.includes(countryCode) && (storedDecision === null || urlParams.has('gdpr'))) {
+                        showModal();
+                    }
+                }
+            } catch (err) {
+                console.warn('GeoIP check fallback:', err);
+            }
+
+            // Bind click handlers
+            acceptButton.onclick = () => setCookieDecision('true');
+            if (acceptModalButton) acceptModalButton.onclick = () => setCookieDecision('true');
         }
 
         // --- MORE DROPDOWN LOGIC ---
@@ -1026,18 +987,14 @@
             const initialNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'blur';
             applyNavStyle(initialNavStyle);
 
-            // Stats, process cards, scroll animations
+            // UI components
             setupStatCounters();
             setupProcessCards();
             setupEventsSlider();
-            //setupScrollAnimations();
 
             // Dropdown + cookies
             initializeDropdownListeners();
             initializeCookieBanner();
-            setupStatCounters();
-            setupProcessCards();
-            //setupScrollAnimations();
 
             // Mobile menu button + auto-close on link click
             if (mobileMenuButton) {
