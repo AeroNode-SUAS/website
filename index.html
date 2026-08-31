@@ -195,7 +195,7 @@
 </head>
 <body class="min-h-screen flex flex-col items-center transition-colors duration-300 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 w-full">
 
-    <nav id="main-nav" class="w-full bg-white/30 backdrop-blur-md shadow-lg sticky top-0 z-50 dark:bg-gray-800/30 dark:shadow-xl transition-colors duration-300">
+    <nav id="main-nav" class="w-full bg-white/50 backdrop-blur-md shadow-lg sticky top-0 z-50 dark:bg-gray-800/30 dark:shadow-xl transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0">
@@ -243,17 +243,18 @@
     
     <div id="mobile-menu" class="fixed inset-0 top-16 w-full h-full md:hidden z-40 bg-white backdrop-blur-md dark:bg-gray-900/40">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col">
-            <a href="index.html" class="text-lg block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">Home</a>
+            <a href="index.html" class="text-lg block px-3 py-2 rounded-md text-primary dark:text-primary-dark bg-indigo-50 dark:bg-indigo-900 font-semibold">Home</a>
             <a href="about.html" class="text-lg block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">About</a>
             <a href="blog.html" class="text-lg block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">Blog</a>
             <a href="contact.html" class="text-lg block px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">Contact</a>
-            <a href="gallery.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark font-medium p-2 rounded-md transition duration-150" role="menuitem">Gallery</a>
+            
 
             <div class="h-px w-full my-2 bg-gray-200 dark:bg-gray-700"></div>
 
-            <a href="PLACEHOLDER.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">PLACEHOLDER</a>
-            <a href="settings.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Page Settings</a>
-            <a href="specs.html" class="text-lg block px-3 py-2 rounded-md text-primary dark:text-primary-dark bg-indigo-50 dark:bg-indigo-900 font-semibold">Aircraft Info</a>
+            <a href="gallery.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Gallery</a>
+            <a href="specs.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Aircraft Info</a>
+			<a href="settings.html" class="text-md block px-3 py-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Page Settings</a>
+           
         </div>
     </div>
 
@@ -644,9 +645,9 @@
 
         // --- NAVIGATION STYLE LOGIC ---
         function applyNavStyle(style) {
-            const navBlurClasses = ['bg-white/30', 'backdrop-blur-md', 'dark:bg-gray-800/30'];
+            const navBlurClasses = ['bg-white/50', 'backdrop-blur-md', 'dark:bg-gray-800/30'];
             const navSolidClasses = ['bg-white', 'bg-opacity-100', 'backdrop-blur-none', 'dark:bg-gray-800', 'dark:bg-opacity-100'];
-            const menuBlurClasses = ['bg-white/30', 'backdrop-blur-md', 'dark:bg-gray-900/40'];
+            const menuBlurClasses = ['bg-white/50', 'backdrop-blur-md', 'dark:bg-gray-900/40'];
             const menuSolidClasses = ['bg-white', 'bg-opacity-100', 'backdrop-blur-none', 'dark:bg-gray-900', 'dark:bg-opacity-100'];
 
             if (navElement) navElement.classList.remove(...navBlurClasses, ...navSolidClasses);
