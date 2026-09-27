@@ -344,20 +344,36 @@
                 Meet the Team
             </h2>
 
-            <!-- Filter Tabs -->
-            <div class="flex flex-wrap gap-2 mb-10">
-                <button class="team-filter-btn active px-4 py-2 rounded-full text-sm font-semibold" data-filter="all">All</button>
-                <button class="team-filter-btn px-4 py-2 rounded-full text-sm font-semibold" data-filter="hardware">Hardware</button>
-                <button class="team-filter-btn px-4 py-2 rounded-full text-sm font-semibold" data-filter="software">Software</button>
-                <button class="team-filter-btn px-4 py-2 rounded-full text-sm font-semibold" data-filter="outreach">Outreach</button>
-            </div>
-
-            <!-- Hardware Subteam -->
-            <div class="team-group mb-14" data-team="hardware">
-                <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">Hardware</h3>
+            <!-- Team Leads -->
+            <div class="team-group mb-14" data-team="leads">
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">Team Leads</h3>
                 <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-8 max-w-3xl">
-                    The Hardware subteam is responsible for the mechanical design, fabrication, and structural integrity of our aircraft. This includes airframe design, material selection, propulsion systems, and payload delivery mechanisms. Members gain hands-on experience with CAD design, carbon fiber layup, 3D printing, and precision machining.
+                    They lead the various subteams and manage overall team coordination.
                 </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden relative hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="lauren" data-team="software">
+                        <div class="relative h-96 overflow-hidden">
+                            <img src="files/R.jpg" alt="Lauren O." class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-5 text-left">
+                                <h3 class="text-2xl font-bold text-white">Lauren O.</h3>
+                                <p class="text-sm text-gray-200 font-medium">Team Co-captain, Outreach Subteam, Payload Specialist</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden relative hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="rick" data-team="software">
+                        <div class="relative h-96 overflow-hidden">
+                            <img src="files/Rick Z.JPG" alt="Rick Z." class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-5 text-left">
+                                <h3 class="text-2xl font-bold text-white">Rick Z.</h3>
+                                <p class="text-sm text-gray-200 font-medium">Team Co-captain, Autonomous Flight Planner, Jetson AI Image Processing</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!-- Hardware Subteam -->
+            
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
                     <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden relative hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="caden" data-team="hardware">
@@ -366,21 +382,12 @@
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none"></div>
                             <div class="absolute bottom-0 left-0 right-0 p-5 text-left">
                                 <h3 class="text-2xl font-bold text-white">Caden Y.</h3>
-                                <p class="text-sm text-gray-200 font-medium">Hardware Lead, Team Logistics Manager, Design Lead</p>
+                                <p class="text-sm text-gray-200 font-medium">Hardware Lead, Team Logistics Manager, Design Lead, Mapping</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="team-card cursor-pointer bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden relative hover:shadow-xl hover:-translate-y-1 transition-all duration-300" data-member="lauren" data-team="software">
-                        <div class="relative h-96 overflow-hidden">
-                            <img src="files/R.jpg" alt="Lauren O." class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none"></div>
-                            <div class="absolute bottom-0 left-0 right-0 p-5 text-left">
-                                <h3 class="text-2xl font-bold text-white">Lauren O.</h3>
-                                <p class="text-sm text-gray-200 font-medium">Team Co-captain</p>
-                            </div>
-                        </div>
-                    </div>
+                    
 
                 </div>
             </div>
@@ -399,7 +406,7 @@
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none"></div>
                             <div class="absolute bottom-0 left-0 right-0 p-5 text-left">
                                 <h3 class="text-2xl font-bold text-white">Rick Z.</h3>
-                                <p class="text-sm text-gray-200 font-medium">Team Co-captain</p>
+                                <p class="text-sm text-gray-200 font-medium">Team Co-captain, Autonomous Flight Planner, Jetson AI Image Processing</p>
                             </div>
                         </div>
                     </div>
@@ -409,7 +416,7 @@
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none"></div>
                             <div class="absolute bottom-0 left-0 right-0 p-5 text-left">
                                 <h3 class="text-2xl font-bold text-white">Kevin Z.</h3>
-                                <p class="text-sm text-gray-200 font-medium">Software Lead, Hardware Subteam, CAD Specialist, Flight Lead & GCS Operator</p>
+                                <p class="text-sm text-gray-200 font-medium">Software Lead, Hardware Subteam, CAD Specialist, Flight Specialist & GCS Operator</p>
                             </div>
                         </div>
                     </div>
@@ -422,7 +429,7 @@
             <div class="team-group" data-team="outreach">
                 <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">Outreach</h3>
                 <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-8 max-w-3xl">
-                    The Outreach subteam manages sponsorships, community engagement, branding, and communications for AeroNode. This includes securing funding, building our web presence, and representing the team at STEM events.
+                    The Outreach subteam manages sponsorships, community engagement, branding, and communications for AeroNode. This includes securing funding, building our web presence, and representing the team at STEM outreach events.
                 </p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
@@ -432,7 +439,7 @@
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none"></div>
                             <div class="absolute bottom-0 left-0 right-0 p-5 text-left">
                                 <h3 class="text-2xl font-bold text-white">Angela O.</h3>
-                                <p class="text-sm text-gray-200 font-medium">Outreach Lead</p>
+                                <p class="text-sm text-gray-200 font-medium">Outreach Lead, Hardware Subteam</p>
                             </div>
                         </div>
                     </div>
