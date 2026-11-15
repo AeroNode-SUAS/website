@@ -282,7 +282,7 @@
                         <label for="nav-solid">Solid</label>
                     </div>
                     <p id="nav-style-status" class="mt-4 text-center text-sm italic text-gray-600 dark:text-gray-400">
-                        Current setting: Blur
+                        Current setting: Solid
                     </p>
                 </div>
 
@@ -560,7 +560,7 @@
 
             // --- FIX START ---
             // Re-apply the current navigation style because setting className above wipes out the background classes
-            const currentNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'blur';
+            const currentNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'solid';
             applyNavStyle(currentNavStyle);
             // --- FIX END ---
 
@@ -761,8 +761,8 @@
             const initialMenuMode = localStorage.getItem(MENU_KEY) || 'auto';
             applyMenuMode(initialMenuMode);
             
-            // 4. Nav Style (NEW) - Default to 'blur' if not set
-            const initialNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'blur';
+            // 4. Nav Style (NEW) - Default to 'solid' if not set
+            const initialNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'solid';
             applyNavStyle(initialNavStyle);
 
             // 5. Cookie

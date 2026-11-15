@@ -719,7 +719,7 @@
                 mobileMenuPanel.classList.remove('md:hidden');
             }
 
-            const currentNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'blur';
+            const currentNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'solid';
             applyNavStyle(currentNavStyle);
         }
 
@@ -974,7 +974,7 @@
             const initialMenuMode = localStorage.getItem(MENU_KEY) || 'auto';
             applyMenuMode(initialMenuMode);
 
-            const initialNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'blur';
+            const initialNavStyle = localStorage.getItem(NAV_STYLE_KEY) || 'solid';
             applyNavStyle(initialNavStyle);
 
             // UI components
