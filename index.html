@@ -167,7 +167,7 @@
 
         .process-card:hover, .timeline-item:hover h3 { transform: translateY(-2px); }
 
-        section .grid > div.text-center:hover {
+        section .grid:not(.stats-grid) > div.text-center:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 25px -8px rgba(79, 70, 229, 0.25);
         }
@@ -309,7 +309,7 @@
     </section>
 
     <section class="w-full max-w-6xl mx-auto px-4 py-12">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="grid stats-grid grid-cols-2 md:grid-cols-4 gap-6">
             <div class="text-center bg-white dark:bg-gray-800 rounded-1xl p-6">
                 <p class="stat-counter text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-200" data-target="5">5</p>
                 <p class="text-sm text-gray-700 dark:text-gray-300 mt-2 uppercase">Team Members</p>
